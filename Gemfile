@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'rails-ujs'
 gem 'foundation-rails'
 gem 'autoprefixer-rails'
+
 gem "font-awesome-rails"
 gem 'prawn'
 gem 'prawn-table'
