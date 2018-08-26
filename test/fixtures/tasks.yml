@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  target_user: 1
+  student: one
+  title: MyString
+  due_date: 2018-05-21
+  completed: false
+
+two:
+  user: two
+  target_user: 1
+  student: two
+  title: MyString
+  due_date: 2018-05-21
+  completed: false

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @push_checklist.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @push_checklist.description %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @push_checklist.manager_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @push_checklist.user %>
+</p>
+
+<p>
+  <strong>Site:</strong>
+  <%= @push_checklist.site %>
+</p>
+
+<p>
+  <strong>Date issued:</strong>
+  <%= @push_checklist.date_issued %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @push_checklist.completed %>
+</p>
+
+<%= link_to 'Edit', edit_push_checklist_path(@push_checklist) %> |
+<%= link_to 'Back', push_checklists_path %>

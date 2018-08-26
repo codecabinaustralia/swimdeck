@@ -1,0 +1,61 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  StuSurname: MyString
+  StuGivenNames: MyString
+  StudId: MyString
+  LessonDay: MyString
+  LessonTime: MyString
+  LessonLevel: MyString
+  Area: MyString
+  TeachSurname: MyString
+  TeachGivenNames: MyString
+  StuBookStartDate: MyString
+  RPSurname: MyString
+  RPGivenNames: MyString
+  RPId: MyString
+  RPAddress: MyString
+  RPSuburb: MyString
+  RPPostCode: MyString
+  RPHomePhone: MyString
+  RPWorkPhone: MyString
+  RPPhone: MyString
+  RPEmail: MyString
+  RPBookingBalance: MyString
+  RPBookingFee: MyString
+  FamilyPaymentType: MyString
+  SpecialDiscount: MyString
+  RP: MyString
+  StuGender: MyString
+  StuDateOfBirth: MyString
+  StuAge: MyString
+
+two:
+  StuSurname: MyString
+  StuGivenNames: MyString
+  StudId: MyString
+  LessonDay: MyString
+  LessonTime: MyString
+  LessonLevel: MyString
+  Area: MyString
+  TeachSurname: MyString
+  TeachGivenNames: MyString
+  StuBookStartDate: MyString
+  RPSurname: MyString
+  RPGivenNames: MyString
+  RPId: MyString
+  RPAddress: MyString
+  RPSuburb: MyString
+  RPPostCode: MyString
+  RPHomePhone: MyString
+  RPWorkPhone: MyString
+  RPPhone: MyString
+  RPEmail: MyString
+  RPBookingBalance: MyString
+  RPBookingFee: MyString
+  FamilyPaymentType: MyString
+  SpecialDiscount: MyString
+  RP: MyString
+  StuGender: MyString
+  StuDateOfBirth: MyString
+  StuAge: MyString

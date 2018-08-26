@@ -1,0 +1,15 @@
+<% @task = Task.find(task_flag.id) %>
+<%= form_for @task do |form| %>
+  
+  <div class="field">
+    <%= form.text_area :note, placeholder: "Close this task with a note", rows: 4 %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.check_box :completed, checked: true %>
+  </div>
+  
+  <div class="actions text-right" style="margin-top: 20px;">
+    <%= form.submit "Close Task", class: "button success large"  %>
+  </div>
+<% end %>

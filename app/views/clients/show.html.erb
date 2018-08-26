@@ -1,0 +1,35 @@
+<div class="grid-container" style="padding-top: 50px; margin-bottom: 500px;">
+  <h1>Your Children</h1>
+  <div class="grid-x grid-margin-x">
+
+    <% @students.each do |student| %>
+      <div class="cell small-12 medium-3">
+        <div class="student-card-head">
+          <div class="text-center" style="color: #fff; padding-top: 50px;">
+            <h2><%= student.full_name %></h2>
+          </div>
+          <div class="student-card-avatar">
+            <% if student.avatar.attached? %>
+                <%= image_tag(student.avatar) %>
+            <% end %>
+          </div>
+        </div>
+        <div class="student-card-base">
+          <div class="text-center" style="margin-top: 20px;">
+            <%= link_to "View Profile", student_path(student), class: "button success" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="cell small-12 medium-3">
+      <div class="student-card-all">
+        <div class="text-center" style="padding-top: 20px;">
+          <h2 style="color: #fff;">View combined timeline</h2>
+          <%= link_to "View Now", student_path(@last_student.id, show_multiple: true), class: "button success hollow", style: "border: 3px solid white; color: #fff;" %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

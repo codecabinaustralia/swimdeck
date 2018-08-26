@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  student: one
+  skill: one
+  level: one
+  competency_level: one
+
+two:
+  student: two
+  skill: two
+  level: two
+  competency_level: two

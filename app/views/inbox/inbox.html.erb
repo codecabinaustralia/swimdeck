@@ -1,0 +1,62 @@
+<%= render 'user_profiles/navigation' %>
+
+<div class="grid-x" style="min-height: 100vh;">
+	<div class="cell small-12 medium-3 inbox-menu text-center">
+		<ul class="menu vertical" style="padding:20px;">
+			<li><div class="button large success">NEW POST</div></li>
+			<li>New</li>
+			<li>All Communications</li>
+			<li>Actioned &amp; Archived</li>
+		</ul>
+	</div>
+	<div class="cell small-12 medium-9 inbox-body">
+		<table class="table hover">
+			<thead>
+				<th></th>
+				<th>Student</th>
+				<th>Post</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				<% @posts = Post.where(user_id: current_user.id).order("created_at DESC, actioned ASC").all %>
+				<% @posts.each do |post| %>
+
+					<% if post.actioned? %>
+						<tr style="cursor: pointer;" data-open="reply_post_<%= post.id %>">
+						
+							<td class="diagonal_lined" style="color: #fff; text-align: center; cursor: pointer; font-weight: bold">
+								ACTIONED
+							</td>
+						<% else %>
+						<tr style="font-weight: bold; cursor: pointer;" data-open="reply_post_<%= post.id %>">
+							<td bgcolor="#0e76bc" style="color: #fff; text-align: center;" >
+								NEW
+							</td>
+						<% end %>
+						<td>
+							<%= post.student.full_name %>
+						</td>
+						<td>
+							<%= post.body %>
+						</td>
+						<td>
+							<%= post.created_at.strftime("%H:%M%p") %>
+						</td>
+					</tr>
+
+					<div class="tiny reveal" id="reply_post_<%= post.id %>" data-reveal>
+					  <h1>Reply to this post</h1>
+					  <%= link_to post.student.full_name, student_path(post.student_id) %>
+					  <p><%= post.body %></p>
+					  <% @comment = Comment.new %>
+					  <%= render 'comments/form', comment: @comment, post: post %>
+					  <button class="close-button" data-close aria-label="Close modal" type="button">
+					    <span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

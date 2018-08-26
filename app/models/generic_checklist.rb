@@ -1,0 +1,2 @@
+class GenericChecklist < ApplicationRecord
+end

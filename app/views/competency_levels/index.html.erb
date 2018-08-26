@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Competency Levels</h1>
+
+<table class="ui celled table sortable stacked striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @competency_levels.each do |competency_level| %>
+      <tr>
+        <td><%= competency_level.title %></td>
+        <td><%= link_to 'Show', competency_level %></td>
+        <td><%= link_to 'Edit', edit_competency_level_path(competency_level) %></td>
+        <td><%= link_to 'Destroy', competency_level, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Competency Level', new_competency_level_path %>

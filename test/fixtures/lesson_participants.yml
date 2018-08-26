@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lesson: one
+  student: one
+  makeup_session: false
+  new_lesson: false
+
+two:
+  lesson: two
+  student: two
+  makeup_session: false
+  new_lesson: false

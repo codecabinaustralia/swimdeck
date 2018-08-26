@@ -1,0 +1,52 @@
+<%= form_with(model: push_checklist, local: true) do |form| %>
+  <% if push_checklist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(push_checklist.errors.count, "error") %> prohibited this push_checklist from being saved:</h2>
+
+      <ul>
+      <% push_checklist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :manager_id %>
+    <%= form.number_field :manager_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :site_id %>
+    <%= form.text_field :site_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_issued %>
+    <%= form.date_select :date_issued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :completed %>
+    <%= form.check_box :completed %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

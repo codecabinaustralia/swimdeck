@@ -1,0 +1,15 @@
+<% @flag = Flag.find(flag.id) %>
+<%= form_for @flag do |form| %>
+
+  <div class="field">
+    <%= form.text_area :note, placeholder: "Please describe how you completed this job", rows: 4 %>
+  </div>
+
+  <div class="field" style="display: none;">
+    <%= form.check_box :closed, checked: true %>
+  </div>
+
+  <div class="actions text-right" data-close>
+    <%= form.submit "Close Flag", class: "button success large delete_flag", data: {flag: flag.id} %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module PushChecklistsHelper
+end

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Generic Checklists</h1>
+
+<table class="ui celled table sortable stacked striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @generic_checklists.each do |generic_checklist| %>
+      <tr>
+        <td><%= generic_checklist.title %></td>
+        <td><%= generic_checklist.description %></td>
+        <td><%= link_to 'Show', generic_checklist %></td>
+        <td><%= link_to 'Edit', edit_generic_checklist_path(generic_checklist) %></td>
+        <td><%= link_to 'Destroy', generic_checklist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Generic Checklist', new_generic_checklist_path %>

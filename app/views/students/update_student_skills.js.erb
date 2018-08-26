@@ -1,0 +1,7 @@
+$('.skill_form').bind('ajax:success', function() {  
+    var student_skill = $(this).data('student_skill');
+    var my_div = '.skill_' + student_skill
+
+    var td = $(my_div).closest('td')
+    $(td).('style').remove();
+});  

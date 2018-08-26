@@ -1,0 +1,158 @@
+<div class="grid-x student-details-header">
+
+  <% if params.has_key?(:show_multiple) %>
+    <% @students.each do |student| %>
+      
+        <div class="cell small-12">
+          <%= link_to student_path(student), style: "color: #fff; font-weight:bold;" do %>
+          <div class="grid-x grid-padding-x grid-padding-y" style="background-color: #414e54; border-radius: 5px; border: 3px solid #485b63; margin-bottom: 10px ">
+            <div class="cell shrink student-details-avatar-multi">
+              <% if student.avatar.attached? %>
+                <%= image_tag(student.avatar) %>
+              <% end %>
+            </div>
+            <div class="cell auto">
+              <div style="padding-top: 15px;">
+                <span style="color: #fff; font-weight:bold;"><%= student.full_name %></span>&nbsp;&nbsp;&nbsp;&nbsp;<small style="color: lightblue; font-size: 11px; text-decoration: underline; font-weight: normal;">View Profile</small>
+              </div>
+            </div>
+          </div>
+          <% end %>
+        </div>
+    <% end %>
+  <% end %>
+
+  
+      <% if params.has_key?(:show_multiple) %>
+      <!-- SHOWING ALL STUDENTS -->
+      <% else %>
+        <div class="cell small-12">
+          <div style="width: 120px; height: 120px; position: relative; margin:auto">
+            <div  class="student-details-avatar">
+              <% if student.avatar.attached? %>
+                <%= image_tag(student.avatar) %>
+              <% end %>
+            </div>
+          <% @clients.each do |client| %>
+            <div data-open="client_avatar_student_<%= client.id %>" style="position: absolute; top: 0; left: 5px;" class="client-small-bubble">
+              <% if client.client.user.avatar.attached? %>
+                <%= image_tag(client.client.user.avatar) %>
+              <% end %>
+            
+            </div>
+
+            <!-- Modal for clients details -->
+            <div class="reveal" id="client_avatar_student_<%= client.id %>" data-reveal>
+                      <div class="client-med-bubble">
+                        <% if client.client.user.avatar.attached? %>
+                          <%= image_tag(client.client.user.avatar) %>
+                        <% end %>
+                         <%= client.client.first_name %> <%= client.client.last_name %>
+                      </div>
+                     
+                <div class="scrolling content">
+                  <table class="ui table inverted" style="margin-top: 40px;">
+                    <tr>
+                      <td><strong>Phone</strong></td>
+                      <td><%= client.client.phone_1 %></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Phone 2</strong></td>
+                      <td><%= client.client.phone_2 %></td>
+                    </tr>
+                    <tr>
+                      <td><strong>Address</strong></td>
+                      <td><%= client.client.address %> <%= client.client.address_city %>, <%= client.client.address_state %> <%= client.client.address_postcode %></td>
+                    </tr>
+                    <tfoot class="full-width">
+                        <tr>
+                          <th></th>
+                          <th colspan="4">
+                            <%= link_to edit_client_path(client.id) do %>
+                            <div class="ui right floated small primary labeled icon button">
+                              <i class="user icon"></i> Edit Client
+                            </div>
+                            <% end %>
+                          </th>
+                        </tr>
+                      </tfoot>
+                  </table>
+                </div> 
+              </div>
+          <% end %>
+          </div>
+        </div>
+        <div class="cell small-12 text-center" style="margin-top:30px;">
+          <h3 style="line-height: 0;"><%= @student.full_name %> <%= link_to edit_student_path(@student) do %><i class="edit icon"></i><% end %></h3>
+          <h5><strong>DOB:</strong> 
+            <% if @student.dob.present? %>
+              <%= @student.dob.strftime("%d %b %Y") %>
+            <% end %>
+          </h5>
+
+          <% if @student.current_level.present? %>
+          <a class="label" style="background-color: <%= @student_level.color %>; color: #fff; margin-top:10px;">
+              <%= @student_level.title %>
+          </a><br />
+          <% end %>
+          <!-- Add Student Notes -->
+          <div class="text-center" style="margin-top: 20px">
+            <% @last_post = @posts.where(note: true).where(note_closed: [nil, false]).last %>
+            <% @open_notes = @posts.where(note: true).where(note_closed: [nil, false]).all %>
+            <% @notes = @posts.where(note: true).order('note_closed DESC').all %>
+            
+            <% if current_user.client != true %>
+              <% if @last_post.present? %>
+                <div class="note-container" data-open="reveal_notes">
+                <p><i class="fa fa-pencil"></i> <strong>NOTES (<%= @open_notes.count %>)</strong></p>
+                <p style="margin-top: -15px;"><i>"<%= @last_post.body %>"</i> </p>
+                <div style="margin-top: -5px; color: lightblue; font-size: 11px; text-decoration: underline;">VIEW ALL NOTES</div>
+                </div>
+              <% else %>
+              <div class="note-container" data-open="reveal_notes">
+              <p><i class="fa fa-pencil"></i> <strong>OPEN NOTES (0)</strong></p>
+            
+              <div style="margin-top: -5px; color: lightblue; font-size: 11px; text-decoration: underline;">VIEW ALL NOTES</div>
+              </div>
+              <% end %>
+            <% end %>
+
+            <div class="reveal" id="reveal_notes" data-reveal>
+              <h1>Private notes for <%= student.full_name %></h1>
+              <% @notes.each do |note| %>
+                <div class="note-container-notes">
+                  <% if note.note_closed == true %>
+                  <span class="label primary">CLOSED</span>
+                  <% else %>
+                  <span class="label success" style="color: white;">OPEN</span>
+                  <% end %>
+                  <p><i><%= note.body %></i> </p> 
+                  
+                  <span style="font-size: 11px;">Created: <%= note.created_at.strftime("%d/%m/%Y") %> by <%= note.user.full_name %>
+                  <% if note.note_closed != true %> | <%= link_to "CLOSE THIS NOTE", post_close_note_path(note.id) %></span>
+                  <% end %>
+                </div>
+              <% end %>
+              <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        
+
+      <% end %>
+</div>
+
+<% if !params.has_key?(:show_multiple) %>
+<%= link_to student_path(student, show_multiple: true) do %>
+  <div class="grid-x grid-padding-y">
+    <div class="cell small-12 text-center" style=" background-color: #0B5E96; color: #fff;">
+              View all your children
+    </div>
+  </div>
+<% end %>
+<% end %>

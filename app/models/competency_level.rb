@@ -1,0 +1,2 @@
+class CompetencyLevel < ApplicationRecord
+end

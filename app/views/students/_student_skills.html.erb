@@ -1,0 +1,57 @@
+<table class="ui compact table">
+
+  <!-- Student Skill Loop -->
+  <% @student_skills.each do |student_skill| %>
+    <tr>
+      <td style="font-weight: bold; font-size: 12px;" width="50%">
+        <%= student_skill.skill.title %>
+      </td>
+      <td style="background-color: <%= student_skill.competency_level.color %>"> 
+        <div class="ui form" style="margin-top:10px;">
+        <!-- Form to change competency-->
+        <% @student_skill = StudentSkill.find(student_skill.id) %>
+
+        <!-- data: {student_skill: student_skill.id} -->
+
+        <%= form_for @student_skill, url: student_update_student_skills_path(@student), html: {class: "form-horizontal skill_form", multipart: :true}, remote: true, :authenticity_token => true do |form| %>
+
+            <div class="skill_<%= student_skill.id %>">
+              <%= form.collection_select(:competency_level_id, CompetencyLevel.all, :id, :title,{}, {onchange: 'this.form.submit();'}) %>
+            </div>
+            <%= form.hidden_field :skill_id, value: student_skill.id %>
+          <% end %>
+          </div>
+      </td>
+    </tr>
+  <% end %>
+      
+  </table>
+
+  <!-- Get the id of the last competency level-->
+  <% @last_competency = CompetencyLevel.last %>
+
+  <!-- Get a list of all student skills with competency level that matches last_competency-->
+  <% @competency_skills = StudentSkill.where(student_id: @student.id).where(competency_level_id: @last_competency.id).all %>
+
+  <!-- New Level -->
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-12">
+      <% if @student.current_level.present? %>
+
+        <% if @student.current_level == 13 %>
+          <% @new_level = Level.find(13) %>
+        <% else %>
+          <% @new_level = Level.find(@student.current_level + 1) %>
+        <% end %>
+
+        <% if @student_skills.count == @competency_skills.count %>
+          <%= form_for(@student) do |form| %>
+              <%= form.hidden_field :current_level, value: @student.current_level + 1 %>
+              <%= form.submit "Graduate to level #{@new_level.title}", class: "button primary large expanded" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+    

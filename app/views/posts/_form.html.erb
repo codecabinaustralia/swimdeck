@@ -1,0 +1,44 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :student_id, value: @student.id %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="grid-x">
+    <div class="cell small-12">
+      <%= form.text_area :body, rows: 2, placeholder: "Write something here" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= form.file_field :files, direct_upload: true, multiple: :true %>
+  </div>
+
+  <div class="grid-x">
+    <div class="cell small-8">
+      <% if current_user.client == nil || current_user.client == false %>
+      <%= form.check_box :note %>
+      <label for="note">Is this a private note?</label>
+      <% end %>
+    </div>
+    <div class="cell small-4 text-right">
+      <%= form.submit "POST TO WALL", class: "button primary small" %>
+    </div>
+  </div>
+
+<% end %>

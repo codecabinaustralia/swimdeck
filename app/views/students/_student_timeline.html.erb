@@ -1,0 +1,123 @@
+
+<div class="student-details-header-light" >
+  <h4 style="margin-bottom: 0;">Timeline and notifications</h4>
+</div>
+<% if !params.has_key?(:show_multiple) %>
+<div class="student-timeline-post-container">
+  <% @post = Post.new %>
+  <%= render 'posts/form', post: @post, student: @student %>
+</div>
+<% end %>
+
+<% @posts.each do |post| %>
+  
+  <% if post.certificate == true %>
+  <div style="padding: 40px; background-color: #0366A0; border: 10px solid #3CBBE6;">
+    <div class="grid-x" style="margin-bottom: 10px;">
+      <div class="cell shrink cert-avatar">
+        <% if student.avatar.attached? %>
+          <%= image_tag(student.avatar) %>
+        <% end %>
+      </div>
+      <div class="cell auto" style="background-color: #3CBBE6;padding: 10px;">
+        <h2 style="color: #fff;">Congratulations <%= student.full_name%><br /> <%= post.body %></h2>
+      </div>
+    </div>
+
+    
+  <a href="https://s3.amazonaws.com/swimdeck/Rackley+Participating+Certificates+-+Holiday+Intensive+Program+-+Inhouse+Print.pdf" target="_blank"><img src="https://s3.amazonaws.com/swimdeck/trevor_certificate.png"></a>
+  </div>
+  <% else %>
+
+    <% if post.note == true && post.sms != true %>
+      <div class="grid-x timeline-post-note">
+    <% elsif post.note == true && post.sms == true  %>
+      <div class="grid-x timeline-sms-note">
+    <% elsif post.skill_id.present? %>
+      <div class="grid-x timeline-skill">
+    <% else %>
+      <div class="grid-x timeline-post">
+    <% end %>
+      <div class="small-12">
+      <div class="grid-x grid-margin-x">
+        <div class="cell shrink post-avatar">
+          <% if post.user.avatar.attached? %>
+            <%= image_tag(post.user.avatar) %>
+          <% end %>
+        </div>
+
+        <% if post.note == true && post.sms != true %>
+          <div class="timeline-post-note-inner cell auto">
+        <% elsif post.note == true && post.sms == true %>
+          <div class="timeline-post-sms-inner cell auto">
+        <% elsif post.skill_id.present? %>
+          <div class="timeline-post-skill-inner cell auto">
+        <% else %>
+          <div class="cell auto">
+        <% end %>
+
+          
+         
+
+          <a href="#"><%= post.user.full_name %></a><br />
+          <% if @multiple == true %>
+            <% if post.note_closed == true && post.note == true %>
+              <span class="label success" style="color: #fff;">CLOSED</span>
+            <% elsif post.note_closed == false || post.note_closed == nil && post.note == true %>
+              <span class="label primary">OPEN</span>
+            <% end %>
+          <small>Posted on <%= post.student.full_name.pluralize(2) %> timeline</small>
+          <% end %>
+          
+          <% if post.files.attached? %>
+          <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+            <div class="orbit-wrapper">
+              <div class="orbit-controls">
+                <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+                <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+              </div>
+              <ul class="orbit-container" style="border: 3px solid #f5f5f5;">
+                <% post.files.each do |file| %>
+                <li class="orbit-slide">
+                  <figure class="orbit-figure">
+                    <%= image_tag file %>
+                  </figure>
+                </li>
+                <% end %> 
+              </ul>
+            </div>
+
+          </div>
+          <% end %>
+
+
+          <p> <%= post.body %>
+            
+          </p>
+          <% if !post.note == true && post.skill_id.blank? %>
+          <div  data-open="reply_post_<%= post.id %>"><small><i class="fa fa-reply"></i> REPLY</small></div>
+          <% end %>
+          <% @comments = Comment.where(post_id: post.id).order("created_at DESC").all %>
+          <% @comments.each do |comment| %>
+            <div class="replies-timeline">  
+              <%= comment.body %><br />
+              <small>FROM <%= comment.user.email %></small>
+            </div>
+          <% end %>
+          <div class="tiny reveal" id="reply_post_<%= post.id %>" data-reveal>
+            <h1>Reply to this post</h1>
+            <p><%= post.body %></p>
+            <% @comment = Comment.new %>
+            <%= render 'comments/form', comment: @comment, post: post %>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+      </div>
+      </div>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,44 @@
+<% if user_signed_in? %>
+<%= form_with(model: task, local: true) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="field">
+    <label>Who is this task for?</label>
+    <%= form.collection_select(:target_user, User.where.not(client: true).all, :id, :full_name, value: current_user.full_name) %>
+  </div>
+
+  <div class="field">
+    <label>Attach this task to a student?</label>
+    <%= form.collection_select(:student_id, Student.all, :id, :full_name, prompt: true) %>
+  </div>
+
+  <div class="field">
+    <label>Set the task</label>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :due_date %>
+    <%= form.date_field :due_date %>
+  </div>
+
+  <div class="actions" style="margin-top: 20px;">
+    <%= form.submit "Create Task", class: "button primary"  %>
+  </div>
+<% end %>
+
+<% end %>

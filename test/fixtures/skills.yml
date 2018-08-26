@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  level: one
+  rank_id: 1
+
+two:
+  title: MyString
+  level: two
+  rank_id: 1

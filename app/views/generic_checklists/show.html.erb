@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @generic_checklist.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @generic_checklist.description %>
+</p>
+
+<%= link_to 'Edit', edit_generic_checklist_path(@generic_checklist) %> |
+<%= link_to 'Back', generic_checklists_path %>

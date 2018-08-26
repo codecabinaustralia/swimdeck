@@ -1,0 +1,4 @@
+$('.delete_generic_checklist').bind('ajax:success', function() {  
+        $(this).closest('tr').fadeOut();
+        var flag_id = $(this).data('generic_checklist');
+});  

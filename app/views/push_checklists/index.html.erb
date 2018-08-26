@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Push Checklists</h1>
+
+<table class="ui celled table sortable stacked striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Manager</th>
+      <th>User</th>
+      <th>Site</th>
+      <th>Date issued</th>
+      <th>Completed</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @push_checklists.each do |push_checklist| %>
+      <tr>
+        <td><%= push_checklist.title %></td>
+        <td><%= push_checklist.description %></td>
+        <td><%= push_checklist.manager_id %></td>
+        <td><%= push_checklist.user %></td>
+        <td><%= push_checklist.site %></td>
+        <td><%= push_checklist.date_issued %></td>
+        <td><%= push_checklist.completed %></td>
+        <td><%= link_to 'Show', push_checklist %></td>
+        <td><%= link_to 'Edit', edit_push_checklist_path(push_checklist) %></td>
+        <td><%= link_to 'Destroy', push_checklist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Push Checklist', new_push_checklist_path %>
