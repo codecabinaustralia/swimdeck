@@ -145,6 +145,7 @@ GenericChecklist.create(title: 'Post', description: 'Complete Team Leader Report
 GenericChecklist.create(title: 'Post', description: 'Update Student Tracking Form on the computer for next session', site_id: 1, session_time: 'pm')
 GenericChecklist.create(title: 'Post', description: 'Print out teacher timetables, Team Leader report and Student Tracking Form for the next shift. If using SwimDesk, make sure all notes are up to date and tablet is put on the charger.', site_id: 1, session_time: 'pm')
 
+redirect_to root_path
   end
 
   def add_links_data
