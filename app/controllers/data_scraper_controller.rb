@@ -1,7 +1,7 @@
 class DataScraperController < ApplicationController
   require 'csv'
   require 'open-uri'
-
+  require 'date'
 
   def csv_spider
 
