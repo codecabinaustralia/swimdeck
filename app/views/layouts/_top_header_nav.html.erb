@@ -1,0 +1,64 @@
+<div class="top-bar-right">
+    <ul class="dropdown menu">
+      <% if user_signed_in? %>
+      <% if current_user.client != true %>
+      <li><div class="button hollow primary" style="border: 2px solid white; font-weight: bold; color: white; margin-top:15px;" data-open="assign_task">ASSIGN A TASK</div></li>
+      <% end %>
+      <% end %>
+
+      <div class="off-canvas position-left new-task-offcanvas" id="assign_task" data-off-canvas style="background-color: #29353d;">
+        <div class="grid-x grid-padding-x">
+          <div class="cell small-12" style="padding-top: 20px;">
+            <% @task = Task.new %>
+            <h3 style="color: white;">Assign a new task</h3>
+            <%= render 'tasks/form', task: @task %>
+          </div>
+        </div>
+      </div>
+
+      <li class="notification-bar text-center">
+        
+        <% if user_signed_in? %>
+        <i class="fa fa-bell"></i>
+        <% @notification_count = Task.where(target_user: current_user.id).where(completed: nil).where("due_date == ?", Time.now.strftime("%Y-%m-%d")).all %>
+        <span class="badge alert" style="margin-left: -10px;"><%= @notification_count.count %></span>
+        <% end %>
+      </li>
+      <li>
+          
+          <% if user_signed_in? %>
+          <% if current_user.client != true %>
+          <%= link_to user_profiles_pool_deck_leader_path do %>
+          
+          <div class="nav-bubble">
+            <% if user_signed_in? %>
+            <% if current_user.avatar.attached? %>
+                <%= image_tag(current_user.avatar) %>
+            <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
+            <% end %>
+            <% end %>
+          </div>
+          <% end %>
+
+
+          <% else %>
+          <%= link_to edit_user_registration_path do %>
+          <div class="nav-bubble">
+            <% if user_signed_in? %>
+            <% if current_user.avatar.attached? %>
+                <%= image_tag(current_user.avatar) %>
+            <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
+            <% end %>
+            <% end %>
+          </div>
+          <% end %>
+          
+        <% end %>
+        <% end %>
+
+
+      </li>
+    </ul>
+  </div>

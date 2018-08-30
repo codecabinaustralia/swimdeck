@@ -9,6 +9,8 @@
             <div class="cell shrink student-details-avatar-multi">
               <% if student.avatar.attached? %>
                 <%= image_tag(student.avatar) %>
+                <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
               <% end %>
             </div>
             <div class="cell auto">
@@ -31,12 +33,16 @@
             <div  class="student-details-avatar">
               <% if student.avatar.attached? %>
                 <%= image_tag(student.avatar) %>
+                <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
               <% end %>
             </div>
           <% @clients.each do |client| %>
             <div data-open="client_avatar_student_<%= client.id %>" style="position: absolute; top: 0; left: 5px;" class="client-small-bubble">
               <% if client.client.user.avatar.attached? %>
                 <%= image_tag(client.client.user.avatar) %>
+                <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
               <% end %>
             
             </div>
@@ -64,11 +70,15 @@
                       <td><strong>Address</strong></td>
                       <td><%= client.client.address %> <%= client.client.address_city %>, <%= client.client.address_state %> <%= client.client.address_postcode %></td>
                     </tr>
+                    <tr>
+                      <td><strong>Notes:</strong></td>
+                      <td><%= client.client.get_to_know %></td>
+                    </tr>
                     <tfoot class="full-width">
                         <tr>
                           <th></th>
                           <th colspan="4">
-                            <%= link_to edit_client_path(client.id) do %>
+                            <%= link_to edit_client_path(client.client.id) do %>
                             <div class="ui right floated small primary labeled icon button">
                               <i class="user icon"></i> Edit Client
                             </div>
@@ -83,7 +93,7 @@
           </div>
         </div>
         <div class="cell small-12 text-center" style="margin-top:30px;">
-          <h3 style="line-height: 0;"><%= @student.full_name %> <%= link_to edit_student_path(@student) do %><i class="edit icon"></i><% end %></h3>
+          <h3 style="line-height: 0;"><%= link_to student.full_name, student_path(student), style: "color: white;" %> <%= link_to edit_student_path(@student) do %><i class="edit icon"></i><% end %></h3>
           <h5><strong>DOB:</strong> 
             <% if @student.dob.present? %>
               <%= @student.dob.strftime("%d %b %Y") %>

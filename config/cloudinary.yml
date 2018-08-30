@@ -1,0 +1,19 @@
+---
+development:
+  CLOUD_NAME: thypowerhouse
+  API_KEY: '613239317455218'
+  API_SECRET: S5DF4bk0mGBtB8WYXT4izLeNqUg
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  CLOUD_NAME: thypowerhouse
+  API_KEY: '613239317455218'
+  API_SECRET: S5DF4bk0mGBtB8WYXT4izLeNqUg
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  CLOUD_NAME: thypowerhouse
+  API_KEY: '613239317455218'
+  API_SECRET: S5DF4bk0mGBtB8WYXT4izLeNqUg
+  enhance_image_tag: true
+  static_image_support: false

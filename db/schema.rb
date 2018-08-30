@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_000204) do
+ActiveRecord::Schema.define(version: 2018_08_27_030602) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.string "address_postcode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "get_to_know"
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "acknowleged"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.boolean "closed"
     t.text "note"
     t.boolean "compulsory_note"
+    t.string "flag_type"
     t.index ["student_id"], name: "index_flags_on_student_id"
   end
 
@@ -120,6 +123,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.integer "site_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "session_time"
     t.index ["site_id"], name: "index_generic_checklists_on_site_id"
   end
 
@@ -196,38 +200,6 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "links_data", force: :cascade do |t|
-    t.string "StuSurname"
-    t.string "StuGivenNames"
-    t.string "StuId"
-    t.string "LessonDay"
-    t.string "LessonTime"
-    t.string "LessonLevel"
-    t.string "Area"
-    t.string "TeachSurname"
-    t.string "TeachGivenNames"
-    t.string "StuBookStartDate"
-    t.string "RPSurname"
-    t.string "RPGivenNames"
-    t.string "RPId"
-    t.string "RPAddress"
-    t.string "RPSuburb"
-    t.string "RPPostCode"
-    t.string "RPHomePhone"
-    t.string "RPWorkPhone"
-    t.string "RPEmail"
-    t.string "RPBookingBalance"
-    t.string "RPBookingFee"
-    t.string "FamilyPaymentType"
-    t.string "SpecialDiscount"
-    t.string "RP"
-    t.string "StuGender"
-    t.string "StuDateOfBirth"
-    t.string "StuAge"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.integer "student_id"
     t.integer "user_id"
@@ -240,12 +212,10 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.boolean "note_closed"
     t.boolean "certificate"
     t.integer "level_id"
-    t.integer "skill_id_id"
     t.integer "skill_id"
     t.boolean "sms"
     t.index ["level_id"], name: "index_posts_on_level_id"
     t.index ["skill_id"], name: "index_posts_on_skill_id"
-    t.index ["skill_id_id"], name: "index_posts_on_skill_id_id"
     t.index ["student_id"], name: "index_posts_on_student_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -322,6 +292,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_000204) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "note"
+    t.string "task_type"
     t.index ["student_id"], name: "index_tasks_on_student_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end

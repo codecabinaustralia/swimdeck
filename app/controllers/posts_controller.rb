@@ -28,6 +28,15 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+
+        @tasks = Task.where(task_type: 'risk').where(student_id: @post.student_id).all
+        @tasks.each do |task|
+          task.update_attributes(
+            completed: true,
+            note: 'Closed by system: A post was added after 30 days.'
+            )
+        end
+
         format.html { redirect_to student_path(@post.student_id), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else

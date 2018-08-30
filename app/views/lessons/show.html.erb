@@ -6,6 +6,8 @@
 				
 				<% if @lesson.user.avatar.attached? %>
 				  <%= image_tag(@lesson.user.avatar) %>
+				  <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
 				<% end %>
 			</div>
 			<div class="cell auto" style="padding: 0 20px;">
@@ -61,6 +63,8 @@
 							
 								<% if lesson_participant.student.avatar.attached? %>
 								  <%= image_tag(lesson_participant.student.avatar) %>
+								  <% else %>
+								      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
 								<% end %>
 							
 								<% end %>
@@ -95,6 +99,8 @@
 								<%= link_to student_path(lesson_participant.student.id) do %>
 								<% if lesson_participant.student.avatar.attached? %>
 								  <%= image_tag(lesson_participant.student.avatar) %>
+								  <% else %>
+								      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
 								<% end %>
 								<% end %>
 							</div>
@@ -112,7 +118,6 @@
 				<% end %>
 			</tbody>
 		</table>
-
 
 		<% @gradulated_participants = Student.where(@students).where.not(current_level: @lesson.level_id).all %>
 		<% if @gradulated_participants.present? %>
@@ -143,6 +148,8 @@
 							<%= link_to student_path(lesson_participant.student.id) do %>
 							<% if lesson_participant.student.avatar.attached? %>
 									  <%= image_tag(lesson_participant.student.avatar) %>
+									  <% else %>
+									      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
 									<% end %>
 							<% end %>
 							</div>

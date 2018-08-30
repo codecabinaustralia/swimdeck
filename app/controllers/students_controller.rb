@@ -106,6 +106,24 @@ protect_from_forgery with: :exception, prepend: true
         body: "Hi it's #{@teacher.first_name} from Rackley Swimming, just writing to say congratulations to #{@student.first_name} who has mastered a new skill - #{@student_skill.skill.title}. It won't be long until #{@student.first_name} moves to the next level! If you haven't already booked your next lesson simply reply to this message with your best time and I can book it in for you. Yours kindly, #{@teacher.full_name}"
       )
 
+      #Add congratulations flag
+      @flag = Flag.new(
+              title: "Congratulate #{@student_skill.student.full_name} for becoming compentant in #{@student_skill.skill.title}.",
+              student_id: @student_skill.student_id,
+              flag_type: 'gratitude',
+              compulsory_note: true,
+
+        )
+      @flag.save
+
+      @tasks = Task.where(student_id: @student_skill.student_id).where(task_type: 'risk').where(completed: [nil, false]).all
+      @tasks.each do |task|
+          task.update_attributes(
+            completed: true,
+            note: 'Closed by system: Skill was updated after 30 days.'
+            )
+        end
+
     end
 
     #Flag
@@ -115,7 +133,10 @@ protect_from_forgery with: :exception, prepend: true
     if @student_skills.count == @competency_skills.count
       @flag = Flag.new(
               title: "#{@student_skill.student.full_name} is ready for evaluation",
-              student_id: @student_skill.student_id
+              student_id: @student_skill.student_id,
+              flag_type: 'evaluation',
+              compulsory_note: true,
+
         )
       @flag.save
     end
@@ -151,7 +172,9 @@ protect_from_forgery with: :exception, prepend: true
           if @all_student_skills.count == @competency_skills.count
             @flag = Flag.new(
                     title: "#{student_skill.student.full_name} is ready for evaluation",
-                    student_id: student_skill.student_id
+                    student_id: student_skill.student_id,
+                    flag_type: 'evaluation',
+                    compulsory_note: true
               )
             @flag.save
           end

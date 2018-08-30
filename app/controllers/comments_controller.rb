@@ -28,7 +28,13 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-
+        if @comment.acknowleged == true 
+          @all_comments = Comment.where(post_id: @comment.post_id).where(acknowleged: [false, nil]).all
+          @all_comments.each do |comment|
+            comment.update_attributes(acknowleged: true)
+          end
+        end
+          
         @post = Post.find(@comment.post_id)
         @post.update_attributes(actioned: true)
 
@@ -73,6 +79,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.require(:comment).permit(:post_id, :user_id, :body)
+      params.require(:comment).permit(:post_id, :user_id, :body, :acknowleged)
     end
 end

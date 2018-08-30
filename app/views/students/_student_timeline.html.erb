@@ -17,6 +17,8 @@
       <div class="cell shrink cert-avatar">
         <% if student.avatar.attached? %>
           <%= image_tag(student.avatar) %>
+          <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
         <% end %>
       </div>
       <div class="cell auto" style="background-color: #3CBBE6;padding: 10px;">
@@ -43,6 +45,8 @@
         <div class="cell shrink post-avatar">
           <% if post.user.avatar.attached? %>
             <%= image_tag(post.user.avatar) %>
+            <% else %>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
           <% end %>
         </div>
 

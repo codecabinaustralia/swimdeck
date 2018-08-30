@@ -1,37 +1,45 @@
 <%= render 'user_profiles/navigation' %>
 
 <div class="grid-x grid-margin-x" style="padding: 20px;">
-	<div class="cell small-12 medium-8">
+	<div class="cell small-12 medium-4">
 		<div class="grid-x grid-margin-x">
-			<div class="cell small-6 health-score text-center">
+			<div class="cell small-12 health-score text-center">
 				<div class="health-header">
-				<h2 style="margin-bottom: 0">Health Score 100</h2>
+				<h2 style="margin-bottom: 0">Health Score <%= @result %></h2>
 				</div>
 				<div style="background-color: #fff;">
-				<i class="fa fa-check-circle"></i>
+				<% if @result <= 25 %>
+					<i class="fas fa-sad-cry" style="color: #D60000"></i>
+				<% elsif @result > 25 && @result <= 80 %>
+					<i class="fas fa-sad-tear" style="color: #ffae00"></i>
+				<% elsif @result > 80 %>
+					<i class="fas fa-smile-wink" style="color: #39BA82"></i>
+				<% end %>
 				</div>
+
 				<table class="table">
 					<thead>
 						<th class="text-center">What you need to do</th>
 					</thead>
+					
+					<% if @out_tasks > 0 %>
 					<tr>
-						<td>Address teacher concerns</td>
-					<tr>
-					<tr>
-						<td>Complete all your outstanding tasks</td>
-					<tr>
-						<td>Complete all your overdue tasks</td>
+						<td><i class="fa fa-check" style="font-size: 20px; color: #19935c"></i> <%= link_to "Complete all your outstanding tasks", daily_planner_path %></td>
 					</tr>
+					<% end %>
+					<% if @out_messages > 0 || @out_comments > 0 %>
 					<tr>
-						<td>Respond to messages in your inbox</td>
+						<td><i class="fa fa-check" style="font-size: 20px; color: #19935c"></i> <%= link_to "Respond to your messages", inbox_new_path %></td>
 					</tr>
+					<% end %>
+					<% if @out_flags > 0 %>
 					<tr>
-						<td>Address current flags</td>
+						<td><i class="fa fa-check" style="font-size: 20px; color: #19935c"></i> <%= link_to "Address Flags", daily_planner_path %></td>
 					</tr>
-					</tr>
+					<% end %>
 				</table>
 			</div>
-			<div class="cell small-6">
+			<div class="cell small-6" style="display: none">
 				<h3>Check a teachers dashboard</h3>
 				<%= form_tag user_profiles_teacher_path, :method => 'get' do %>
 				<div class="grid-x">
@@ -62,7 +70,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="cell small-12 medium-4">
+	<div class="cell small-12 medium-8">
 		<h2>My Tasks</h2>
 		<table class="table">
 			<thead>
@@ -80,21 +88,19 @@
 						</td>
 					</tr>
 				<% end %>
+				<% @risk_tasks.each do |task| %>
+					<tr>
+						<td width="50%" style="font-size: 12px;"><%= task.title %></td>
+						<td>
+						<%= form_for task, :url => task_complete_task_path(task) do |f| %>
+						<%= f.submit "Complete Task",class: "button small success expanded", style: "margin-top: 10px;" %>
+						<% end %>
+						</td>
+					</tr>
+				<% end %>
 			</tbody>
 		</table>
 
-		<h2>Completed Tasks</h2>
-		<table class="table">
-			<thead>
-				<th><h5>Recently Completed Tasks</h5></th>
-			</thead>
-			<tbody>
-				<% @completed_tasks.limit(3).each do |ct| %>
-					<tr>
-						<td colspan="2" style="color: #ccc; text-decoration: line-through; font-size: 12px;"><%= ct.title %></td>
-					</tr>
-				<% end %>	
-			</tbody>
-		</table>
+
 	</div>
 </div>

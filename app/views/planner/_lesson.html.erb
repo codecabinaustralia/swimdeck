@@ -5,11 +5,15 @@
             <div class="shrink planner-avatar">
               <% if lesson.user.avatar.attached? %>
                 <%= image_tag(lesson.user.avatar) %>
+                <% else %>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
               <% end %>
             </div>
             <div class="auto" style="padding: 0 20px;">
               <% @lesson_participants = LessonParticipant.where(lesson_id: lesson.id).pluck(:student_id) %>
               <% @student_flags = Flag.where(student_id: @lesson_participants) %>
+              <% @student_tasks = Task.where(student_id: @lesson_participants) %>
+
               <h3><%= lesson.level.title %></h3> 
               
               <h4>
@@ -20,11 +24,13 @@
                 <% @lessons_attending = LessonParticipant.where(lesson_id: lesson.id).all %>
                 <i class="fa fa-user"></i> <%= @lessons_attending.count %> 
                 <% @symbol_flags = @student_flags.where(closed: [nil, false]).all %>
+                <% @symbol_tasks = @student_tasks.where(completed: [nil, false]).all %>
+
                 <% if @symbol_flags.count > 0 %>
                 | <i class="fa fa-flag"></i>
                 <% end %>
 
-                <% if @task_flags.count > 0 %>
+                <% if @symbol_tasks.count > 0 %>
                 | <i class="fa fa-check"></i>
                 <% end %>
 
@@ -76,11 +82,35 @@
                             <% @student_flags = Flag.where(student_id: ls.student_id).where(closed: [nil, false]).all %>
                             <% @student_tasks =  @task_flags.where(student_id: ls.student_id).where(completed: [nil, false]).all %>
 
-                            <% if @student_flags.count < 1 && @student_tasks.count < 1 %>
+                            <% @other_student_tasks =  @other_tasks.where(student_id: ls.student_id).where(completed: [nil, false]).all %>
+
+                            <% if @student_flags.count < 1 && @student_tasks.count < 1 && @other_student_tasks.count < 1 %>
                                 <h5>No Flags or Tasks</h5>
                             <% else %>
                               <% @student_tasks.each do |task_flag| %>
-                                <span class="label primary task_flag_<%= task_flag.id %>" style="cursor: pointer;" data-open="student_task_flag_<%= task_flag.id %>"><%= task_flag.title %></span>
+                                <div class="label-primary task_flag_<%= task_flag.id %>" style="cursor: pointer;" data-open="student_task_flag_<%= task_flag.id %>"><%= task_flag.title %></div>
+                                <div class="reveal" id="student_task_flag_<%= task_flag.id %>" data-reveal>
+                                  <table>
+                                    <tr>
+                                      <td width="50%">
+                                      <h4 class="student_trigger_<%=task_flag.student_id %>" style="margin-bottom: 0"><%= task_flag.title %></h4> 
+                                      </td>
+                                      <td>
+                                        
+                                        <div class="button success expanded" data-open="complete_task_flag_<%= task_flag.id %>">COMPLETED</div>
+                                        <div id="complete_task_flag_<%= task_flag.id %>" class="reveal" data-reveal>
+                                          <h3>To close this task please add a note</h3>
+                                          <%= render 'tasks/edit_form', task_flag: task_flag %>
+                                        </div>
+                                          
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              <% end %>
+
+                              <% @other_student_tasks.each do |task_flag| %>
+                                <div class="label-primary task_flag_<%= task_flag.id %>" style="cursor: pointer;" data-open="student_task_flag_<%= task_flag.id %>"><%= task_flag.title %></div>
                                 <div class="reveal" id="student_task_flag_<%= task_flag.id %>" data-reveal>
                                   <table>
                                     <tr>
@@ -102,7 +132,7 @@
                               <% end %>
 
                               <% @student_flags.each do |flag| %>
-                                <span class="label alert flag_<%= flag.id %>" style="cursor: pointer;" data-open="student_flag_<%= flag.id %>"><%= flag.title %></span>
+                                <div class="label-alert flag_<%= flag.id %>" style="cursor: pointer;" data-open="student_flag_<%= flag.id %>"><%= flag.title %></div>
                                 <div class="reveal" id="student_flag_<%= flag.id %>" data-reveal>
                                   <table>
                                     <tr>

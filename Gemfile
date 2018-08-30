@@ -6,7 +6,7 @@ ruby '2.2.6'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
-
+gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -21,19 +21,20 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
-gem 'rails-ujs', '~> 0.1.0'
+gem 'rails-ujs'
 gem 'foundation-rails'
 gem 'autoprefixer-rails'
-gem "font-awesome-rails"
 gem 'prawn'
 gem 'prawn-table'
 gem 'twilio-ruby'
 gem "aws-sdk-s3", require: false
 gem "figaro"
 gem 'will_paginate', '~> 3.1.0'
-
 gem 'will_paginate_infinite'
+
+gem 'birthday', '~> 0.3.0'
+
+gem 'cloudinary', require: false
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -57,7 +58,6 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'sqlite3'
 end
 
 group :development do
@@ -67,7 +67,6 @@ group :development do
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
 
 end
 

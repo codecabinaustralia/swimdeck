@@ -1,7 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+User.create(first_name:"Bob",last_name:"Jane",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)
+User.create(first_name:"Fatimah",last_name:"Gisi",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)
+User.create(first_name:"Shawnda",last_name:"Rhode",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)
+User.create(first_name:"Mercedez",last_name:"Given",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)
+User.create(first_name:"Shay",last_name:"Delisa",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)
+User.create(first_name:"Mikel",last_name:"Korus",password:"password",password_confirmation:"password", current_sign_in_at:"4320905:12:02.423018", last_sign_in_at:"4320905:12:02.423018", created_at:"4320905:12:02.423018", admin:false, manager:false, pool_deck_leader:false, teacher:true, customer_service:false, client:false)

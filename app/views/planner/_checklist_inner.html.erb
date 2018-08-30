@@ -1,0 +1,14 @@
+<tr>
+  <td>
+    <p><%= generic_checklist.description %></p> 
+  </td>
+  <td>
+    <div class="ui form massive">
+      <div class="inline field">
+        <div class="ui checkbox">
+          <%= link_to 'Completed', generic_checklist_check_list_path(generic_checklist.id), :remote => true, :class => 'delete_generic_checklist button success expanded', data: {generic_checklist: generic_checklist.id}, style: "margin-bottom:0;" %> 
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

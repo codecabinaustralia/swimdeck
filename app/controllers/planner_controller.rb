@@ -14,16 +14,20 @@ class PlannerController < ApplicationController
   		@filter_time = Time.now
   	end
 
-    
-
-  	@lessons = Lesson.where("start_time >= ?", @filter_time).where("start_time < ?", @filter_time.to_date + 1.day).all.order(:start_time).paginate(:page => params[:page], :per_page => 30)
+  	@lessons = Lesson.where("start_time >= ?", @filter_time.to_date).where("start_time < ?", @filter_time.to_date + 1.day).all.order(:start_time).paginate(:page => params[:page], :per_page => 30)
     @checked_lists = GenericListCheck.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).all.pluck(:generic_checklist_id)
-  	@generic_checklists = GenericChecklist.where.not(id: @checked_lists).all
-  	@push_checklists = PushChecklist.where(site_id: @site).all
+  	
+    @generic_checklists_am_pres = GenericChecklist.where(session_time: "am").where(title: "Pre").where.not(id: @checked_lists).all
+    @generic_checklists_am_posts = GenericChecklist.where(session_time: "am").where(title: "Post").where.not(id: @checked_lists).all
+    @generic_checklists_pm_pres = GenericChecklist.where(session_time: "pm").where(title: "Pre").where.not(id: @checked_lists).all
+    @generic_checklists_pm_posts = GenericChecklist.where(session_time: "pm").where(title: "Post").where.not(id: @checked_lists).all
+  	
+    @push_checklists = PushChecklist.where(site_id: @site).all
 
     @date_today = Time.now.strftime("%Y-%m-%d")
     @task_flags = Task.where(target_user: current_user.id).where(due_date: @date_today).where(completed: [false, nil]).all
-    
+    @other_tasks = Task.where(due_date: @date_today).where(completed: [false, nil]).all
 
   	end
 end
+

@@ -83,6 +83,6 @@ class GenericChecklistsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def generic_checklist_params
-      params.require(:generic_checklist).permit(:title, :description, :site_id)
+      params.require(:generic_checklist).permit(:title, :description, :site_id, :session_time)
     end
 end

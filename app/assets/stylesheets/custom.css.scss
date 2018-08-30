@@ -2,6 +2,13 @@
 
 /* Generic */
 
+.home-page{
+	height: 100vh;
+	background-position: right;
+	background-image: url('https://cityvenuemanagement.com.au/userfiles/uploads/slides/CityVenueManagement-BannerImages-HealthClubs-Aquatics.jpg');
+	background-size: cover;
+}
+
 body,html{
 	height: 100% !important;
 	background-color: #e5e5e5; 
@@ -32,7 +39,42 @@ body,html{
 	color: #fff;
 }
 
+/* Cockpit */
+.cockpit-tile-1{
+	background-color: #29adab;
+	color: #fff;
+	padding: 40px 0;
+	border: 10px solid #229b95;
+	border-radius: 30px;
+	transition: all 0.5s ease;
+}
+
+.cockpit-tile-1:hover{
+	background-color: #229b95;
+	cursor: pointer;
+	border: 10px solid #29adab;
+	padding: 40px 0;
+}
+
 /* Daily Planner */
+
+.label-alert{
+	background-color: #D60000;
+	color: #fff;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.label-primary{
+	background-color: #0B5E96;
+	color: #fff;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
 
 .planner-avatar img{
 	border-radius: 50%;
@@ -361,7 +403,6 @@ object-fit: cover;
 
 .health-score i{
 	font-size: 200px;
-	color: $success;
 }
 
 .health-header{

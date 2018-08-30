@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  get 'control_room/cockpit'
   get 'twilio/webhook'
   #Twilio test
   get 'twilio/voice'
   
   get 'inbox' => 'inbox#inbox'
+  get 'inbox_new' => 'inbox#inbox_new'
+  get 'inbox_actioned' => 'inbox#inbox_actioned'
+
+
   resources :comments
   resources :posts do 
     get 'close_note'
@@ -22,10 +27,17 @@ Rails.application.routes.draw do
   get 'data_scraper/add_links_data'
   get 'data_scraper/add_lessons'
   get 'data_scraper/add_skills'
+  get 'data_scraper/test_user'
 
   get 'daily_planner' => 'planner#daily_planner'
 
   resources :flags
+
+  get 'feed_me' => 'flags#feed_me'
+  get 'birthdays' => 'flags#birthdays'
+  get 'wall_inactivity' => 'flags#wall_inactivity'
+  get 'skill_inactivity' => 'flags#skill_inactivity'
+  get 'client_details' => 'flags#client_details'
 
   resources :lessons do 
     patch 'bulk_update_skills' => 'students#bulk_update_skills'
@@ -45,6 +57,7 @@ Rails.application.routes.draw do
   resources :competency_levels
   resources :skills
   resources :levels
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
   root to: "static#home"
+
 end

@@ -3,6 +3,11 @@
   <!-- Student Skill Loop -->
   <% @student_skills.each do |student_skill| %>
     <tr>
+      <% if current_user.client == true %>
+      <td style="font-weight: normal; font-size: 14px; color: #fff; text-align: center; background-color: <%= student_skill.competency_level.color %>" width="100%">
+        <%= student_skill.skill.title %>
+      </td>
+      <% else %>
       <td style="font-weight: bold; font-size: 12px;" width="50%">
         <%= student_skill.skill.title %>
       </td>
@@ -14,6 +19,7 @@
         <!-- data: {student_skill: student_skill.id} -->
 
         <%= form_for @student_skill, url: student_update_student_skills_path(@student), html: {class: "form-horizontal skill_form", multipart: :true}, remote: true, :authenticity_token => true do |form| %>
+            
 
             <div class="skill_<%= student_skill.id %>">
               <%= form.collection_select(:competency_level_id, CompetencyLevel.all, :id, :title,{}, {onchange: 'this.form.submit();'}) %>
@@ -22,6 +28,7 @@
           <% end %>
           </div>
       </td>
+      <% end %>
     </tr>
   <% end %>
       

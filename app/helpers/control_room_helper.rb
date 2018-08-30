@@ -1,0 +1,2 @@
+module ControlRoomHelper
+end

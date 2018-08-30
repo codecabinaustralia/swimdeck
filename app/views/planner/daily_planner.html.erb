@@ -10,7 +10,7 @@
       <% @flags = Flag.where(student_id: @students_today).where(closed: [false, nil]).all %>
 
       <div class="expanded button-group large">
-        <a class="button success" data-open="complete_checklist">Complete Daily Checklist</a>
+        <a class="button success" data-open="complete_checklist">Complete Shift Checklist</a>
         <a class="button alert" data-open="complete_flags">View Daily Flags</a>
       </div>
 
@@ -31,28 +31,75 @@
 <!-- MODALS -->
 <!-- Checklist Modal -->
 <div class="reveal" id="complete_checklist" data-reveal>
-    <div class="grid-x grid-margin-x">
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="grid-x grid-margin-x" style="margin-top: 40px;">
       
       <div class="cell small-12 medium-12"> 
-        <h3>Generic checklists</h3>
         <table class="ui table stackable inverted">
-          <% @generic_checklists.each do |generic_checklist| %>
-          <tr>
-            <td>
-              <h4><%= generic_checklist.title %></h4> 
-              <p><%= generic_checklist.description %></p> 
-            </td>
-            <td>
-              <div class="ui form massive">
-                <div class="inline field">
-                  <div class="ui checkbox">
-                    <%= link_to 'Completed', generic_checklist_check_list_path(generic_checklist.id), :remote => true, :class => 'delete_generic_checklist button success expanded', data: {generic_checklist: generic_checklist.id}, style: "margin-bottom:0;" %> 
-                  </div>
-                </div>
-              </div>
+          
+          <% if @generic_checklists_am_pres.present? || @generic_checklists_am_posts.present? %>
+          <tr style="background-color: #29353d; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h2>MORNING Session Checklist</h2>
             </td>
           </tr>
           <% end %>
+          <% if @generic_checklists_am_pres.present? %>
+            
+            <tr style="background-color: #2e4554; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h4>PRE session checklist</h4>
+            </td>
+          </tr>
+          <% end %>
+          <% @generic_checklists_am_pres.each do |generic_checklist| %>
+            <%= render 'checklist_inner', generic_checklist: generic_checklist %>
+          <% end %>
+
+          <% if @generic_checklists_am_posts.present? %>
+            <tr style="background-color: #2e4554; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h4>POST session checklist</h4>
+            </td>
+          </tr>
+          <% end %>
+          <% @generic_checklists_am_posts.each do |generic_checklist| %>
+            <%= render 'checklist_inner', generic_checklist: generic_checklist %>
+          <% end %>
+
+
+          <% if @generic_checklists_pm_pres.present? || @generic_checklists_pm_posts.present? %>
+          <tr style="background-color: #29353d; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h2>AFTERNOON Session Checklist</h2>
+            </td>
+          </tr>
+          <% end %>
+          <% if @generic_checklists_pm_pres.present? %>
+            <tr style="background-color: #2e4554; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h4>PRE session checklist</h4>
+            </td>
+          </tr>
+          <% end %>
+          <% @generic_checklists_pm_pres.each do |generic_checklist| %>
+            <%= render 'checklist_inner', generic_checklist: generic_checklist %>
+          <% end %>
+
+          <% if @generic_checklists_pm_posts.present? %>
+            <tr style="background-color: #2e4554; color: #fff; font-size: 20px; padding: 10px 0;">
+            <td colspan="2">
+                <h4>POST session checklist</h4>
+            </td>
+          </tr>
+          <% end %>
+          <% @generic_checklists_pm_posts.each do |generic_checklist| %>
+            <%= render 'checklist_inner', generic_checklist: generic_checklist %>
+          <% end %>
+
         </table>
       </div>
     </div>
@@ -62,7 +109,7 @@
 <!-- Flag Modal -->
 
 <div class="reveal" id="complete_flags" data-reveal>
-  <% if @flags.count < 1 && @task_flags.count < 1 %>
+  <% if @flags.count < 1 && @task_flags.count < 1 && @other_tasks.count < 1 %>
     <div class="text-center">
       <h2 style="font-size: 40px;">Woohoo!</h2>
       <h4>You've addressed all flags for today</h4>
@@ -87,6 +134,22 @@
           </td>
         </tr>
       <% end %>
+      <% @other_tasks.each do |task_flag| %>
+        <tr>
+          <td><span class="label">Sechdualed Task</span></td>
+          <td>
+            <h4><%= task_flag.title %></h4>  
+          </td>
+          <td>
+            <div class="button success expanded" data-open="complete_flag_<%= task_flag.id %>">COMPLETED</div>
+            <div id="complete_flag_<%= task_flag.id %>" class="reveal" data-reveal>
+              <h3>To close this task please add a note</h3>
+              <%= render 'tasks/edit_form', task_flag: task_flag %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+
   		<% @flags.each do |flag| %>
   		<tr class="flag_hide_<%= flag.id %>">
         <td><span class="label alert">Automated Flag</span></td>

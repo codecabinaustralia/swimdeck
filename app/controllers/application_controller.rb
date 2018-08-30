@@ -3,19 +3,18 @@ class ApplicationController < ActionController::Base
   include Pundit
   
 
-  protected  
+  protected
+
 
   def after_sign_in_path_for(resource)
     sign_in_url = new_user_session_url
-    if request.referer == sign_in_url
-      if current_user.client == true
+    if request.referer == sign_in_url && current_user.client == true
+      
         @client = Client.where(user_id: current_user.id).last
         client_path(@client)
-    	else
-        root_path
-      end
+
     else
-      	stored_location_for(resource) || request.referer || root_path
+      	stored_location_for(resource) || request.referer || daily_planner_path
     end
   end
 

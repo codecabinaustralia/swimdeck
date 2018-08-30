@@ -2,20 +2,22 @@ class DataScraperController < ApplicationController
   require 'csv'
   require 'open-uri'
 
-  def csv_spider
-	csv_text = open('https://res.cloudinary.com/thypowerhouse/raw/upload/v1534642033/rackleyswimming/HVL_SCHOOL.csv')
-	csv = CSV.parse(csv_text, :headers=>true)
-	puts csv
-	csv.each do |row|
 
-	@new_row = row[0].split("|")
-	puts @new_row.values_at(6)
-	end
+  def csv_spider
+
   end
 
   def add_links_data
 
-  	csv_text = open('https://res.cloudinary.com/thypowerhouse/raw/upload/v1535154261/MIA_SCHOOL.csv')
+  	require 'net/ftp'
+	ftp = Net::FTP.new
+	ftp.connect("203.13.68.170",21)
+	ftp.login("swimdesk@ftp.cityvenuemanagement.com.au","Axs4swim")
+	ftp.chdir("/")
+	ftp.passive = true
+	ftp.getbinaryfile("CEN_SCHOOL.csv", "tmp_path")
+
+  	csv_text = open("tmp_path")
 	csv = CSV.parse(csv_text, :headers=>true)
 
 	csv.each do |row|
@@ -93,6 +95,7 @@ class DataScraperController < ApplicationController
 
   	@links.each do |link|
 
+  	if link.StuSurname != "----------"
   		# LESSON LEVEL 
 
   		if link.LessonLevel == "00 SPLASH"
@@ -146,10 +149,9 @@ class DataScraperController < ApplicationController
 		  	end
 	  	end
 
-
 	  	@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
-	  	@lesson_finish = @time_reformat + 1.hour
+	  	@lesson_finish = @time_reformat
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
@@ -295,6 +297,7 @@ class DataScraperController < ApplicationController
 		  	)
 		end
 
+	end
 	end
 	redirect_to data_scraper_add_skills_path
   end

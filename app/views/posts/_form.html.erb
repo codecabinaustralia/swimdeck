@@ -32,8 +32,8 @@
   <div class="grid-x">
     <div class="cell small-8">
       <% if current_user.client == nil || current_user.client == false %>
-      <%= form.check_box :note %>
-      <label for="note">Is this a private note?</label>
+      <%= form.check_box :note, checked: true %>
+      <label for="note">Uncheck to make post public?</label>
       <% end %>
     </div>
     <div class="cell small-4 text-right">
