@@ -200,10 +200,10 @@ class DataScraperController < ApplicationController
 	  		).last
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
-		  		start_time: @lesson_start,
-		  		finish_time: @lesson_finish,
-		  		user_id: 2, #Teacher placeholder 3
-		  		site_id: 5, #Site placeholder 1
+		  		start_time: Date.today,
+		  		finish_time: Date.today,
+		  		user_id: 1, #Teacher placeholder 3
+		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
 	  	end
