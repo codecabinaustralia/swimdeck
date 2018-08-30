@@ -138,6 +138,8 @@ class DataScraperController < ApplicationController
 			@current_level = 13
 		end
 
+		  
+
 		# DOB FORMAT
 
 		if link.StuDateOfBirth.present?
@@ -149,7 +151,11 @@ class DataScraperController < ApplicationController
 		  	end
 	  	end
 
-	  	@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+	  	@date  = Date.parse(link.LessonDay)
+		@delta = date > Date.today ? 0 : 7
+		@lesson_start = (date + delta).strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat
 
@@ -221,18 +227,26 @@ class DataScraperController < ApplicationController
 	  	end
 
 	  	# LESSON PARTICPANT
+	  	require 'securerandom'
+	  	@random_string = SecureRandom.hex
+
 	  	@lesson_participant = LessonParticipant.where(
 	  		lesson_id: lesson.id).where(
 	  		student_id: student.id
 	  	).last
+
 	  	if @lesson_participant.blank?
 		  	lesson_participant = LessonParticipant.create(
 		  		lesson_id: lesson.id,
-		  		student_id: student.id
+		  		student_id: student.id,
+		  		random_string: @random_string
 		  	)
 		else
 			lesson_participant = @lesson_participant
 	    end
+
+
+
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
