@@ -340,7 +340,7 @@ redirect_to root_path
 	  		).where(
 	  		level_id: @current_level,
 	  		).last
-	  	
+
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
@@ -349,6 +349,8 @@ redirect_to root_path
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
+	  	else
+	  		lesson = @find_lesson
 	  	end
 
 	  	@find_student = Student.where(
