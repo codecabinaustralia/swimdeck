@@ -332,7 +332,7 @@ redirect_to root_path
 	  	@find_lesson = Lesson.where(
 	  		start_time: @lesson_start
 	  		).where(
-	  		finish_time: @lesson_finish
+	  		finish_time: @lesson_start
 	  		).where(
 	  		user_id: t_user.id #Teacher
 	  		).where(
@@ -340,11 +340,12 @@ redirect_to root_path
 	  		).where(
 	  		level_id: @current_level,
 	  		).last
+	  	
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
-		  		start_time: Date.today,
-		  		finish_time: Date.today,
-		  		user_id: 1, #Teacher placeholder 3
+		  		start_time: @lesson_start,
+		  		finish_time: @lesson_start,
+		  		user_id: @teacher.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
@@ -475,6 +476,7 @@ redirect_to root_path
 		end
 	end
 
+	redirect_to root_path
 
   end
 
