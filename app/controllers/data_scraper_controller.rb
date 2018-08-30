@@ -4,27 +4,6 @@ class DataScraperController < ApplicationController
   require 'date'
 
   def csv_spider
-Level.create(title: "Splash", color: "#C0882D")
-Level.create(title: "Discovery 1", color: "#C0882D")
-Level.create(title: "Discovery 2", color: "#C0882D")
-Level.create(title: "Discovery 3", color: "#C0882D")
-Level.create(title: "New Start 1", color: "#06a5d0")
-Level.create(title: "Learners 1", color: "#7C51A1")
-Level.create(title: "Learners 2", color: "#7C51A1")
-Level.create(title: "Intermediate 1", color: "#26cfad")
-Level.create(title: "Intermediate 2", color: "#7C51A1")
-Level.create(title: "Advanced 1", color: "#EF5B72")
-Level.create(title: "Advanced 2", color: "#EF5B72")
-Level.create(title: "Achievers 1", color: "#EF5B72")
-Level.create(title: "Achievers 2", color: "#EF5B72")
-
-Site.create(title: "REDBANK PLAINS")
-Site.create(title: "WESTLAKE")
-Site.create(title: "SPRING HILL")
-Site.create(title: "CHERMSIDE")
-Site.create(title: "CENTENARY")
-Site.create(title: "DEAGON")
-Site.create(title: "LOGAN WEST")
 
 Skill.create(title: "Feel comfortable in the water", level_id: 1, rank_id: 1)
 Skill.create(title: "Front float with assistance", level_id: 1, rank_id: 2)
@@ -314,6 +293,7 @@ GenericChecklist.create(title: 'Post', description: 'Print out teacher timetable
 	  	end
 
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+
 	  	@newdate  = Date.today
 		@deltadate = Date.today
 		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
