@@ -87,6 +87,7 @@ class DataScraperController < ApplicationController
   	  		)
   		end
   	end
+  	redirect_to root_path
   end
 
   def add_lessons
