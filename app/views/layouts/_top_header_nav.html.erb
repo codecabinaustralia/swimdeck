@@ -20,7 +20,7 @@
         
         <% if user_signed_in? %>
         <i class="fa fa-bell"></i>
-        <% @notification_count = Task.where(target_user: current_user.id).where(completed: nil).where("due_date == ?", Time.now.strftime("%Y-%m-%d")).all %>
+        <% @notification_count = Task.where(target_user: current_user.id).where(completed: nil).where(due_date: Time.now.strftime("%Y-%m-%d")).all %>
         <span class="badge alert" style="margin-left: -10px;"><%= @notification_count.count %></span>
         <% end %>
       </li>
