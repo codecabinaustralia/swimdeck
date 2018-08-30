@@ -345,7 +345,7 @@ redirect_to root_path
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
-		  		user_id: @teacher.id, #Teacher placeholder 3
+		  		user_id: t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
