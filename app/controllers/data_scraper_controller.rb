@@ -153,9 +153,9 @@ class DataScraperController < ApplicationController
 	  	end
 
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
-	  	@newdate  = Date.parse(link.LessonDay)
-		@deltadate = @newdate > Date.today ? 0 : 7
-		@lesson_start = (@newdate + @deltadate).strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+	  	@newdate  = Date.today
+		@deltadate = Date.today
+		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat
