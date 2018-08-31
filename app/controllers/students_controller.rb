@@ -100,11 +100,11 @@ protect_from_forgery with: :exception, prepend: true
 
       @myclient = ClientStudent.where(student_id: @student.id).last
 
-      @client.api.account.messages.create(
-        from: '+61488810959',
-        to: "#{@myclient.client.phone_1}",
-        body: "Hi it's #{@teacher.first_name} from Rackley Swimming, just writing to say congratulations to #{@student.first_name} who has mastered a new skill - #{@student_skill.skill.title}. It won't be long until #{@student.first_name} moves to the next level! If you haven't already booked your next lesson simply reply to this message with your best time and I can book it in for you. Yours kindly, #{@teacher.full_name}"
-      )
+      #@client.api.account.messages.create(
+      #  from: '+61488810959',
+      #  to: "#{@myclient.client.phone_1}",
+      #  body: "Hi it's #{@teacher.first_name} from Rackley Swimming, just writing to say congratulations to #{@student.first_name} who has mastered a new skill - #{@student_skill.skill.title}. It won't be long until #{@student.first_name} moves to the next level! If you haven't already booked your next lesson simply reply to this message with your best time and I can book it in for you. Yours kindly, #{@teacher.full_name}"
+      #)
 
       #Add congratulations flag
       @flag = Flag.new(
