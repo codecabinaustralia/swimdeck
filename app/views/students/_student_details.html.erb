@@ -41,7 +41,7 @@
             <div data-open="client_avatar_student_<%= client.id %>" style="position: absolute; top: 0; left: 5px;" class="client-small-bubble">
               <% if client.client.user.avatar.attached? %>
                 <%= image_tag(client.client.user.avatar) %>
-                <% else %>
+              <% else %>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
               <% end %>
             

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_27_030602) do
+ActiveRecord::Schema.define(version: 2018_08_30_202910) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 2018_08_27_030602) do
     t.boolean "new_lesson"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "random_string"
     t.index ["lesson_id"], name: "index_lesson_participants_on_lesson_id"
     t.index ["student_id"], name: "index_lesson_participants_on_student_id"
   end

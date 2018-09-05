@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   include Pundit
+
+  before_action :set_variables
+
+  def set_variables
+   @activate_parent_sms = false
+  end
+
   
 
   protected
