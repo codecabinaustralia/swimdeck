@@ -286,6 +286,7 @@ redirect_to root_path
 
 		if link.StuDateOfBirth.present?
 			require 'date'
+			require 'time'
 		  	begin
 		  	   @dob = Date.parse(link.StuDateOfBirth.to_date.strftime("%Y-%m-%d"))
 		  	rescue ArgumentError
@@ -295,9 +296,10 @@ redirect_to root_path
 
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
-	  	@newdate  = Date.today
+	  	@newdate  = Date.today  8:30AM
 		@deltadate = Date.today
-		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+		@lesson_start_time = Time.parse("#{link.LessonTime}")
+		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + @lesson_start_time.strftime("%I:%M:00")
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat
