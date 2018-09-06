@@ -1,6 +1,5 @@
 class HardWorker
-	require 'date'
-  	require 'time'
+
   include Sidekiq::Worker
   sidekiq_options retry:false
 
