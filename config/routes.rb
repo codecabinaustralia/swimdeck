@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'inbox_new' => 'inbox#inbox_new'
   get 'inbox_actioned' => 'inbox#inbox_actioned'
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => "/sidekiq"
 
   resources :comments
   resources :posts do 
