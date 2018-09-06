@@ -236,7 +236,7 @@ redirect_to root_path
   def add_lessons
 
   	HardWorker.perform_async
-	render text: "Monkey Shit"
+	render text: "Performing sync now"
   end
 
   def add_skills
