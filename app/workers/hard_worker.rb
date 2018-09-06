@@ -99,7 +99,6 @@ class HardWorker
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 
-	   	find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
 
  	  	find_teacher = User.new(
  	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
