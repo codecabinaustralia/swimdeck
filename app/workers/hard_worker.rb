@@ -94,7 +94,7 @@ class HardWorker
 		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime("%H:%M").to_s}"
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
-	  	@lesson_finish = @time_reformat + 30.minutes
+	  	@lesson_finish = @time_reformat
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
