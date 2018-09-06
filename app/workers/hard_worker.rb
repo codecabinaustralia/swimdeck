@@ -14,43 +14,43 @@ class HardWorker
   		# LESSON LEVEL 
 
   		if link.LessonLevel == "00 SPLASH"
-  			@current_level = 1
+  			current_level = 1
   		end
 		if link.LessonLevel == "01 DIS 1"
-			@current_level = 2
+			current_level = 2
 		end
 		if link.LessonLevel == "02 DIS 2"
-			@current_level = 3
+			current_level = 3
 		end
 		if link.LessonLevel == "03 DIS 3"
-			@current_level = 4
+			current_level = 4
 		end
 		if link.LessonLevel == "04 NWST"
-			@current_level = 5
+			current_level = 5
 		end
 		if link.LessonLevel == "05 LRN 1"
-			@current_level = 6
+			current_level = 6
 		end
 		if link.LessonLevel == "06 LRN 2"
-			@current_level = 7
+			current_level = 7
 		end
 		if link.LessonLevel == "07 INT 1"
-			@current_level = 8
+			current_level = 8
 		end
 		if link.LessonLevel == "08 INT 2"
-			@current_level = 9
+			current_level = 9
 		end
 		if link.LessonLevel == "09 ADV 1"
-			@current_level = 10
+			current_level = 10
 		end
 		if link.LessonLevel == "10 ADV 2"
-			@current_level = 11
+			current_level = 11
 		end
 		if link.LessonLevel == "11 ACH 1"
-			@current_level = 12
+			current_level = 12
 		end
 		if link.LessonLevel == "12 ACH 2"
-			@current_level = 13
+			current_level = 13
 		end
 
 		  
@@ -98,83 +98,51 @@ class HardWorker
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
 
-	   	if @teacher.blank?
-	 	  	t_user = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-	 	  		password: "Test123",
-	 	  		password_confirmation: "Test123", 
-	 	  		current_sign_in_at: DateTime.now,
-	 	  		last_sign_in_at: DateTime.now,
-	 	  		created_at: DateTime.now,
-	 	  		admin: false,
-	 	  		manager: false,
-	 	  		pool_deck_leader: false,
-	 	  		teacher: true,
-	 	  		customer_service: false,
-	 	  		client: false,
-	 	  		first_name: link.TeachGivenNames,
-	 	  		last_name: link.TeachSurname
-	 	  		)
-	 	  	t_user.save
-	 	else
-	 		t_user = @teacher
-	 	end
+ 	  	find_teacher = User.find_or_create_by(
+ 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+ 	  		password: "Test123",
+ 	  		password_confirmation: "Test123", 
+ 	  		current_sign_in_at: DateTime.now,
+ 	  		last_sign_in_at: DateTime.now,
+ 	  		created_at: DateTime.now,
+ 	  		admin: false,
+ 	  		manager: false,
+ 	  		pool_deck_leader: false,
+ 	  		teacher: true,
+ 	  		customer_service: false,
+ 	  		client: false,
+ 	  		first_name: link.TeachGivenNames,
+ 	  		last_name: link.TeachSurname
+ 	  		)
 
 
-	  	@find_lesson = Lesson.where(
+	  	find_lesson = Lesson.find_or_create_by(
 	  		start_time: @time_reformat
 	  		).where(
-	  		user_id: t_user.id #Teacher
+	  		user_id: find_teacher.id #Teacher
 	  		).where(
 	  		site_id: 1 #Site
 	  		).where(
-	  		level_id: @current_level,
+	  		level_id: current_level
 	  		).last
 
-	  	if @find_lesson.blank?
-	  		@find_lesson = Lesson.create(
-		  		start_time: @time_reformat,
-		  		user_id: t_user.id, #Teacher placeholder 3
-		  		site_id: 1, #Site placeholder 1
-		  		level_id: @current_level,
-	  		)
-	  	end
+	  	
 
-	  	@find_student = Student.where(
+	  	find_student = Student.find_or_create_by(
 	  		first_name: link.StuGivenNames).where(
 	  		last_name: link.StuSurname).where(
 	  		dob: @dob).where(
 	  		personal_notes: 1).where(
-	  		current_level: @current_level
-	  		).last
-	  	if @find_student.blank?
-	  	@find_student = Student.create(
-	  		first_name: link.StuGivenNames,
-	  		last_name: link.StuSurname,
-	  		dob: @dob,
-	  		personal_notes: 1,
-	  		current_level: @current_level,
+	  		current_level: current_level
 	  		)
-	  	end
 
 	  	# LESSON PARTICPANT
-	  	require 'securerandom'
-	  	@random_string = SecureRandom.hex
 
-	  	@lesson_participant = LessonParticipant.where(
-	  		lesson_id: @find_lesson.id).where(
-	  		student_id: @find_student.id
-	  	).last
-
-	  	if @lesson_participant.blank?
-		  	@lesson_participant = LessonParticipant.create(
-		  		lesson_id: @find_lesson.id,
-		  		student_id: @find_student.id,
-		  		random_string: @random_string
-		  	)
-	    end
+	  	lesson_participant = LessonParticipant.find_or_create_by(
+	  		lesson_id: find_lesson.id).where(
+	  		student_id: find_student.id
+	  	)
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
@@ -202,7 +170,7 @@ class HardWorker
 		end
 
 		#Create Client
-		@find_client = Client.where(
+		find_client = Client.find_or_create_by(
 			user_id: c_user.id).where(
 			first_name: link.RPGivenNames).where(
 			last_name: link.RPSurname).where(
@@ -211,31 +179,14 @@ class HardWorker
 			address: link.RPAddress).where(
 			address_city: link.RPSuburb).where(
 			address_state: "QLD").where(
-			address_postcode: link.RPPostCode).last
-		if @find_client.blank?
-		@find_client = Client.create(
-			user_id: c_user.id,
-			first_name: link.RPGivenNames,
-			last_name: link.RPSurname,
-			phone_1: link.RPPhone,
-			phone_2: link.RPWorkPhone,
-			address: link.RPAddress,
-			address_city: link.RPSuburb,
-			address_state: "QLD",
-			address_postcode: link.RPPostCode,
-			)
-		end
+			address_postcode: link.RPPostCode)
+	
 
 		#Attach user to student
-		@find_parent = ClientStudent.where(
-			client_id: @find_client.id).where(
-	  		student_id: @find_student.id).last
-	  	if @find_parent.blank?
-			@find_parent = ClientStudent.find_or_create_by(
-		  		client_id: @find_client.id,
-		  		student_id: @find_student.id
-		  	)
-		end
+		find_parent = ClientStudent.find_or_create_by(
+			client_id: find_client.id).where(
+	  		student_id: find_student.id)
+	  	
 
 	end
 	end
