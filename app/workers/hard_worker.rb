@@ -1,10 +1,9 @@
 class HardWorker
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry:false
 
-  def perform(links, students)
-	@links = links
-	@students = students
+  def perform()
+	@links = Link.all
 
   	@links.each do |link|
 
@@ -253,7 +252,7 @@ class HardWorker
 	end
 
 	#Add skills 
-	
+	@students = Student.all
 
   	@students.each do |student|
 

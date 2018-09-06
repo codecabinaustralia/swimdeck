@@ -237,7 +237,7 @@ redirect_to root_path
   	links = Link.all
   	students = Student.all
 
-  	HardWorker.perform_async(links, students,)
+  	HardWorker.perform_async()
 	render text: "Performing sync now"
   end
 
