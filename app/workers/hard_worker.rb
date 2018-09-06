@@ -99,7 +99,9 @@ class HardWorker
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 
- 	  	find_teacher = User.find_or_create_by(
+	   	find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
+
+ 	  	find_teacher = User.new(
  	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
  	  		password: "Test123",
  	  		password_confirmation: "Test123", 
@@ -115,6 +117,7 @@ class HardWorker
  	  		first_name: link.TeachGivenNames,
  	  		last_name: link.TeachSurname
  	  		)
+ 	  	find_teacher.save
 
 
 	  	find_lesson = Lesson.find_or_create_by(
