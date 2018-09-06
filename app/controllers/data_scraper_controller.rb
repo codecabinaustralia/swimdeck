@@ -235,7 +235,7 @@ redirect_to root_path
 
   def add_lessons
 
-  	HardWorker.perform_later
+  	HardWorker.perform_now
 	redirect_to data_scraper_add_skills_path
   end
 
