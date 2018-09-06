@@ -313,10 +313,12 @@ redirect_to root_path
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	puts = link.StuBookStartDate
+	  	@lesson_start_time = link.LessonTime.to_date
+
+	  	puts link.StuBookStartDate
 	  	puts @new_date
 
-		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime('%I:%M:00')}"
+		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime('%-I:%M:00')}"
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat
