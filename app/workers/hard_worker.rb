@@ -86,12 +86,12 @@ class HardWorker
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	#@lesson_start_time = Time.strptime("#{link.LessonTime}", "%I:%M")
+	  	@lesson_start_time = Time.strptime(link.LessonTime, "%H:%M")
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
 
-		@lesson_start = "#{@new_date.to_s} 07:00}"
+		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime("%H:%M").to_s}"
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat + 30.minutes
