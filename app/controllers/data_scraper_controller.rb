@@ -2,6 +2,8 @@ class DataScraperController < ApplicationController
   require 'csv'
   require 'open-uri'
   require 'date'
+  require 'time'
+
 
   def csv_spider
 
@@ -313,15 +315,15 @@ redirect_to root_path
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	@lesson_start_time = Time.parse(link.LessonTime)
+	  	@lesson_start_time = Time.strptime("#{link.LessonTime}", "%I%P")
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
 
-		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime('%-I:%M:00')}"
+		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime("%H:%M")}"
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
-	  	@lesson_finish = @time_reformat
+	  	@lesson_finish = @time_reformat + 30.minutes
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
