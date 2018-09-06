@@ -5,7 +5,7 @@ class HardWorker
   def perform()
   	require 'date'
   	require 'time'
-  	
+
 	@links = Link.all
 
   	@links.each do |link|
@@ -86,7 +86,7 @@ class HardWorker
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	@lesson_start_time = Time.strptime("#{link.LessonTime}", "%I%P")
+	  	@lesson_start_time = Time.strptime("#{link.LessonTime}", "%I:%M")
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
