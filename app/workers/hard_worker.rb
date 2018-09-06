@@ -1,10 +1,11 @@
 class HardWorker
+	require 'date'
+  	require 'time'
   include Sidekiq::Worker
   sidekiq_options retry:false
 
   def perform()
-  	require 'date'
-  	require 'time'
+  	
 
 	@links = Link.all
 
@@ -86,7 +87,7 @@ class HardWorker
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	@lesson_start_time = Time.strptime(link.LessonTime, "%H%M")
+	  	@lesson_start_time = Time.strptime(link.LessonTime, "%H:%M")
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
