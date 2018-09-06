@@ -296,10 +296,25 @@ redirect_to root_path
 
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
-	  	@newdate  = Date.today  8:30AM
-		@deltadate = Date.today
-		@lesson_start_time = Time.parse("#{link.LessonTime}")
-		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + @lesson_start_time.strftime("%I:%M:00")
+	  	if link.LessonDay == "Monday"
+	  		@myday = :monday
+	  	elsif link.LessonDay == "Tuesday"
+	  		@myday = :tuesday
+	  	elsif link.LessonDay == "Wednesday"
+	  		@myday = :wednesday
+	  	elsif link.LessonDay == "Thursday"
+	  		@myday = :thursday
+	  	elsif link.LessonDay == "Friday"
+	  		@myday = :friday
+	  	elsif link.LessonDay == "Saturday"
+	  		@myday = :saturday
+	  	elsif link.LessonDay == "Sunday"
+	  		@myday = :sunday
+	  	end
+
+	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
+
+		@lesson_start = @new_date.strftime("%Y-%m-%d") + " " + @lesson_start_time.strftime("%I:%M:00")
 
 	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
 	  	@lesson_finish = @time_reformat
@@ -351,7 +366,7 @@ redirect_to root_path
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
-	  	else
+	  	else	
 	  		lesson = @find_lesson
 	  	end
 
