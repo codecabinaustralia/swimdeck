@@ -11,7 +11,7 @@ class PlannerController < ApplicationController
   	if params.has_key?(:filter_time)
   		@filter_time = params[:filter_time].to_date
   	else
-  		@filter_time = Time.zone.now
+  		@filter_time = Date.now
   	end
 
   	@lessons = Lesson.where(start_time: @filter_time..@filter_time.end_of_day).all.order(:start_time).paginate(:page => params[:page], :per_page => 30)
