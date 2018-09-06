@@ -234,8 +234,10 @@ redirect_to root_path
   end
 
   def add_lessons
+  	links = Link.all
+  	students = Student.all
 
-  	HardWorker.perform_async
+  	HardWorker.perform_async(links, students,)
 	render text: "Performing sync now"
   end
 
