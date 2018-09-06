@@ -235,8 +235,8 @@ redirect_to root_path
 
   def add_lessons
 
-  	HardWorker.perform_now
-	redirect_to data_scraper_add_skills_path
+  	HardWorker.perform_async
+	render text: "Monkey Shit"
   end
 
   def add_skills
