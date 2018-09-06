@@ -86,7 +86,7 @@ class HardWorker
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	@lesson_start_time = Time.strptime("#{link.LessonTime}", "%I:%M")
+	  	@lesson_start_time = Time.strptime("5:00AM", "%I:%M")
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
