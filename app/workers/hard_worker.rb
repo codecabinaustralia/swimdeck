@@ -3,6 +3,9 @@ class HardWorker
   sidekiq_options retry:false
 
   def perform()
+  	require 'date'
+  	require 'time'
+  	
 	@links = Link.all
 
   	@links.each do |link|
