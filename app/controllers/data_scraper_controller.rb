@@ -313,7 +313,7 @@ redirect_to root_path
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
-	  	@lesson_start_time = link.LessonTime.to_date
+	  	@lesson_start_time = Time.parse(link.LessonTime)
 
 	  	puts link.StuBookStartDate
 	  	puts @new_date
