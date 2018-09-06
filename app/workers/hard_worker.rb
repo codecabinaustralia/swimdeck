@@ -124,9 +124,7 @@ class HardWorker
 
 
 	  	@find_lesson = Lesson.where(
-	  		start_time: @lesson_start
-	  		).where(
-	  		finish_time: @lesson_start
+	  		start_time: @time_reformat
 	  		).where(
 	  		user_id: t_user.id #Teacher
 	  		).where(
@@ -136,15 +134,12 @@ class HardWorker
 	  		).last
 
 	  	if @find_lesson.blank?
-	  		lesson = Lesson.create(
-		  		start_time: @lesson_start,
-		  		finish_time: @lesson_start,
+	  		@find_lesson = Lesson.create(
+		  		start_time: @time_reformat,
 		  		user_id: t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
 	  		)
-	  	else	
-	  		lesson = @find_lesson
 	  	end
 
 	  	@find_student = Student.where(
@@ -155,15 +150,13 @@ class HardWorker
 	  		current_level: @current_level
 	  		).last
 	  	if @find_student.blank?
-	  	student = Student.create(
+	  	@find_student = Student.create(
 	  		first_name: link.StuGivenNames,
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
 	  		current_level: @current_level,
 	  		)
-	  	else
-	  	student = @find_student
 	  	end
 
 	  	# LESSON PARTICPANT
@@ -171,22 +164,17 @@ class HardWorker
 	  	@random_string = SecureRandom.hex
 
 	  	@lesson_participant = LessonParticipant.where(
-	  		lesson_id: lesson.id).where(
-	  		student_id: student.id
+	  		lesson_id: @find_lesson.id).where(
+	  		student_id: @find_student.id
 	  	).last
 
 	  	if @lesson_participant.blank?
-		  	lesson_participant = LessonParticipant.create(
-		  		lesson_id: lesson.id,
-		  		student_id: student.id,
+		  	@lesson_participant = LessonParticipant.create(
+		  		lesson_id: @find_lesson.id,
+		  		student_id: @find_student.id,
 		  		random_string: @random_string
 		  	)
-		else
-			lesson_participant = @lesson_participant
 	    end
-
-
-
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
@@ -225,7 +213,7 @@ class HardWorker
 			address_state: "QLD").where(
 			address_postcode: link.RPPostCode).last
 		if @find_client.blank?
-		client = Client.create(
+		@find_client = Client.create(
 			user_id: c_user.id,
 			first_name: link.RPGivenNames,
 			last_name: link.RPSurname,
@@ -236,18 +224,16 @@ class HardWorker
 			address_state: "QLD",
 			address_postcode: link.RPPostCode,
 			)
-		else
-			client = @find_client
 		end
 
 		#Attach user to student
 		@find_parent = ClientStudent.where(
-			client_id: client.id).where(
-	  		student_id: student.id).last
+			client_id: @find_client.id).where(
+	  		student_id: @find_student.id).last
 	  	if @find_parent.blank?
-			parent = ClientStudent.find_or_create_by(
-		  		client_id: client.id,
-		  		student_id: student.id
+			@find_parent = ClientStudent.find_or_create_by(
+		  		client_id: @find_client.id,
+		  		student_id: @find_student.id
 		  	)
 		end
 
