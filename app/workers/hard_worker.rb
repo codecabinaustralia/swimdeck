@@ -116,7 +116,6 @@ class HardWorker
 
 
 	  	find_lesson = Lesson.find_or_create_by(
-	  		start_time: @time_reformat,
 	  		user_id: find_teacher.id,
 	  		site_id: 1,
 	  		level_id: current_level
