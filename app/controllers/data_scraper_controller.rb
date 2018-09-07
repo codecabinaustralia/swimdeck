@@ -155,7 +155,9 @@ redirect_to root_path
   end
 
   def add_links_data
-
+  	@link_data = Link.all
+  	@link_data.destroy_all
+  	
   	require 'net/ftp'
 	ftp = Net::FTP.new
 	ftp.connect("203.13.68.170",21)
