@@ -5,6 +5,10 @@ class DataScraperController < ApplicationController
   require 'time'
 
 
+  def delete_all_lesson_data
+    RemovableWorker.perform_async()
+  end
+
   def csv_spider
 
 Skill.create(title: "Feel comfortable in the water", level_id: 1, rank_id: 1)

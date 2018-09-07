@@ -70,30 +70,27 @@ class HardWorker
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
 	  	if link.LessonDay == "Monday"
-	  		@myday = :monday
+	  		@myday = ":monday"
 	  	elsif link.LessonDay == "Tuesday"
-	  		@myday = :tuesday
+	  		@myday = ":tuesday"
 	  	elsif link.LessonDay == "Wednesday"
-	  		@myday = :wednesday
+	  		@myday = ":wednesday"
 	  	elsif link.LessonDay == "Thursday"
-	  		@myday = :thursday
+	  		@myday = ":thursday"
 	  	elsif link.LessonDay == "Friday"
-	  		@myday = :friday
+	  		@myday = ":friday"
 	  	elsif link.LessonDay == "Saturday"
-	  		@myday = :saturday
+	  		@myday = ":saturday"
 	  	elsif link.LessonDay == "Sunday"
-	  		@myday = :sunday
+	  		@myday = ":sunday"
 	  	end
 
-	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday)
+	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday.to_sym)
 	  	@lesson_start_time = Time.strptime("7:00AM", "%H:%M")
 
-	  	puts link.StuBookStartDate
-	  	puts @new_date
+		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.to_s}"
 
-		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.strftime("%H:%M").to_s}"
-
-	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
+	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %H:%M%p")
 	  	@lesson_finish = @time_reformat
 
 	  	#Add Teacher User

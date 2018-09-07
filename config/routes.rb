@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'data_scraper/add_lessons'
   get 'data_scraper/add_skills'
   get 'data_scraper/test_user'
+  get 'data_scraper/delete_all_lesson_data'
 
   get 'daily_planner' => 'planner#daily_planner'
 
