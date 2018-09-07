@@ -99,7 +99,6 @@ class HardWorker
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 
-
  	  	find_teacher = User.new(
  	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
  	  		password: "Test123",
@@ -120,29 +119,26 @@ class HardWorker
 
 
 	  	find_lesson = Lesson.find_or_create_by(
-	  		start_time: @time_reformat
-	  		).where(
-	  		user_id: find_teacher.id #Teacher
-	  		).where(
-	  		site_id: 1 #Site
-	  		).where(
+	  		start_time: @time_reformat,
+	  		user_id: find_teacher.id,
+	  		site_id: 1,
 	  		level_id: current_level
-	  		).last
+	  		)
 
 	  	
 
 	  	find_student = Student.find_or_create_by(
-	  		first_name: link.StuGivenNames).where(
-	  		last_name: link.StuSurname).where(
-	  		dob: @dob).where(
-	  		personal_notes: 1).where(
+	  		first_name: link.StuGivenNames,
+	  		last_name: link.StuSurname,
+	  		dob: @dob,
+	  		personal_notes: 1,
 	  		current_level: current_level
 	  		)
 
 	  	# LESSON PARTICPANT
 
 	  	lesson_participant = LessonParticipant.find_or_create_by(
-	  		lesson_id: find_lesson.id).where(
+	  		lesson_id: find_lesson.id,
 	  		student_id: find_student.id
 	  	)
 
@@ -173,21 +169,23 @@ class HardWorker
 
 		#Create Client
 		find_client = Client.find_or_create_by(
-			user_id: c_user.id).where(
-			first_name: link.RPGivenNames).where(
-			last_name: link.RPSurname).where(
-			phone_1: link.RPPhone).where(
-			phone_2: link.RPWorkPhone).where(
-			address: link.RPAddress).where(
-			address_city: link.RPSuburb).where(
-			address_state: "QLD").where(
-			address_postcode: link.RPPostCode)
+			user_id: c_user.id,
+			first_name: link.RPGivenNames,
+			last_name: link.RPSurname,
+			phone_1: link.RPPhone,
+			phone_2: link.RPWorkPhone,
+			address: link.RPAddress,
+			address_city: link.RPSuburb,
+			address_state: "QLD",
+			address_postcode: link.RPPostCode
+			)
 	
 
 		#Attach user to student
 		find_parent = ClientStudent.find_or_create_by(
-			client_id: find_client.id).where(
-	  		student_id: find_student.id)
+			client_id: find_client.id,
+	  		student_id: find_student.id
+	  	)
 	  	
 
 	end
@@ -209,6 +207,5 @@ class HardWorker
 		end
 	end
 
-	redirect_to root_path
   end
 end
