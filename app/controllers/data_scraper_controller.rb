@@ -1,12 +1,17 @@
 class DataScraperController < ApplicationController
-  require 'csv'
-  require 'open-uri'
-  require 'date'
-  require 'time'
+  
 
 
   def delete_all_lesson_data
     RemovableWorker.perform_async()
+  end
+
+  def add_links_data
+	LinksWorker.perform_async()
+  end
+
+  def add_lessons
+  	HardWorker.perform_async()
   end
 
   def csv_spider
@@ -153,38 +158,6 @@ GenericChecklist.create(title: 'Post', description: 'Print out teacher timetable
 
 redirect_to root_path
   end
-
-  def add_links_data
-	LinksWorker.perform_async()
-  end
-
-  def add_lessons
-  	links = Link.all
-  	students = Student.all
-  	HardWorker.perform_async()
-  end
-
-  def add_skills
-  	@students = Student.all
-
-  	@students.each do |student|
-
-  	@skills = Skill.where(level_id: student.current_level).all
-		@skills.each do |skill|
-		StudentSkill.find_or_create_by(
-	  		student_id: student.id,
-	  		skill_id: skill.id,
-	  		level_id: student.current_level,
-	  		competency_level_id: 1
-	  	)
-		end
-	end
-
-	redirect_to root_path
-
-  end
-
-
 
 end
 

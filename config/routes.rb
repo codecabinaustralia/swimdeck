@@ -28,7 +28,6 @@ Rails.application.routes.draw do
   get 'data_scraper/csv_spider'
   get 'data_scraper/add_links_data'
   get 'data_scraper/add_lessons'
-  get 'data_scraper/add_skills'
   get 'data_scraper/test_user'
   get 'data_scraper/delete_all_lesson_data'
 
