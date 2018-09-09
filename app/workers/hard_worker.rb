@@ -87,10 +87,10 @@ class HardWorker
 	  	
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
+	   	@teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
 
 	   	if @teacher.blank?
-	 	  	@teacher = User.new(
+	 	  	t_user = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
 	 	  		password_confirmation: "Test123", 
@@ -106,17 +106,19 @@ class HardWorker
 	 	  		first_name: link.TeachGivenNames,
 	 	  		last_name: link.TeachSurname
 	 	  		)
-	 	  	@teacher.save
+	 	  	t_user.save
+	 	else
+	 		t_user = @teacher
 	 	end
 
 
-	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: @teacher.id).where(level_id: @current_level).last
+	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).where(level_id: @current_level).last
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
-		  		user_id: @teacher.id,
+		  		user_id: t_user.id,
 		  		site_id: 1,
 		  		level_id: @current_level
 	  		)
