@@ -117,7 +117,7 @@ class HardWorker
 	  	@find_lesson = Lesson.where(
 	  		start_time: @lesson_start
 	  		).where(
-	  		finish_time: @lesson_start + 30.minutes
+	  		finish_time: @lesson_start
 	  		).where(
 	  		user_id: t_user.id #Teacher
 	  		).where(
@@ -205,7 +205,7 @@ class HardWorker
 		else
 			c_user = @user
 		end
-		
+
 
 		#Create Client
 		@find_client = Client.where(
