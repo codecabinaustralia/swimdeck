@@ -127,8 +127,8 @@ class HardWorker
 	  	# LESSON PARTICPANT
 
 	  	@lesson_participant = LessonParticipant.find_or_create_by(
-	  		lesson_id: @find_lesson,
-	  		student_id: @find_student
+	  		lesson_id: @find_lesson.id,
+	  		student_id: @find_student.id
 	  	)
 
 	  	#Create User/Client/Parent Login
