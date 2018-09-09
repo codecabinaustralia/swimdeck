@@ -59,6 +59,7 @@ class HardWorker
 
 		if link.StuDateOfBirth.present?
 			require 'date'
+			require 'time'
 		  	begin
 		  	   @dob = Date.parse(link.StuDateOfBirth.to_date.strftime("%Y-%m-%d"))
 		  	rescue ArgumentError
@@ -66,6 +67,7 @@ class HardWorker
 		  	end
 	  	end
 
+	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
 	  	if link.LessonDay == "Monday"
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
@@ -83,16 +85,13 @@ class HardWorker
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
-		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
-
-	  	@time_reformat = @lesson_start
-	  	@lesson_finish = @time_reformat
+	  	@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
-
-	   	if @teacher.blank?
+	   	@find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
+	   	
+	   	if @find_teacher.blank?
 	 	  	t_user = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
@@ -111,9 +110,9 @@ class HardWorker
 	 	  		)
 	 	  	t_user.save
 	 	else
-	 		t_user = @teacher
+	 		t_user = @find_teacher
 	 	end
-
+	   	
 
 	  	@find_lesson = Lesson.where(
 	  		start_time: @lesson_start
@@ -139,6 +138,9 @@ class HardWorker
 	  		lesson = @find_lesson
 	  	end
 
+
+	  	
+
 	  	@find_student = Student.where(
 	  		first_name: link.StuGivenNames).where(
 	  		last_name: link.StuSurname).where(
@@ -158,26 +160,25 @@ class HardWorker
 	  	student = @find_student
 	  	end
 
+
 	  	# LESSON PARTICPANT
-	  	require 'securerandom'
-	  	@random_string = SecureRandom.hex
+	  		  	require 'securerandom'
+	  		  	@random_string = SecureRandom.hex
 
-	  	@lesson_participant = LessonParticipant.where(
-	  		lesson_id: lesson.id).where(
-	  		student_id: student.id
-	  	).last
+	  		  	@lesson_participant = LessonParticipant.where(
+	  		  		lesson_id: lesson.id).where(
+	  		  		student_id: student.id
+	  		  	).last
 
-	  	if @lesson_participant.blank?
-		  	lesson_participant = LessonParticipant.create(
-		  		lesson_id: lesson.id,
-		  		student_id: student.id,
-		  		random_string: @random_string
-		  	)
-		else
-			lesson_participant = @lesson_participant
-	    end
-
-
+	  		  	if @lesson_participant.blank?
+	  			  	lesson_participant = LessonParticipant.create(
+	  			  		lesson_id: lesson.id,
+	  			  		student_id: student.id,
+	  			  		random_string: @random_string
+	  			  	)
+	  			else
+	  				lesson_participant = @lesson_participant
+	  		    end
 
 
 	  	#Create User/Client/Parent Login
@@ -204,6 +205,7 @@ class HardWorker
 		else
 			c_user = @user
 		end
+
 
 		#Create Client
 		@find_client = Client.where(
@@ -232,6 +234,7 @@ class HardWorker
 			client = @find_client
 		end
 
+
 		#Attach user to student
 		@find_parent = ClientStudent.where(
 			client_id: client.id).where(
@@ -242,8 +245,25 @@ class HardWorker
 		  		student_id: student.id
 		  	)
 		end
+	  	
 
 	end
+	end
+
+	#Add skills 
+	@students = Student.all
+
+  	@students.each do |student|
+
+  	@skills = Skill.where(level_id: student.current_level).all
+		@skills.each do |skill|
+		StudentSkill.find_or_create_by(
+	  		student_id: student.id,
+	  		skill_id: skill.id,
+	  		level_id: student.current_level,
+	  		competency_level_id: 1
+	  	)
+		end
 	end
 
   end
