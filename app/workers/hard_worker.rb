@@ -89,7 +89,7 @@ class HardWorker
 	   	#Create User/Client/Parent Login
 	   	teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
 
-	   	if teacher.blank?
+	   	if teacher.present?
 	 	  	t_user = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
