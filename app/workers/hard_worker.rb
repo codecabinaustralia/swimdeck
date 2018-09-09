@@ -84,7 +84,7 @@ class HardWorker
 	  	elsif link.LessonDay == "Sunday"
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
-	  	
+
 	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 		@time_reformat = @new_time
 
@@ -95,7 +95,7 @@ class HardWorker
 
 	  	find_lesson = Lesson.find_or_create_by(
 	  		start_time: @time_reformat,
-	  		user_id: 1,
+	  		user_id: 6,
 	  		site_id: 1,
 	  		level_id: current_level
 	  		)
