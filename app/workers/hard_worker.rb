@@ -87,13 +87,16 @@ class HardWorker
 
 	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 		@time_reformat = @new_time
-
+		
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 
 	   	@find_teacher = User.find_or_create_by(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au") do |user|
 	   	  user.password = "Rackley!23"
 	   	  user.password_confirmation = "Rackley!23"
+	   	  user.current_sign_in_at = DateTime.now
+	   	  user.last_sign_in_at = DateTime.now
+	   	  user.created_at = DateTime.now
 	   	  user.admin = false
 	   	  user.manager = false
 	   	  user.pool_deck_leader = false
@@ -134,6 +137,9 @@ class HardWorker
 	  	@user_p = User.find_or_create_by(email: link.RPEmail) do |user|
 	  		user.password = "Test123"
 	  		user.password_confirmation = "Test123"
+	  		user.current_sign_in_at = DateTime.now
+	  		user.last_sign_in_at = DateTime.now
+	  		user.created_at = DateTime.now
 	  		user.admin = false
 	  		user.manager = false
 	  		user.pool_deck_leader = false
