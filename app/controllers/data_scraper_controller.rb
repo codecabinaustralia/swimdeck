@@ -246,9 +246,9 @@ redirect_to root_path
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au")
- 	  	if find_teacher.blank?
-	 	  	find_teacher = User.new(
+	   	@find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au")
+ 	  	if @find_teacher.blank?
+	 	  	@find_teacher = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Rackley!23",
 	 	  		password_confirmation: "Rackley!23",
@@ -264,13 +264,15 @@ redirect_to root_path
 	 	  		first_name: link.TeachGivenNames,
 	 	  		last_name: link.TeachSurname
 	 	  		)
-	 	  	find_teacher.save
+	 	  	@find_teacher.save
+	 	else
+	 		@find_teacher = @find_teacher
 	 	end
 
 
 	  	find_lesson = Lesson.find_or_create_by(
 	  		start_time: @time_reformat,
-	  		user_id: find_teacher.id,
+	  		user_id: @find_teacher.id,
 	  		site_id: 1,
 	  		level_id: current_level
 	  		)
