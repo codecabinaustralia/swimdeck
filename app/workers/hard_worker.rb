@@ -85,13 +85,8 @@ class HardWorker
 	  		@myday = :sunday
 	  	end
 
-	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday.to_sym)
-	  	@new_time = Time.strptime("7:00AM", "%H:%M")
-
-		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.to_s}"
-
-	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %H:%M%p")
-	  	@lesson_finish = @time_reformat
+	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
+		@time_reformat = @new_time
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
