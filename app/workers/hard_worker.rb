@@ -112,44 +112,29 @@ class HardWorker
 	 	end
 
 
-	  	@find_lesson = Lesson.where(
-	  		start_time: @lesson_start
-	  		).where(
-	  		finish_time: @lesson_start
-	  		).where(
-	  		user_id: t_user.id #Teacher
-	  		).where(
-	  		site_id: 1 #Site
-	  		).where(
-	  		level_id: @current_level,
-	  		).last
+	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).where(level_id: @current_level).last
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
-		  		user_id: t_user.id, #Teacher placeholder 3
-		  		site_id: 1, #Site placeholder 1
-		  		level_id: @current_level,
+		  		user_id: t_user.id,
+		  		site_id: 1,
+		  		level_id: @current_level
 	  		)
 	  	else
 	  		lesson = @find_lesson
 	  	end
 
-	  	@find_student = Student.where(
-	  		first_name: link.StuGivenNames).where(
-	  		last_name: link.StuSurname).where(
-	  		dob: @dob).where(
-	  		personal_notes: 1).where(
-	  		current_level: @current_level
-	  		).last
+	  	@find_student = Student.where(first_name: link.StuGivenNames).where(last_name: link.StuSurname).where(dob: @dob).where(personal_notes: 1).where(current_level: @current_level).last
+
 	  	if @find_student.blank?
 	  	student = Student.create(
 	  		first_name: link.StuGivenNames,
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
-	  		current_level: @current_level,
+	  		current_level: @current_level
 	  		)
 	  	else
 	  	student = @find_student
