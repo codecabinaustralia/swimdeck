@@ -91,18 +91,18 @@ class HardWorker
 	   	#Create User/Client/Parent Login
 
 	   	@find_teacher = User.find_or_create_by(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au") do |user|
-	   	  user.password = "Rackley!23",
-	   	  user.password_confirmation = "Rackley!23",
-	   	  user.current_sign_in_at = DateTime.now,
-	   	  user.last_sign_in_at = DateTime.now,
-	   	  user.created_at = DateTime.now,
-	   	  user.admin = false,
-	   	  user.manager = false,
-	   	  user.pool_deck_leader = false,
-	   	  user.teacher = true,
-	   	  user.customer_service = false,
-	   	  user.client = false,
-	   	  user.first_name = link.TeachGivenNames,
+	   	  user.password = "Rackley!23"
+	   	  user.password_confirmation = "Rackley!23"
+	   	  user.current_sign_in_at = DateTime.now
+	   	  user.last_sign_in_at = DateTime.now
+	   	  user.created_at = DateTime.now
+	   	  user.admin = false
+	   	  user.manager = false
+	   	  user.pool_deck_leader = false
+	   	  user.teacher = true
+	   	  user.customer_service = false
+	   	  user.client = false
+	   	  user.first_name = link.TeachGivenNames
 	   	  user.last_name = link.TeachSurname
 	   	end
 	   	
@@ -134,18 +134,18 @@ class HardWorker
 	  	#Create User/Client/Parent Login
 
 	  	@user_p = User.find_or_create_by(email: link.RPEmail) do |user|
-	  		user.password = "Test123",
-	  		user.password_confirmation = "Test123", 
-	  		user.current_sign_in_at = DateTime.now,
-	  		user.last_sign_in_at = DateTime.now,
-	  		user.created_at = DateTime.now,
-	  		user.admin = false,
-	  		user.manager = false,
-	  		user.pool_deck_leader = false,
-	  		user.teacher = false,
-	  		user.customer_service = false,
-	  		user.client = true,
-	  		user.first_name = link.RPGivenNames,
+	  		user.password = "Test123"
+	  		user.password_confirmation = "Test123"
+	  		user.current_sign_in_at = DateTime.now
+	  		user.last_sign_in_at = DateTime.now
+	  		user.created_at = DateTime.now
+	  		user.admin = false
+	  		user.manager = false
+	  		user.pool_deck_leader = false
+	  		user.teacher = false
+	  		user.customer_service = false
+	  		user.client = true
+	  		user.first_name = link.RPGivenNames
 	  		user.last_name = link.RPSurname
 	  	end
 
