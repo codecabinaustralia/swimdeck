@@ -92,12 +92,13 @@ class HardWorker
 	   	
 	   	
 
-	  	find_lesson = Lesson.find_or_create_by(
+	  	find_lesson = Lesson.new(
 	  		start_time: new_time.to_date,
 	  		user_id: 6,
 	  		site_id: 1,
 	  		level_id: current_level
 	  		)
+	  	find_lesson.save
 
 	  	
 
