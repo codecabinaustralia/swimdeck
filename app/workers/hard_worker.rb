@@ -88,7 +88,8 @@ class HardWorker
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
-	   	if teacher.present?
+
+	   	if teacher.blank?
 	 	  	t_user = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
@@ -113,7 +114,7 @@ class HardWorker
 
 	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).last
 
-	  	if @find_lesson.blank?
+	  	if @find_lesson.present?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
