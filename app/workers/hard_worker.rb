@@ -112,7 +112,7 @@ class HardWorker
 	 	end
 
 
-	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).where(level_id: @current_level).last
+	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).last
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
