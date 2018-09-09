@@ -86,7 +86,7 @@ class HardWorker
 	  	end
 
 	  	@new_date = Date.parse(link.StuBookStartDate).next_occurring(@myday.to_sym)
-	  	@lesson_start_time = Time.strptime("7:00AM", "%H:%M")
+	  	@new_time = Time.strptime("7:00AM", "%H:%M")
 
 		@lesson_start = "#{@new_date.to_s} #{@lesson_start_time.to_s}"
 
@@ -95,27 +95,30 @@ class HardWorker
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-
- 	  	find_teacher = User.new(
- 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
- 	  		password: "Test123",
- 	  		password_confirmation: "Test123", 
- 	  		current_sign_in_at: DateTime.now,
- 	  		last_sign_in_at: DateTime.now,
- 	  		created_at: DateTime.now,
- 	  		admin: false,
- 	  		manager: false,
- 	  		pool_deck_leader: false,
- 	  		teacher: true,
- 	  		customer_service: false,
- 	  		client: false,
- 	  		first_name: link.TeachGivenNames,
- 	  		last_name: link.TeachSurname
- 	  		)
- 	  	find_teacher.save
+	   	find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au")
+ 	  	if find_teacher.blank?
+	 	  	find_teacher = User.new(
+	 	  		email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+	 	  		password: "Rackley!23",
+	 	  		password_confirmation: "Rackley!23",
+	 	  		current_sign_in_at: DateTime.now,
+	 	  		last_sign_in_at: DateTime.now,
+	 	  		created_at: DateTime.now,
+	 	  		admin: false,
+	 	  		manager: false,
+	 	  		pool_deck_leader: false,
+	 	  		teacher: true,
+	 	  		customer_service: false,
+	 	  		client: false,
+	 	  		first_name: link.TeachGivenNames,
+	 	  		last_name: link.TeachSurname
+	 	  		)
+	 	  	find_teacher.save
+	 	end
 
 
 	  	find_lesson = Lesson.find_or_create_by(
+	  		start_time: @time_reformat,
 	  		user_id: find_teacher.id,
 	  		site_id: 1,
 	  		level_id: current_level
