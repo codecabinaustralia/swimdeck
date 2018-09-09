@@ -14,43 +14,43 @@ class HardWorker
   		# LESSON LEVEL 
 
   		if link.LessonLevel == "00 SPLASH"
-  			current_level = 1
+  			@current_level = 1
   		end
 		if link.LessonLevel == "01 DIS 1"
-			current_level = 2
+			@current_level = 2
 		end
 		if link.LessonLevel == "02 DIS 2"
-			current_level = 3
+			@current_level = 3
 		end
 		if link.LessonLevel == "03 DIS 3"
-			current_level = 4
+			@current_level = 4
 		end
 		if link.LessonLevel == "04 NWST"
-			current_level = 5
+			@current_level = 5
 		end
 		if link.LessonLevel == "05 LRN 1"
-			current_level = 6
+			@current_level = 6
 		end
 		if link.LessonLevel == "06 LRN 2"
-			current_level = 7
+			@current_level = 7
 		end
 		if link.LessonLevel == "07 INT 1"
-			current_level = 8
+			@current_level = 8
 		end
 		if link.LessonLevel == "08 INT 2"
-			current_level = 9
+			@current_level = 9
 		end
 		if link.LessonLevel == "09 ADV 1"
-			current_level = 10
+			@current_level = 10
 		end
 		if link.LessonLevel == "10 ADV 2"
-			current_level = 11
+			@current_level = 11
 		end
 		if link.LessonLevel == "11 ACH 1"
-			current_level = 12
+			@current_level = 12
 		end
 		if link.LessonLevel == "12 ACH 2"
-			current_level = 13
+			@current_level = 13
 		end
 
 		  
@@ -85,61 +85,57 @@ class HardWorker
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
-	  	new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
+	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	
-	   	find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au")
- 	  	if find_teacher.blank?
-	 	  	find_teacher = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-	 	  		password: "Rackley!23",
-	 	  		password_confirmation: "Rackley!23",
-	 	  		current_sign_in_at: DateTime.now,
-	 	  		last_sign_in_at: DateTime.now,
-	 	  		created_at: DateTime.now,
-	 	  		admin: false,
-	 	  		manager: false,
-	 	  		pool_deck_leader: false,
-	 	  		teacher: true,
-	 	  		customer_service: false,
-	 	  		client: false,
-	 	  		first_name: link.TeachGivenNames,
-	 	  		last_name: link.TeachSurname
-	 	  		)
-	 	  	find_teacher.save
-	 	end
 
-	  	find_lesson = Lesson.find_or_create_by(
-	  		start_time: new_time.to_date,
-	  		
+	   	@find_teacher = User.find_or_create_by(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au") do |user|
+	   	  password: "Rackley!23",
+	   	  password_confirmation: "Rackley!23",
+	   	  current_sign_in_at: DateTime.now,
+	   	  last_sign_in_at: DateTime.now,
+	   	  created_at: DateTime.now,
+	   	  admin: false,
+	   	  manager: false,
+	   	  pool_deck_leader: false,
+	   	  teacher: true,
+	   	  customer_service: false,
+	   	  client: false,
+	   	  first_name: link.TeachGivenNames,
+	   	  last_name: link.TeachSurname
+	   	end
+	   	
+
+	  	@find_lesson = Lesson.find_or_create_by(
+	  		start_time: @new_time.to_date,
+	  		user_id: @find_teacher.id,
 	  		site_id: 1,
-	  		level_id: current_level
+	  		level_id: @current_level
 	  		)
 
 	  	
 
-	  	find_student = Student.find_or_create_by(
+	  	@find_student = Student.find_or_create_by(
 	  		first_name: link.StuGivenNames,
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
-	  		current_level: current_level
+	  		current_level: @current_level
 	  		)
 
 	  	# LESSON PARTICPANT
 
-	  	lesson_participant = LessonParticipant.find_or_create_by(
-	  		lesson_id: find_lesson.id,
-	  		student_id: find_student.id
+	  	@lesson_participant = LessonParticipant.find_or_create_by(
+	  		lesson_id: @find_lesson.id,
+	  		student_id: @find_student.id
 	  	)
 
 	  	#Create User/Client/Parent Login
-	  	@user = User.where(email: link.RPEmail).last
+	  	@user_p = User.where(email: link.RPEmail).last
 
-	  	if @user.blank?
-		  	c_user = User.new(
+	  	if @user_p.blank?
+		  	@c_user = User.new(
 		  		email: link.RPEmail,
 		  		password: "Test123",
 		  		password_confirmation: "Test123", 
@@ -155,14 +151,14 @@ class HardWorker
 		  		first_name: link.RPGivenNames,
 		  		last_name: link.RPSurname
 		  		)
-		  	c_user.save
+		  	@c_user.save
 		else
-			c_user = @user
+			@c_user = @user_p
 		end
 
 		#Create Client
-		find_client = Client.find_or_create_by(
-			user_id: c_user.id,
+		@find_client = Client.find_or_create_by(
+			user_id: @c_user.id,
 			first_name: link.RPGivenNames,
 			last_name: link.RPSurname,
 			phone_1: link.RPPhone,
@@ -175,9 +171,9 @@ class HardWorker
 	
 
 		#Attach user to student
-		find_parent = ClientStudent.find_or_create_by(
-			client_id: find_client.id,
-	  		student_id: find_student.id
+		@find_parent = ClientStudent.find_or_create_by(
+			client_id: @find_client.id,
+	  		student_id: @find_student.id
 	  	)
 	  	
 
