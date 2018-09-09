@@ -125,6 +125,7 @@ class HardWorker
 	  	else
 	  		lesson = @find_lesson
 	  	end
+	  	
 
 	  	@find_student = Student.where(first_name: link.StuGivenNames).where(last_name: link.StuSurname).where(dob: @dob).where(personal_notes: 1).where(current_level: @current_level).last
 
