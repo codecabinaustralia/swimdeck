@@ -133,7 +133,7 @@ class HardWorker
 
 	  	#Create User/Client/Parent Login
 
-	  	@user_p User.find_or_create_by(email: link.RPEmail) do |user|
+	  	@user_p = User.find_or_create_by(email: link.RPEmail) do |user|
 	  		user.password = "Test123",
 	  		user.password_confirmation = "Test123", 
 	  		user.current_sign_in_at = DateTime.now,
