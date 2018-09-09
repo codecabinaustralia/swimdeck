@@ -246,7 +246,7 @@ redirect_to root_path
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au")
+	   	@find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
  	  	if @find_teacher.blank?
 	 	  	@find_teacher = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au",
