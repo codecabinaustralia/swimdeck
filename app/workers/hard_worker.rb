@@ -109,7 +109,7 @@ class HardWorker
 
 	  	@find_lesson = Lesson.find_or_create_by(
 	  		start_time: @new_time.to_date,
-	  	
+	  		user_id: @find_teacher,
 	  		site_id: 1,
 	  		level_id: @current_level
 	  		)
@@ -127,8 +127,8 @@ class HardWorker
 	  	# LESSON PARTICPANT
 
 	  	@lesson_participant = LessonParticipant.find_or_create_by(
-	  		lesson_id: @find_lesson.id,
-	  		student_id: @find_student.id
+	  		lesson_id: @find_lesson,
+	  		student_id: @find_student
 	  	)
 
 	  	#Create User/Client/Parent Login
@@ -152,7 +152,7 @@ class HardWorker
 
 		#Create Client
 		@find_client = Client.find_or_create_by(
-			user_id: @c_user.id,
+			user_id: @c_user,
 			first_name: link.RPGivenNames,
 			last_name: link.RPSurname,
 			phone_1: link.RPPhone,
@@ -166,8 +166,8 @@ class HardWorker
 
 		#Attach user to student
 		@find_parent = ClientStudent.find_or_create_by(
-			client_id: @find_client.id,
-	  		student_id: @find_student.id
+			client_id: @find_client,
+	  		student_id: @find_student
 	  	)
 	  	
 
