@@ -87,7 +87,7 @@ class HardWorker
 
 	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 		@time_reformat = @new_time
-		
+
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 
@@ -110,7 +110,7 @@ class HardWorker
 
 	  	@find_lesson = Lesson.find_or_create_by(
 	  		start_time: @time_reformat,
-	  		user_id: @find_teacher.id,
+	  		user_id: 566,
 	  		site_id: 1,
 	  		level_id: @current_level
 	  		)
