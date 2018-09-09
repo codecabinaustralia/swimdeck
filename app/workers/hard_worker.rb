@@ -83,14 +83,14 @@ class HardWorker
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
-		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M:00")
+		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M:00")
 	  	
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
 
 	   	if @teacher.blank?
-	 	  	t_user = User.new(
+	 	  	@teacher = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
 	 	  		password_confirmation: "Test123", 
@@ -106,26 +106,24 @@ class HardWorker
 	 	  		first_name: link.TeachGivenNames,
 	 	  		last_name: link.TeachSurname
 	 	  		)
-	 	  	t_user.save
-	 	else
-	 		t_user = @teacher
+	 	  	@teacher.save
 	 	end
 
 
-	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).where(level_id: @current_level).last
+	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: @teacher.id).where(level_id: @current_level).last
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
-		  		user_id: t_user.id,
+		  		user_id: @teacher.id,
 		  		site_id: 1,
 		  		level_id: @current_level
 	  		)
 	  	else
 	  		lesson = @find_lesson
 	  	end
-	  	
+
 
 	  	@find_student = Student.where(first_name: link.StuGivenNames).where(last_name: link.StuSurname).where(dob: @dob).where(personal_notes: 1).where(current_level: @current_level).last
 
