@@ -91,19 +91,19 @@ class HardWorker
 	   	#Create User/Client/Parent Login
 
 	   	@find_teacher = User.find_or_create_by(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au") do |user|
-	   	  password: "Rackley!23",
-	   	  password_confirmation: "Rackley!23",
-	   	  current_sign_in_at: DateTime.now,
-	   	  last_sign_in_at: DateTime.now,
-	   	  created_at: DateTime.now,
-	   	  admin: false,
-	   	  manager: false,
-	   	  pool_deck_leader: false,
-	   	  teacher: true,
-	   	  customer_service: false,
-	   	  client: false,
-	   	  first_name: link.TeachGivenNames,
-	   	  last_name: link.TeachSurname
+	   	  user.password = "Rackley!23",
+	   	  user.password_confirmation = "Rackley!23",
+	   	  user.current_sign_in_at = DateTime.now,
+	   	  user.last_sign_in_at = DateTime.now,
+	   	  user.created_at = DateTime.now,
+	   	  user.admin = false,
+	   	  user.manager = false,
+	   	  user.pool_deck_leader = false,
+	   	  user.teacher = true,
+	   	  user.customer_service = false,
+	   	  user.client = false,
+	   	  user.first_name = link.TeachGivenNames,
+	   	  user.last_name = link.TeachSurname
 	   	end
 	   	
 
@@ -132,29 +132,23 @@ class HardWorker
 	  	)
 
 	  	#Create User/Client/Parent Login
-	  	@user_p = User.where(email: link.RPEmail).last
 
-	  	if @user_p.blank?
-		  	@c_user = User.new(
-		  		email: link.RPEmail,
-		  		password: "Test123",
-		  		password_confirmation: "Test123", 
-		  		current_sign_in_at: DateTime.now,
-		  		last_sign_in_at: DateTime.now,
-		  		created_at: DateTime.now,
-		  		admin: false,
-		  		manager: false,
-		  		pool_deck_leader: false,
-		  		teacher: false,
-		  		customer_service: false,
-		  		client: true,
-		  		first_name: link.RPGivenNames,
-		  		last_name: link.RPSurname
-		  		)
-		  	@c_user.save
-		else
-			@c_user = @user_p
-		end
+	  	@user_p User.find_or_create_by(email: link.RPEmail) do |user|
+	  		user.password = "Test123",
+	  		user.password_confirmation = "Test123", 
+	  		user.current_sign_in_at = DateTime.now,
+	  		user.last_sign_in_at = DateTime.now,
+	  		user.created_at = DateTime.now,
+	  		user.admin = false,
+	  		user.manager = false,
+	  		user.pool_deck_leader = false,
+	  		user.teacher = false,
+	  		user.customer_service = false,
+	  		user.client = true,
+	  		user.first_name = link.RPGivenNames,
+	  		user.last_name = link.RPSurname
+	  	end
+
 
 		#Create Client
 		@find_client = Client.find_or_create_by(
