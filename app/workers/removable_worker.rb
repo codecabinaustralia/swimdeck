@@ -10,7 +10,9 @@ class RemovableWorker
   	@clients = Client.all
   	@students = Student.all
   	@lessons = Lesson.all
+    @generic_lists = GenericListCheck.all
 	@users = User.where.not(email: "josh@codecabin.com.au").all
+
 
 	@student_skills.destroy_all
 	@lesson_participants.destroy_all
@@ -18,6 +20,7 @@ class RemovableWorker
 	@clients.destroy_all
 	@students.destroy_all
 	@lessons.destroy_all
+  @generic_lists.destroy_all
 	@users.destroy_all
   end
 end
