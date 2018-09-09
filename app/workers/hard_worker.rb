@@ -83,14 +83,13 @@ class HardWorker
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
-		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M:00")
+		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 	  	
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
+	   	teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
 
-
-	   	if @teacher.blank?
+	   	if teacher.blank?
 	 	  	t_user = User.new(
 	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 	 	  		password: "Test123",
@@ -109,7 +108,7 @@ class HardWorker
 	 	  		)
 	 	  	t_user.save
 	 	else
-	 		t_user = @teacher
+	 		t_user = teacher
 	 	end
 
 
