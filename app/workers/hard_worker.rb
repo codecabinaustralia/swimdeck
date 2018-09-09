@@ -70,21 +70,21 @@ class HardWorker
 	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
 	  	if link.LessonDay == "Monday"
-	  		@myday = :monday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
 	  	elsif link.LessonDay == "Tuesday"
-	  		@myday = :tuesday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
 	  	elsif link.LessonDay == "Wednesday"
-	  		@myday = :wednesday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
 	  	elsif link.LessonDay == "Thursday"
-	  		@myday = :thursday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
 	  	elsif link.LessonDay == "Friday"
-	  		@myday = :friday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
 	  	elsif link.LessonDay == "Saturday"
-	  		@myday = :saturday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
 	  	elsif link.LessonDay == "Sunday"
-	  		@myday = :sunday
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
-
+	  	
 	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 		@time_reformat = @new_time
 
