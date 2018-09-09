@@ -111,7 +111,6 @@ class HardWorker
 	 		t_user = teacher
 	 	end
 
-
 	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).last
 
 	  	if @find_lesson.present?
