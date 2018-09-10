@@ -21,8 +21,8 @@
         <% @lessons.each do |lesson| %>
           <% @brisbane_time = Time.now + 10.hours %>
           <% @temp_date = Date.strptime("#{lesson.lesson_date}", "%d %b %Y") %>
-          <% if @temp_date.to_date.strftime("%d %b %Y") > @brisbane_time.strftime("%d %b %Y") %>
-          <% else %>
+          <% if @temp_date.to_date.strftime("%d %b %Y") <= @brisbane_time.strftime("%d %b %Y") %>
+          
             <%= render 'planner/lesson', lesson: lesson %>
           <% end %>
         <% end %>
