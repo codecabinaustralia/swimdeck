@@ -135,10 +135,10 @@ class LessonWorker
 			c.address_state = "QLD"
 			c.address_postcode = link.RPPostCode
 		end
-		
+
 
 		#Let's connect the student to the client
-		student_client = ClientStudent.find_or_create_by(student_id: student.id, client_id: client.id)
+		#student_client = ClientStudent.find_or_create_by(student_id: student.id, client_id: client.id)
 
 		# Finally we can add the skills to the students
 		# Currently we are just adding the skills from the @current_level and assigning them as incompetant
