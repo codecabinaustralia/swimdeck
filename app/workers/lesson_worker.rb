@@ -82,7 +82,7 @@ class LessonWorker
 	  		@new_date = Date.parse(@refactored_date).next_occurring(:sunday)
 	  	end
 
-	  	@new_time = (@refactored_date + " " link.LessonTime).to_s
+	  	@new_time = (@refactored_date + " " + link.LessonTime).to_s
 
 	  	@lesson_start = DateTime.strptime("#{@new_time}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 	  	#Add Teacher User
