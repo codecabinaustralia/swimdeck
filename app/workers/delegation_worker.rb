@@ -1,10 +1,11 @@
 class DelegationWorker
-  require 'date'
-  require 'time'
+ 
   include Sidekiq::Worker
   sidekiq_options retry:false
 
   def perform()
+  	require 'date'
+  	require 'time'
   	#Find all links
   	@links = Link.all
 
