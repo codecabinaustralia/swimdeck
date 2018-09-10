@@ -85,7 +85,7 @@ class LessonWorker
 
 	  	
 
-	  	@lesson_start = DateTime.strptime("#{@new_date} 7:00AM", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
+	  	@lesson_start = DateTime.strptime("2018-09-10 #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
