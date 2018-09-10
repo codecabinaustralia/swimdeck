@@ -1,6 +1,5 @@
 class DataScraperController < ApplicationController
- 
- 
+	
   def delete_all_lesson_data
     RemovableWorker.perform_async()
   end

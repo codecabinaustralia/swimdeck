@@ -53,7 +53,7 @@ class LinksWorker
   	  		)
   	end
 
-    @link_first = link.first
+    @link_first = Link.first
     @link_first.destroy
 
     @links = Link.all.group_by{|e| [e.TeachSurname, e.StuBookStartDate, e.LessonDay]}
