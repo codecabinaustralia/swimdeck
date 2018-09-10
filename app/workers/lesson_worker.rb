@@ -112,7 +112,9 @@ class LessonWorker
 
 
 	  	@find_lesson = Lesson.where(
-	  		start_time: @time_reformat
+	  		lesson_date: link.StuBookStartDate
+	  		).where(
+		  	lesson_time: link.LessonTime,
 	  		).where(
 	  		user_id: @t_user.id #Teacher
 	  		).where(
@@ -125,6 +127,8 @@ class LessonWorker
 	  		lesson = Lesson.create(
 		  		start_time: @time_reformat,
 		  		finish_time: @time_reformat,
+		  		lesson_date: link.StuBookStartDate,
+		  		lesson_time: link.LessonTime,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
