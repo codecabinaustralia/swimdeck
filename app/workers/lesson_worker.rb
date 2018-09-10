@@ -124,7 +124,9 @@ class LessonWorker
 				  end
 
 		#Now the client details record
-		client = Client.find_or_create_by(user_id: parent.id, first_name: "#{link.RPGivenNames}", last_name: "#{link.RPSurname}") do |c|
+		client = Client.find_or_create_by(user_id: parent.id) do |c|
+			c.first_name = link.RPGivenNames
+			c.last_name = link.RPSurname
 			c.phone_1 = link.RPPhone
 			c.phone_2 = link.RPWorkPhone
 			c.address = link.RPAddress
