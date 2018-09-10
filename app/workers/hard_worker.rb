@@ -39,60 +39,60 @@ class HardWorker
 
   		#Now the Lesson
   		#First we find the current level of each student
-  		if link.LessonLevel == "00 SPLASH"
+  		if lesson.LessonLevel == "00 SPLASH"
   			@current_level = 1
   		end
-		if link.LessonLevel == "01 DIS 1"
+		if lesson.LessonLevel == "01 DIS 1"
 			@current_level = 2
 		end
-		if link.LessonLevel == "02 DIS 2"
+		if lesson.LessonLevel == "02 DIS 2"
 			@current_level = 3
 		end
-		if link.LessonLevel == "03 DIS 3"
+		if lesson.LessonLevel == "03 DIS 3"
 			@current_level = 4
 		end
-		if link.LessonLevel == "04 NWST"
+		if lesson.LessonLevel == "04 NWST"
 			@current_level = 5
 		end
-		if link.LessonLevel == "05 LRN 1"
+		if lesson.LessonLevel == "05 LRN 1"
 			@current_level = 6
 		end
-		if link.LessonLevel == "06 LRN 2"
+		if lesson.LessonLevel == "06 LRN 2"
 			@current_level = 7
 		end
-		if link.LessonLevel == "07 INT 1"
+		if lesson.LessonLevel == "07 INT 1"
 			@current_level = 8
 		end
-		if link.LessonLevel == "08 INT 2"
+		if lesson.LessonLevel == "08 INT 2"
 			@current_level = 9
 		end
-		if link.LessonLevel == "09 ADV 1"
+		if lesson.LessonLevel == "09 ADV 1"
 			@current_level = 10
 		end
-		if link.LessonLevel == "10 ADV 2"
+		if lesson.LessonLevel == "10 ADV 2"
 			@current_level = 11
 		end
-		if link.LessonLevel == "11 ACH 1"
+		if lesson.LessonLevel == "11 ACH 1"
 			@current_level = 12
 		end
-		if link.LessonLevel == "12 ACH 2"
+		if lesson.LessonLevel == "12 ACH 2"
 			@current_level = 13
 		end
   		# Secondly we need to find the date of next StuBookStartDate
-  		if link.LessonDay == "Monday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
-	  	elsif link.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
-	  	elsif link.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
-	  	elsif link.LessonDay == "Thursday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
-	  	elsif link.LessonDay == "Friday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
-	  	elsif link.LessonDay == "Saturday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
-	  	elsif link.LessonDay == "Sunday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
+  		if lesson.LessonDay == "Monday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:monday)
+	  	elsif lesson.LessonDay == "Tuesday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:tuesday)
+	  	elsif lesson.LessonDay == "Wednesday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:wednesday)
+	  	elsif lesson.LessonDay == "Thursday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:thursday)
+	  	elsif lesson.LessonDay == "Friday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:friday)
+	  	elsif lesson.LessonDay == "Saturday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:saturday)
+	  	elsif lesson.LessonDay == "Sunday"
+	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:sunday)
 	  	end
 	  	# Now we need to merge that date with the LessonTime - we'llconvert this to a DateTime then format it accordingly
   		@lesson_start = DateTime.strptime("#{@new_date} #{lesson.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
