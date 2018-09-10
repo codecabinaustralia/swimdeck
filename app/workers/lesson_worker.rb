@@ -96,7 +96,48 @@ class LessonWorker
 				    l.level_id = @current_level
 				 end
 
-		
+		#Let's create a student now
+		student = Student.find_or_create_by(first_name: link.StuGivenNames, last_name: link.StuSurname, dob: @dob) do |s|
+					s.personal_notes = 1
+					s.current_level = @current_level
+				  end
+
+		#Now we can add the student to the lesson
+		student_lesson = StudentLesson.find_or_create_by(student_id: student.id, lesson_id: lesson.id)
+
+		#The student needs a parent let's create a client/parent
+		#first create the login / user
+		parent = User.find_or_create_by(email: "#{link.RPEmail}") do |p|
+					p.password = "Test123"
+					p.password_confirmation = "Test123"
+					p.current_sign_in_at = DateTime.now
+					p.last_sign_in_at = DateTime.now
+					p.created_at = DateTime.now
+					p.admin = false
+					p.manager = false
+					p.pool_deck_leader = false
+					p.teacher = false
+					p.customer_service = false
+					p.client = true
+					p.first_name = link.RPGivenNames
+					p.last_name = link.RPSurname
+				  end
+
+		#Now the client details record
+		client = Client.find_or_create_by(email: "#{link.RPEmail}") do |c|
+			c.user_id = c_user.id
+			c.first_name = link.RPGivenNames
+			c.last_name = link.RPSurname
+			c.phone_1 = link.RPPhone
+			c.phone_2 = link.RPWorkPhone
+			c.address = link.RPAddress
+			c.address_city = link.RPSuburb
+			c.address_state = "QLD"
+			c.address_postcode = link.RPPostCode
+		end
+
+		#Let's connect the student to the client
+		student_client = ClientStudent.find_or_create_by(student_id: student.id, client_id: client.id)
 
 		# Finally we can add the skills to the students
 		# Currently we are just adding the skills from the @current_level and assigning them as incompetant
