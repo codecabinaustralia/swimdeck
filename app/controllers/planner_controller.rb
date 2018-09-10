@@ -16,7 +16,6 @@ class PlannerController < ApplicationController
 
   	@lessons = Lesson.where(lesson_day: @filter_time.strftime('%A').to_s).where("lesson_date < ?", @filter_time).all.order(:lesson_time).paginate(:page => params[:page], :per_page => 30)
     
-
     @checked_lists = GenericListCheck.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).all.pluck(:generic_checklist_id)
   	
     @generic_checklists_am_pres = GenericChecklist.where(session_time: "am").where(title: "Pre").where.not(id: @checked_lists).all

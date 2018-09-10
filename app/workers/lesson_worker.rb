@@ -5,7 +5,7 @@ class LessonWorker
 
   def perform()
   	
-	@links = Link.all
+	@links = Link.where(LessonDay: Time.now.strftime('%A').to_s).where("StuBookStartDate < ?", Time.now.strftime('%d %b %Y')).all
 
   	@links.each do |link|
 
@@ -65,25 +65,6 @@ class LessonWorker
 		  	end
 	  	end
 
-	  	if link.LessonDay == "Monday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
-	  	elsif link.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
-	  	elsif link.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
-	  	elsif link.LessonDay == "Thursday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
-	  	elsif link.LessonDay == "Friday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
-	  	elsif link.LessonDay == "Saturday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
-	  	elsif link.LessonDay == "Sunday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
-	  	end
-
-	  	@new_time = DateTime.strptime("2018-09-10 #{link.LessonTime}", "%Y-%m-%d %H:%M%p").strftime("%Y-%m-%d %H:%M")
-		@time_reformat = @new_time
-
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
@@ -125,8 +106,6 @@ class LessonWorker
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
-		  		start_time: @time_reformat,
-		  		finish_time: @time_reformat,
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: link.LessonTime,
 		  		lesson_day: link.LessonDay,
