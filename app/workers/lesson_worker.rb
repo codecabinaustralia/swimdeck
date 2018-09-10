@@ -5,9 +5,8 @@ class LessonWorker
 
   def perform()
   	
-	@links = Link.where(LessonDay: Time.now.strftime('%A').to_s).all
-
-
+  	@time_brisbane = Time.now + 10.hours
+	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
 
   	@links.each do |link|
 
@@ -54,10 +53,8 @@ class LessonWorker
 			@current_level = 13
 		end
 
-		  
-
+		
 		# DOB FORMAT
-
 		if link.StuDateOfBirth.present?
 			require 'date'
 		  	begin
