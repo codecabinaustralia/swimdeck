@@ -163,7 +163,6 @@ class DelegationWorker
 			    StudentSkill.find_or_create_by(student_id: student.id, skill_id: skill.id) do |sk|
 					sk.level_id = student.current_level,
 					sk.competency_level_id = 1
-				)
 			    end
 			end
 	  	end
