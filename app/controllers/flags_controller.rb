@@ -75,52 +75,62 @@ class FlagsController < ApplicationController
         end
       end
     end
-    
-    @students = Student.all
 
-    @students.each do |student|
-      @current_year = Date.today.strftime("%Y").to_s
-      @current_birthday = @current_year + student.dob.strftime("-%m-%d").to_s
-      @current_birthday = @current_birthday.to_date
-      @birthday = Date.today - @current_birthday
-      @birthday = @birthday.floor
 
-      #Create flag 6 weeks before
-      if @birthday == -42
-        @flag = Flag.new(
-          title: "#{student.full_name} has a birthday on the #{student.dob.strftime('%d/%m')}. If it's not too late. Please talk to parents about booking in a birthday party",
-          student_id: student.id,
-          compulsory_note: true,
-          flag_type: "birthday"
-          )
-        @flag.save
-      end
+    if @birthday_party_flag == true || @birthday_week_flag == true
+      @students = Student.all
 
-      #Create flag 1 weeks before
-      if @birthday == -7
-        @flag = Flag.new(
-          title: "#{student.full_name} has a birthday on the #{student.dob.strftime('%d/%m')}. Don't forget to wish them a happy birthday!",
-          student_id: student.id,
-          compulsory_note: true,
-          flag_type: "birthday"
-          )
-        @flag.save
-      end
-    
-      #Delete flags if birthday has past
-      if @birthday > 0
-        @flags = Flag.where(student_id: student.id).where(flag_type: 'birthday').where(closed: [false, nil]).all
-        @flags.each do |flag|
-          flag.update_attributes(
-            note: "Not completed by actual birthday - closed by system",
-            closed: true
-            )
+      @students.each do |student|
+        @current_year = Date.today.strftime("%Y").to_s
+        @current_birthday = @current_year + student.dob.strftime("-%m-%d").to_s
+        @current_birthday = @current_birthday.to_date
+        @birthday = Date.today - @current_birthday
+        @birthday = @birthday.floor
+
+        #Create flag 6 weeks before
+        if @birthday_party_flag == true
+          if @birthday == -42
+            @flag = Flag.new(
+              title: "#{student.full_name} has a birthday on the #{student.dob.strftime('%d/%m')}. If it's not too late. Please talk to parents about booking in a birthday party",
+              student_id: student.id,
+              compulsory_note: true,
+              flag_type: "birthday"
+              )
+            @flag.save
+          end
+        end
+
+        #Create flag 1 weeks before
+        if @birthday_week_flag == true
+          if @birthday == -7
+            @flag = Flag.new(
+              title: "#{student.full_name} has a birthday on the #{student.dob.strftime('%d/%m')}. Don't forget to wish them a happy birthday!",
+              student_id: student.id,
+              compulsory_note: true,
+              flag_type: "birthday"
+              )
+            @flag.save
+          end
+        end
+      
+        #Delete flags if birthday has past
+        if @birthday > 0
+          @flags = Flag.where(student_id: student.id).where(flag_type: 'birthday').where(closed: [false, nil]).all
+          @flags.each do |flag|
+            flag.update_attributes(
+              note: "Not completed by actual birthday - closed by system",
+              closed: true
+              )
+          end
         end
       end
     end
 
     redirect_to root_path
   end
+
+
+  #Individual flag runs
 
   def client_details
     @clients = Client.all
