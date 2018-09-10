@@ -115,6 +115,7 @@ protect_from_forgery with: :exception, prepend: true
       end
 
       #Add congratulations flag
+      if @new_skill_achieved_flag == true
       @flag = Flag.new(
               title: "Congratulate #{@student_skill.student.full_name} for becoming compentant in #{@student_skill.skill.title}.",
               student_id: @student_skill.student_id,
@@ -123,6 +124,7 @@ protect_from_forgery with: :exception, prepend: true
 
         )
       @flag.save
+      end
 
       @tasks = Task.where(student_id: @student_skill.student_id).where(task_type: 'risk').where(completed: [nil, false]).all
       @tasks.each do |task|
@@ -139,14 +141,16 @@ protect_from_forgery with: :exception, prepend: true
     @competency_skills = StudentSkill.where(student_id: @student_skill.student_id).where(competency_level_id: @last_competency.id).all
     @student_skills = StudentSkill.where(student_id: @student_skill.student_id).all
     if @student_skills.count == @competency_skills.count
-      @flag = Flag.new(
-              title: "#{@student_skill.student.full_name} is ready for evaluation",
-              student_id: @student_skill.student_id,
-              flag_type: 'evaluation',
-              compulsory_note: true,
+      if @ready_for_assesment_flag == true
+        @flag = Flag.new(
+                title: "#{@student_skill.student.full_name} is ready for evaluation",
+                student_id: @student_skill.student_id,
+                flag_type: 'evaluation',
+                compulsory_note: true,
 
-        )
-      @flag.save
+          )
+        @flag.save
+      end
     end
 
     #Redirect
