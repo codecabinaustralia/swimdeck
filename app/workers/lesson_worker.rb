@@ -65,24 +65,24 @@ class LessonWorker
 		  	end
 	  	end
 
+	  	@refactored_date = Date.strptime(link.StuBookStartDate, "%d %b %Y")
 	  	if link.LessonDay == "Monday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:monday)
 	  	elsif link.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:tuesday)
 	  	elsif link.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:wednesday)
 	  	elsif link.LessonDay == "Thursday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:thursday)
 	  	elsif link.LessonDay == "Friday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:friday)
 	  	elsif link.LessonDay == "Saturday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:saturday)
 	  	elsif link.LessonDay == "Sunday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
+	  		@new_date = Date.parse(@refactored_date).next_occurring(:sunday)
 	  	end
 
-	  	@lesson_start = DateTime.strptime("#{@new_date.to_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
-	  	@lesson_start = @lesson_start.to_date
+	  	@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
