@@ -15,7 +15,7 @@ class LessonWorker
   	#Loop through these lessons and create a teacher and lesson
   	@links_lessons.each do |lesson|
   		#First create the teacher and their login
-  		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachFirstname}@rackleyswimming.com.au").last
+  		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachGivenNames}@rackleyswimming.com.au").last
   		if @teacher.blank?
   			@teacher = User.new(
 		 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
