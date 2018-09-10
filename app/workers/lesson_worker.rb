@@ -14,43 +14,43 @@ class LessonWorker
   		# LESSON LEVEL 
 
   		if link.LessonLevel == "00 SPLASH"
-  			@current_level = 1
+  			current_level = 1
   		end
 		if link.LessonLevel == "01 DIS 1"
-			@current_level = 2
+			current_level = 2
 		end
 		if link.LessonLevel == "02 DIS 2"
-			@current_level = 3
+			current_level = 3
 		end
 		if link.LessonLevel == "03 DIS 3"
-			@current_level = 4
+			current_level = 4
 		end
 		if link.LessonLevel == "04 NWST"
-			@current_level = 5
+			current_level = 5
 		end
 		if link.LessonLevel == "05 LRN 1"
-			@current_level = 6
+			current_level = 6
 		end
 		if link.LessonLevel == "06 LRN 2"
-			@current_level = 7
+			current_level = 7
 		end
 		if link.LessonLevel == "07 INT 1"
-			@current_level = 8
+			current_level = 8
 		end
 		if link.LessonLevel == "08 INT 2"
-			@current_level = 9
+			current_level = 9
 		end
 		if link.LessonLevel == "09 ADV 1"
-			@current_level = 10
+			current_level = 10
 		end
 		if link.LessonLevel == "10 ADV 2"
-			@current_level = 11
+			current_level = 11
 		end
 		if link.LessonLevel == "11 ACH 1"
-			@current_level = 12
+			current_level = 12
 		end
 		if link.LessonLevel == "12 ACH 2"
-			@current_level = 13
+			current_level = 13
 		end
 
 		
@@ -100,7 +100,7 @@ class LessonWorker
 	  		).where(
 	  		site_id: 1 #Site
 	  		).where(
-	  		level_id: @current_level,
+	  		level_id: current_level,
 	  		).last
 
 	  	if @find_lesson.blank?
@@ -110,7 +110,7 @@ class LessonWorker
 		  		lesson_day: link.LessonDay,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
-		  		level_id: @current_level,
+		  		level_id: current_level,
 	  		)
 	  	else
 	  		lesson = @find_lesson
@@ -121,7 +121,7 @@ class LessonWorker
 	  		last_name: link.StuSurname).where(
 	  		dob: @dob).where(
 	  		personal_notes: 1).where(
-	  		current_level: @current_level
+	  		current_level: current_level
 	  		).last
 	  	if @find_student.blank?
 	  	student = Student.create(
@@ -129,7 +129,7 @@ class LessonWorker
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
-	  		current_level: @current_level,
+	  		current_level: current_level,
 	  		)
 	  	else
 	  	student = @find_student
