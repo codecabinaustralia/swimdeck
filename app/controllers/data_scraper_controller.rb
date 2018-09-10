@@ -12,6 +12,7 @@ class DataScraperController < ApplicationController
   	LessonWorker.perform_async()
   end
 
+
   def csv_spider
 
 Skill.create(title: "Feel comfortable in the water", level_id: 1, rank_id: 1)
