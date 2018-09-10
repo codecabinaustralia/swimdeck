@@ -20,7 +20,8 @@ class LinksWorker
 
 	csv.each do |row|
 		data = row[0].split("|")
-  		
+  		    @today_date = Date.strptime(StuBookStartDate, "%Y-%m-%d")
+          if @today_date <= (Time.now - 7.days).strftime("%Y-%m-%d")
   	  		Link.create(
   		  		StuSurname: data.values_at(0).join(''),
   		  		StuGivenNames: data.values_at(1).join(''),
@@ -51,6 +52,7 @@ class LinksWorker
   		  		StuDateOfBirth: data.values_at(26).join(''),
   		  		StuAge: data.values_at(27).join('')
   	  		)
+        end
   	end
 
     
