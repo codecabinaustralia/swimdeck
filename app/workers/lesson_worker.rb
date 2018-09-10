@@ -65,27 +65,25 @@ class LessonWorker
 		  	end
 	  	end
 
-	  	@refactored_date = Date.strptime(link.StuBookStartDate, "%d %b %Y")
 	  	if link.LessonDay == "Monday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:monday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
 	  	elsif link.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:tuesday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
 	  	elsif link.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:wednesday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
 	  	elsif link.LessonDay == "Thursday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:thursday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
 	  	elsif link.LessonDay == "Friday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:friday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
 	  	elsif link.LessonDay == "Saturday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:saturday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
 	  	elsif link.LessonDay == "Sunday"
-	  		@new_date = Date.parse(@refactored_date).next_occurring(:sunday).strftime("%Y-%m-%d")
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
+	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
+		@time_reformat = @new_time
 
-	  	
-
-	  	@lesson_start = DateTime.strptime("2018-09-10 #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
 	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
@@ -114,9 +112,7 @@ class LessonWorker
 
 
 	  	@find_lesson = Lesson.where(
-	  		start_time: @lesson_start
-	  		).where(
-	  		finish_time: @lesson_start
+	  		start_time: @time_reformat
 	  		).where(
 	  		user_id: @t_user.id #Teacher
 	  		).where(
