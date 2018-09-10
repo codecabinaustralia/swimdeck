@@ -4,73 +4,78 @@ class FlagsController < ApplicationController
   def feed_me
     @clients = Client.all
 
-    @clients.each do |client|
-      if client.get_to_know.blank?
-        @client_students = ClientStudent.where(client_id: client.id).all
-        @students = Student.where(id: @client_students.pluck(:student_id))
-        @students.each do |student|
-          @flag = Flag.new(
-            title: "We need to know more information about the guardian: #{client.first_name}, try to fill out their details.",
-            student_id: student.id,
-            compulsory_note: true,
-            flag_type: "client_information"
-            )
-          @flag.save
+    if @parent_info_flag == true
+      @clients.each do |client|
+        if client.get_to_know.blank?
+          @client_students = ClientStudent.where(client_id: client.id).all
+          @students = Student.where(id: @client_students.pluck(:student_id))
+          @students.each do |student|
+            @flag = Flag.new(
+              title: "We need to know more information about the guardian: #{client.first_name}, try to fill out their details.",
+              student_id: student.id,
+              compulsory_note: true,
+              flag_type: "client_information"
+              )
+            @flag.save
+          end
         end
       end
     end
 
 
-     @students = Student.all
-     @one_month = Time.now - 30.days
+    if @no_skill_achieved_flag == true
+       @students = Student.all
+       @one_month = Time.now - 30.days
+
+        @students.each do |student|
+        @last_post = Post.where(student_id: student.id).where(note: nil).where.not(skill_id: nil).last
+         
+         if @last_post.present?
+           if @last_post.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
+             @task = Task.new(
+               title: "#{student.full_name} hasn't mastered a skill for a while and is at risk of dropping off.",
+               student_id: student.id,
+               due_date: Time.now,
+               task_type: "risk"
+               )
+             @task.save
+           end
+         else
+           if student.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
+             @task = Task.new(
+               title: "#{student.full_name} hasn't mastered any skills yet and is at risk of dropping off.",
+               student_id: student.id,
+               due_date: Time.now,
+               task_type: "risk"
+               )
+             @task.save
+           end
+         end
+      end
+    end
+
+    if @no_wall_activity_flag == true
+      @students = Student.all
+      @one_month = Time.now - 30.days
+      puts @one_month.strftime("%Y-%m-%d")
 
       @students.each do |student|
-      @last_post = Post.where(student_id: student.id).where(note: nil).where.not(skill_id: nil).last
-       
-       if @last_post.present?
-         if @last_post.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
-           @task = Task.new(
-             title: "#{student.full_name} hasn't mastered a skill for a while and is at risk of dropping off.",
-             student_id: student.id,
-             due_date: Time.now,
-             task_type: "risk"
-             )
-           @task.save
-         end
-       else
-         if student.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
-           @task = Task.new(
-             title: "#{student.full_name} hasn't mastered any skills yet and is at risk of dropping off.",
-             student_id: student.id,
-             due_date: Time.now,
-             task_type: "risk"
-             )
-           @task.save
-         end
-       end
-    end
-
-
-    @students = Student.all
-    @one_month = Time.now - 30.days
-    puts @one_month.strftime("%Y-%m-%d")
-
-    @students.each do |student|
-      @last_post = Post.where(student_id: student.id).where(note: nil).last
-      if @last_post.present?
-        puts @last_post.created_at.strftime("%Y-%m-%d")
-        if @last_post.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
-          @task = Task.new(
-            title: "#{student.full_name} is at risk of dropping off. Please review their wall and make contact.",
-            student_id: student.id,
-            due_date: Time.now,
-            task_type: "risk"
-            )
-          @task.save
+        @last_post = Post.where(student_id: student.id).where(note: nil).last
+        if @last_post.present?
+          puts @last_post.created_at.strftime("%Y-%m-%d")
+          if @last_post.created_at.strftime("%Y-%m-%d") == @one_month.strftime("%Y-%m-%d")
+            @task = Task.new(
+              title: "#{student.full_name} is at risk of dropping off. Please review their wall and make contact.",
+              student_id: student.id,
+              due_date: Time.now,
+              task_type: "risk"
+              )
+            @task.save
+          end
         end
       end
     end
-
+    
     @students = Student.all
 
     @students.each do |student|

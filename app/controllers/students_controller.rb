@@ -80,13 +80,13 @@ protect_from_forgery with: :exception, prepend: true
 
     #Add skill post
     if @student_skill.competency_level_id == 3
-      @post = Post.new(
-                skill_id: @student_skill.id,
-                student_id: @student_skill.student_id,
-                user_id: current_user.id,
-                body: "Congratulations you have mastered a new skill"
-                )
-      @post.save!
+      #@post = Post.new(
+       #         skill_id: @student_skill.id,
+        #        student_id: @student_skill.student_id,
+         #       user_id: current_user.id,
+          #      body: "Congratulations you have mastered a new skill"
+           #     )
+      #@post.save!
 
 
 
