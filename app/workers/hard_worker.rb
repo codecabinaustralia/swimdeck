@@ -79,21 +79,25 @@ class HardWorker
 			@current_level = 13
 		end
   		# Secondly we need to find the date of next StuBookStartDate
+  		#But we need to make lesson.StuBookStartDate a true date
+  		@true_date = Date.strptime(lesson.StuBookStartDateDate, "%d %b %Y")
+
   		if lesson.LessonDay == "Monday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:monday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:monday)
 	  	elsif lesson.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:tuesday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:tuesday)
 	  	elsif lesson.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:wednesday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:wednesday)
 	  	elsif lesson.LessonDay == "Thursday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:thursday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:thursday)
 	  	elsif lesson.LessonDay == "Friday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:friday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:friday)
 	  	elsif lesson.LessonDay == "Saturday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:saturday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:saturday)
 	  	elsif lesson.LessonDay == "Sunday"
-	  		@new_date = Date.parse(lesson.StuBookStartDate).next_occurring(:sunday)
+	  		@new_date = Date.parse(@true_date).next_occurring(:sunday)
 	  	end
+	  	
 	  	# Now we need to merge that date with the LessonTime - we'llconvert this to a DateTime then format it accordingly
   		@lesson_start = DateTime.strptime("#{@new_date} #{lesson.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
   		#Finally we create the lesson
