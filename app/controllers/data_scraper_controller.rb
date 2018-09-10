@@ -11,6 +11,7 @@ class DataScraperController < ApplicationController
   def add_lessons
   	LessonWorker.perform_async()
   end
+  
 
   def csv_spider
 
