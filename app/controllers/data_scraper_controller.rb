@@ -1,5 +1,5 @@
 class DataScraperController < ApplicationController
-	
+
   def delete_all_lesson_data
     RemovableWorker.perform_async()
   end
@@ -9,7 +9,7 @@ class DataScraperController < ApplicationController
   end
 
   def add_lessons
-  	HardWorker.perform_async()
+  	LessonWorker.perform_async()
   end
 
   def csv_spider

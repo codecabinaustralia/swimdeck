@@ -1,4 +1,4 @@
-class HardWorker
+class LessonWorker
 
   include Sidekiq::Worker
   sidekiq_options retry:false
