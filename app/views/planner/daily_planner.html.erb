@@ -3,7 +3,8 @@
     <div class="cell small-12 medium-6 medium-offset-3">
       <!-- Header -->
       <div class="accordion-header">
-        <h1>Daily Planner <small>For <%= Time.now.strftime("%b %d %Y") %></small></h1>
+        <% @mytime = Time.now + 10.hours %>
+        <h1>Daily Planner <small>For <%= @mytime.strftime("%b %d %Y") %></small></h1>
       </div>
       <!-- Checklist Flag Buttons -->
       <% @students_today = LessonParticipant.where(lesson_id: @lessons).pluck(:student_id) %>
