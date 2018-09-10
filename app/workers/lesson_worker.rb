@@ -7,6 +7,8 @@ class LessonWorker
   	
 	@links = Link.where(LessonDay: Time.now.strftime('%A').to_s).all
 
+
+
   	@links.each do |link|
 
   	if link.StuSurname != "----------"
@@ -140,14 +142,11 @@ class LessonWorker
 	  	require 'securerandom'
 	  	@random_string = SecureRandom.hex
 
-	  		@find_lessonparticipant = LessonParticipant.where(lesson_id: lesson.id).where(student_id: student.id).all
-		  	if @find_lessonparticipant.blank?
-			  	lesson_participant = LessonParticipant.create(
-			  		lesson_id: lesson.id,
-			  		student_id: student.id,
-			  		random_string: @random_string
-			  	)
-		  	end
+	  	lesson_participant = LessonParticipant.create(
+	  		lesson_id: lesson.id,
+	  		student_id: student.id,
+	  		random_string: @random_string
+	  	)
 		
 
 
