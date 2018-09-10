@@ -10,28 +10,28 @@ class HardWorker
   	@link_first.destroy
 
   	#Now group links data by lesson time and teacher
-  	@links_lessons = Link.all.group_by{|e| [e.LessonDay, e.LessonTime, e.StuBookStartDate]}
+  	@links_lessons = Link.all
 
   	#Loop through these lessons and create a teacher and lesson
   	@links_lessons.each do |lesson|
-  		#First the teacher and their login
+  		#First create the teacher and their login
   		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachFirstname}@rackleyswimming.com.au").last
   		if @teacher.blank?
   			@teacher = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-	 	  		password: "Test123",
-	 	  		password_confirmation: "Test123", 
-	 	  		current_sign_in_at: DateTime.now,
-	 	  		last_sign_in_at: DateTime.now,
-	 	  		created_at: DateTime.now,
-	 	  		admin: false,
-	 	  		manager: false,
-	 	  		pool_deck_leader: false,
-	 	  		teacher: true,
-	 	  		customer_service: false,
-	 	  		client: false,
-	 	  		first_name: link.TeachGivenNames,
-	 	  		last_name: link.TeachSurname
+		 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+		 	  		password: "Test123",
+		 	  		password_confirmation: "Test123", 
+		 	  		current_sign_in_at: DateTime.now,
+		 	  		last_sign_in_at: DateTime.now,
+		 	  		created_at: DateTime.now,
+		 	  		admin: false,
+		 	  		manager: false,
+		 	  		pool_deck_leader: false,
+		 	  		teacher: true,
+		 	  		customer_service: false,
+		 	  		client: false,
+		 	  		first_name: link.TeachGivenNames,
+		 	  		last_name: link.TeachSurname
 	 	  		)
   			@teacher.save
   		end
@@ -96,15 +96,21 @@ class HardWorker
 	  	end
 	  	# Now we need to merge that date with the LessonTime - we'llconvert this to a DateTime then format it accordingly
   		@lesson_start = DateTime.strptime("#{@new_date} #{lesson.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
-  		#Finally we create the lesson  		
-  		@lesson = Lesson.new(
-		  		start_time: @lesson_start,
-		  		user_id: @teacher.id,
-		  		site_id: 1,
-		  		level_id: @current_level,
-  			)
-  		@lesson.save
-  		
+  		#Finally we create the lesson
+  		@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: @teacher.id).last
+
+  		if @find_lesson.blank?
+	  		@lesson = Lesson.new(
+			  		start_time: @lesson_start,
+			  		user_id: @teacher.id,
+			  		site_id: 1,
+			  		level_id: @current_level,
+	  			)
+	  		@lesson.save
+	  	else
+	  		@lesson = @find_lesson
+  		end
+
   	end
 
   end
