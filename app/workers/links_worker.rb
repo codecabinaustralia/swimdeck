@@ -15,7 +15,7 @@ class LinksWorker
 	ftp.login("swimdesk@ftp.cityvenuemanagement.com.au","Axs4swim")
 	ftp.chdir("/")
 	ftp.passive = true
-	ftp.getbinaryfile("CEN_SCHOOL.csv", "tmp_path")
+	ftp.getbinaryfile("CEN_SCHOOL_TEMP.csv", "tmp_path")
 
   	csv_text = open("tmp_path")
 	csv = CSV.parse(csv_text, :headers=>true)
@@ -25,7 +25,7 @@ class LinksWorker
   		    
 
           @csv_date = Date.strptime("data.values_at(9).join('')", "%d-%b-%y").strftime("%d-%b-%y")
-          if (@csv_date == (Date.today).strftime("%d-%b-%y"))
+
   	  		Link.create(
   		  		StuSurname: data.values_at(0).join(''),
   		  		StuGivenNames: data.values_at(1).join(''),
@@ -56,7 +56,7 @@ class LinksWorker
   		  		StuDateOfBirth: data.values_at(26).join(''),
   		  		StuAge: data.values_at(27).join('')
   	  		)
-        end
+        
   	end
 
     
