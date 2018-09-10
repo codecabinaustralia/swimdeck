@@ -14,8 +14,7 @@
 				<h1>
 					<%= @lesson.site.title %> - <%= @lesson.level.title %> class<br />
 					<small>
-						<%= @lesson.start_time.strftime("%a %d of %b at %-I:%M%p - ") %>
-						<%= @lesson.finish_time.strftime("%-I:%M%p") %> with <%= @lesson.user.full_name %>
+						<%= @lesson.lesson_time %>
 					</small>
 				</h1>
 			</div>
