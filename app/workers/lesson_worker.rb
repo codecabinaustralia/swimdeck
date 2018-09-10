@@ -91,11 +91,10 @@ class LessonWorker
 					user.last_name = link.TeachSurname
 				  end
 
+		if Time.now.strftime('%A').to_s == link.LessonDay && Time.now.strftime('%d %b %Y').to_s > link.StuBookStartDate  
 		#Now to create the Lesson
-		lesson = Lesson.find_or_create_by(user_id: teacher.id, lesson_date: "#{@new_date.to_s}", lesson_time: "#{link.LessonTime}") do |l|
-				    l.level_id = @current_level
-				    l.site_id = 1
-				 end
+		lesson = Lesson.find_or_create_by(site_id: 1, level_id: @current_level, user_id: teacher.id, lesson_date: "#{@new_date.to_s}", lesson_time: "#{link.LessonTime}")
+		end
 
 		#Let's create a student now
 		student = Student.find_or_create_by(first_name: link.StuGivenNames, last_name: link.StuSurname, dob: @dob) do |s|
