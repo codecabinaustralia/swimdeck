@@ -123,8 +123,8 @@ class LessonWorker
 
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
-		  		start_time: @lesson_start,
-		  		finish_time: @lesson_start,
+		  		start_time: @time_reformat,
+		  		finish_time: @time_reformat,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
