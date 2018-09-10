@@ -81,6 +81,7 @@ class LessonWorker
 	  	elsif link.LessonDay == "Sunday"
 	  		@new_date = Date.parse(@refactored_date).next_occurring(:sunday)
 	  	end
+	  	
 
 	  	@new_time = (@refactored_date + " " + link.LessonTime).to_s
 
