@@ -93,7 +93,7 @@ class LessonWorker
 
 
 	  	@find_lesson = Lesson.where(
-	  		lesson_date: link.StuBookStartDate
+	  		lesson_day: link.LessonDay
 	  		).where(
 		  	lesson_time: link.LessonTime,
 	  		).where(
