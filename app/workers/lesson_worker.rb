@@ -92,8 +92,9 @@ class LessonWorker
 				  end
 
 		#Now to create the Lesson
-		lesson = Lesson.find_or_create_by(site_id: 1, user_id: teacher.id, lesson_date: @new_date, lesson_time: link.LessonTime) do |l|
+		lesson = Lesson.find_or_create_by(user_id: teacher.id, lesson_date: link.StuBookStartDate, lesson_time: link.LessonTime) do |l|
 				    l.level_id = @current_level
+				    l.site_id = 1
 				 end
 
 		#Let's create a student now
