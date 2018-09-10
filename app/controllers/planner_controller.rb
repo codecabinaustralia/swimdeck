@@ -14,8 +14,7 @@ class PlannerController < ApplicationController
   		@filter_time = Time.now.strftime('%d %b %Y')
   	end
 
-    Time.now.strftime('%d %b %Y').to_s > @lesson.StuBookStartDate
-  	@lessons = Lesson.where(lesson_day: @filter_time.strftime('%A').to_s).where("lesson_date > ?", @filter_time).all.order(:lesson_time).paginate(:page => params[:page], :per_page => 30)
+  	@lessons = Lesson.where(lesson_day: @filter_time.strftime('%A').to_s).where("lesson_date < ?", @filter_time).all.order(:lesson_time).paginate(:page => params[:page], :per_page => 30)
     
 
     @checked_lists = GenericListCheck.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).all.pluck(:generic_checklist_id)
