@@ -66,80 +66,49 @@ class HardWorker
 		  	end
 	  	end
 
-	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
-	  	@newdate  = Date.today
-		@deltadate = Date.today
-		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+	  	if link.LessonDay == "Monday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
+	  	elsif link.LessonDay == "Tuesday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
+	  	elsif link.LessonDay == "Wednesday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
+	  	elsif link.LessonDay == "Thursday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
+	  	elsif link.LessonDay == "Friday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
+	  	elsif link.LessonDay == "Saturday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
+	  	elsif link.LessonDay == "Sunday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
+	  	end
 
-	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
-	  	@lesson_finish = @time_reformat
+		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 
-	  	#Add Teacher User
-	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
+	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).last
 
-	   	if @teacher.blank?
-	 	  	@t_user = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-	 	  		password: "Test123",
-	 	  		password_confirmation: "Test123", 
-	 	  		current_sign_in_at: DateTime.now,
-	 	  		last_sign_in_at: DateTime.now,
-	 	  		created_at: DateTime.now,
-	 	  		admin: false,
-	 	  		manager: false,
-	 	  		pool_deck_leader: false,
-	 	  		teacher: true,
-	 	  		customer_service: false,
-	 	  		client: false,
-	 	  		first_name: link.TeachGivenNames,
-	 	  		last_name: link.TeachSurname
-	 	  		)
-	 	  	@t_user.save
-	 	else
-	 		@t_user = @teacher
-	 	end
-
-
-	  	@find_lesson = Lesson.where(
-	  		start_time: @lesson_start
-	  		).where(
-	  		finish_time: @lesson_start
-	  		).where(
-	  		user_id: @t_user.id #Teacher
-	  		).where(
-	  		site_id: 1 #Site
-	  		).where(
-	  		level_id: @current_level,
-	  		).last
-
-	  	if @find_lesson.blank?
+	  	if @find_lesson.present?
 	  		lesson = Lesson.create(
 		  		start_time: @lesson_start,
 		  		finish_time: @lesson_start,
-		  		user_id: @t_user.id, #Teacher placeholder 3
-		  		site_id: 1, #Site placeholder 1
-		  		level_id: @current_level,
+		  		user_id: t_user.id,
+		  		site_id: 1,
+		  		level_id: @current_level
 	  		)
 	  	else
 	  		lesson = @find_lesson
 	  	end
 
-	  	@find_student = Student.where(
-	  		first_name: link.StuGivenNames).where(
-	  		last_name: link.StuSurname).where(
-	  		dob: @dob).where(
-	  		personal_notes: 1).where(
-	  		current_level: @current_level
-	  		).last
+
+	  	@find_student = Student.where(first_name: link.StuGivenNames).where(last_name: link.StuSurname).where(dob: @dob).where(personal_notes: 1).where(current_level: @current_level).last
+
 	  	if @find_student.blank?
 	  	student = Student.create(
 	  		first_name: link.StuGivenNames,
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
-	  		current_level: @current_level,
+	  		current_level: @current_level
 	  		)
 	  	else
 	  	student = @find_student
