@@ -129,6 +129,7 @@ class LessonWorker
 		  		finish_time: @time_reformat,
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: link.LessonTime,
+		  		lesson_day: link.LessonDay,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: @current_level,
