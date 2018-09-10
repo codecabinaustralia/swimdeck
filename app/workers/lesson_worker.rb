@@ -5,7 +5,7 @@ class LessonWorker
 
   def perform()
   	
-require 'date'
+	require 'date'
   	require 'time'
   	#Find all links
   	@links = Link.all
@@ -19,41 +19,29 @@ require 'date'
   		#We'll need to determin the level of the lesson
   		if link.LessonLevel == "00 SPLASH"
   			@current_level = 1
-  		end
-		if link.LessonLevel == "01 DIS 1"
+		elsif link.LessonLevel == "01 DIS 1"
 			@current_level = 2
-		end
-		if link.LessonLevel == "02 DIS 2"
+		elsif link.LessonLevel == "02 DIS 2"
 			@current_level = 3
-		end
-		if link.LessonLevel == "03 DIS 3"
+		elsif link.LessonLevel == "03 DIS 3"
 			@current_level = 4
-		end
-		if link.LessonLevel == "04 NWST"
+		elsif link.LessonLevel == "04 NWST"
 			@current_level = 5
-		end
-		if link.LessonLevel == "05 LRN 1"
+		elsif link.LessonLevel == "05 LRN 1"
 			@current_level = 6
-		end
-		if link.LessonLevel == "06 LRN 2"
+		elsif link.LessonLevel == "06 LRN 2"
 			@current_level = 7
-		end
-		if link.LessonLevel == "07 INT 1"
+		elsif link.LessonLevel == "07 INT 1"
 			@current_level = 8
-		end
-		if link.LessonLevel == "08 INT 2"
+		elsif link.LessonLevel == "08 INT 2"
 			@current_level = 9
-		end
-		if link.LessonLevel == "09 ADV 1"
+		elsif link.LessonLevel == "09 ADV 1"
 			@current_level = 10
-		end
-		if link.LessonLevel == "10 ADV 2"
+		elsif link.LessonLevel == "10 ADV 2"
 			@current_level = 11
-		end
-		if link.LessonLevel == "11 ACH 1"
+		elsif link.LessonLevel == "11 ACH 1"
 			@current_level = 12
-		end
-		if link.LessonLevel == "12 ACH 2"
+		elsif link.LessonLevel == "12 ACH 2"
 			@current_level = 13
 		end
 
@@ -151,19 +139,7 @@ require 'date'
 		#Let's connect the student to the client
 		student_client = StudentClient.find_or_create_by(student_id: student.id, client_id: client.id)
 
-		# Finally we can add the skills to the students
-		# Currently we are just adding the skills from the @current_level and assigning them as incompetant
-			
-	    @students = Student.all
-	    @students.each do |student|
-		    @skills = Skill.where(level_id: student.current_level).all
-		    @skills.each do |skill|
-			    StudentSkill.find_or_create_by(student_id: student.id, skill_id: skill.id) do |sk|
-					sk.level_id = student.current_level,
-					sk.competency_level_id = 1
-			    end
-			end
-	  	end
+		
   	end
 
 end
