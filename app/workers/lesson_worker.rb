@@ -123,23 +123,7 @@ class LessonWorker
 					p.last_name = link.RPSurname
 				  end
 
-		#Now the client details record
-		client = Client.find_or_create_by(email: "#{link.RPEmail}") do |c|
-			c.user_id = c_user.id
-			c.first_name = link.RPGivenNames
-			c.last_name = link.RPSurname
-			c.phone_1 = link.RPPhone
-			c.phone_2 = link.RPWorkPhone
-			c.address = link.RPAddress
-			c.address_city = link.RPSuburb
-			c.address_state = "QLD"
-			c.address_postcode = link.RPPostCode
-		end
-
-
-		#Let's connect the student to the client
-		#student_client = ClientStudent.find_or_create_by(student_id: student.id, client_id: client.id)
-
+		
 		# Finally we can add the skills to the students
 		# Currently we are just adding the skills from the @current_level and assigning them as incompetant
 			
