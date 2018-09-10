@@ -5,8 +5,7 @@
           <tr style="color: #fff; background-color: <%= lesson.lesson.level.color %>">
             <td class="future_lessons">
               <h5 style="font-weight: bold;"><%= lesson.lesson.site.title %></h5> 
-              <h5><%= lesson.lesson.start_time.strftime("%d %b %Y") %></h5>
-              <h5>@ <%= lesson.lesson.start_time.strftime("%-I:%M%p") %> - <%= lesson.lesson.finish_time.strftime("%-I:%M%p") %> </h5> 
+              <h5><%= lesson.lesson.lesson_time %></h5>
             </td>
             <td style="text-align: right">
               <%= link_to "View Lesson", lesson_path(lesson.lesson.id), class: "button expanded success hollow", style: " border: 2px solid white; color: #fff; font-weight: bold;" %>
