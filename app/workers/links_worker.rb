@@ -51,7 +51,7 @@ class LinksWorker
   		  		StuDateOfBirth: data.values_at(26).join(''),
   		  		StuAge: data.values_at(27).join('')
   	  		)
-  	end
+  	
 
     @link_first = Link.first
     @link_first.destroy
@@ -143,7 +143,7 @@ class LinksWorker
         level_id: @current_level
       )
 
-
+end
 
     end
 
