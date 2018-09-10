@@ -85,7 +85,7 @@ class DelegationWorker
 	  	end
 
 	  	#Now we need to turn StuBookStartDate from AM to 24hr time
-	  	@new_time = Time.strptime( link.StuBookStartDate, "%H:%M%p")
+	  	@new_time = Time.strptime( link.LessonTime, "%H:%M%p")
 
 
   		#Now let's create a teacher
