@@ -15,7 +15,7 @@ class LinksWorker
 	ftp.login("swimdesk@ftp.cityvenuemanagement.com.au","Axs4swim")
 	ftp.chdir("/")
 	ftp.passive = true
-	ftp.getbinaryfile("CEN_SCHOOL_TEMP.csv", "tmp_path")
+	ftp.getbinaryfile("CEN_SCHOOL.csv", "tmp_path")
 
   	csv_text = open("tmp_path")
 	csv = CSV.parse(csv_text, :headers=>true)
