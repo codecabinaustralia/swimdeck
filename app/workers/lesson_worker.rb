@@ -65,14 +65,23 @@ class LessonWorker
 		  	end
 	  	end
 
-	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+	  	if link.LessonDay == "Monday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
+	  	elsif link.LessonDay == "Tuesday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
+	  	elsif link.LessonDay == "Wednesday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
+	  	elsif link.LessonDay == "Thursday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
+	  	elsif link.LessonDay == "Friday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
+	  	elsif link.LessonDay == "Saturday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
+	  	elsif link.LessonDay == "Sunday"
+	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
+	  	end
 
-	  	@newdate  = Date.today
-		@deltadate = Date.today
-		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
-
-	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
-	  	@lesson_finish = @time_reformat
+	  	@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
