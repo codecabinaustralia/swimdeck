@@ -9,7 +9,7 @@ class DelegationWorker
   	@links = Link.all
 
   	#Delete the first row containing ------------
-  	@link.first.destroy
+  	@links.first.destroy
 
   	#Loop through all links
   	@links.each do |link|
