@@ -5,14 +5,40 @@ class HardWorker
 
   def perform()
   	
+  	#First destroy the first line in links table -----------
+  	@link_first = Link.first
+  	@link_first.destroy
 
-	@links = Link.all
+  	#Now group links data by lesson time and teacher
+  	@links_lessons = Link.all.group_by{|e| [e.LessonDay, e.LessonTime, e.StuBookStartDate]}
 
-  	@links.each do |link|
+  	#Loop through these lessons and create a teacher and lesson
+  	@links_lessons.each do |lesson|
+  		#First the teacher and their login
+  		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachFirstname}@rackleyswimming.com.au").last
+  		if @teacher.blank?
+  			@teacher = User.new(
+	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+	 	  		password: "Test123",
+	 	  		password_confirmation: "Test123", 
+	 	  		current_sign_in_at: DateTime.now,
+	 	  		last_sign_in_at: DateTime.now,
+	 	  		created_at: DateTime.now,
+	 	  		admin: false,
+	 	  		manager: false,
+	 	  		pool_deck_leader: false,
+	 	  		teacher: true,
+	 	  		customer_service: false,
+	 	  		client: false,
+	 	  		first_name: link.TeachGivenNames,
+	 	  		last_name: link.TeachSurname
+	 	  		)
+  			@teacher.save
+  		end
 
-  	if link.StuSurname != "----------"
-  		# LESSON LEVEL 
 
+  		#Now the Lesson
+  		#First we find the current level of each student
   		if link.LessonLevel == "00 SPLASH"
   			@current_level = 1
   		end
@@ -52,22 +78,8 @@ class HardWorker
 		if link.LessonLevel == "12 ACH 2"
 			@current_level = 13
 		end
-
-		  
-
-		# DOB FORMAT
-
-		if link.StuDateOfBirth.present?
-			require 'date'
-		  	begin
-		  	   @dob = Date.parse(link.StuDateOfBirth.to_date.strftime("%Y-%m-%d"))
-		  	rescue ArgumentError
-		  	   @dob = nil
-		  	end
-	  	end
-
-
-	  	if link.LessonDay == "Monday"
+  		# Secondly we need to find the date of next StuBookStartDate
+  		if link.LessonDay == "Monday"
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
 	  	elsif link.LessonDay == "Tuesday"
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
@@ -82,125 +94,18 @@ class HardWorker
 	  	elsif link.LessonDay == "Sunday"
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
-
-		@lesson_start = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %-I:%M%p").strftime("%Y-%m-%d %-I:%M")
-
-	  	@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: t_user.id).last
-
-	  	if @find_lesson.present?
-	  		lesson = Lesson.create(
+	  	# Now we need to merge that date with the LessonTime - we'llconvert this to a DateTime then format it accordingly
+  		@lesson_start = DateTime.strptime("#{@new_date} #{lesson.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
+  		#Finally we create the lesson  		
+  		@lesson = Lesson.new(
 		  		start_time: @lesson_start,
-		  		finish_time: @lesson_start,
-		  		user_id: t_user.id,
+		  		user_id: @teacher.id,
 		  		site_id: 1,
-		  		level_id: @current_level
-	  		)
-	  	else
-	  		lesson = @find_lesson
-	  	end
-
-
-	  	@find_student = Student.where(first_name: link.StuGivenNames).where(last_name: link.StuSurname).where(dob: @dob).where(personal_notes: 1).where(current_level: @current_level).last
-
-	  	if @find_student.blank?
-	  	student = Student.create(
-	  		first_name: link.StuGivenNames,
-	  		last_name: link.StuSurname,
-	  		dob: @dob,
-	  		personal_notes: 1,
-	  		current_level: @current_level
-	  		)
-	  	else
-	  	student = @find_student
-	  	end
-
-	  	# LESSON PARTICPANT
-	  	require 'securerandom'
-	  	@random_string = SecureRandom.hex
-
-	  	@lesson_participant = LessonParticipant.where(
-	  		lesson_id: lesson.id).where(
-	  		student_id: student.id
-	  	).last
-
-	  	if @lesson_participant.blank?
-		  	lesson_participant = LessonParticipant.create(
-		  		lesson_id: lesson.id,
-		  		student_id: student.id,
-		  		random_string: @random_string
-		  	)
-		else
-			lesson_participant = @lesson_participant
-	    end
-
-
-
-
-	  	#Create User/Client/Parent Login
-	  	@user = User.where(email: link.RPEmail).last
-
-	  	if @user.blank?
-		  	c_user = User.new(
-		  		email: link.RPEmail,
-		  		password: "Test123",
-		  		password_confirmation: "Test123", 
-		  		current_sign_in_at: DateTime.now,
-		  		last_sign_in_at: DateTime.now,
-		  		created_at: DateTime.now,
-		  		admin: false,
-		  		manager: false,
-		  		pool_deck_leader: false,
-		  		teacher: false,
-		  		customer_service: false,
-		  		client: true,
-		  		first_name: link.RPGivenNames,
-		  		last_name: link.RPSurname
-		  		)
-		  	c_user.save
-		else
-			c_user = @user
-		end
-
-		#Create Client
-		@find_client = Client.where(
-			user_id: c_user.id).where(
-			first_name: link.RPGivenNames).where(
-			last_name: link.RPSurname).where(
-			phone_1: link.RPPhone).where(
-			phone_2: link.RPWorkPhone).where(
-			address: link.RPAddress).where(
-			address_city: link.RPSuburb).where(
-			address_state: "QLD").where(
-			address_postcode: link.RPPostCode).last
-		if @find_client.blank?
-		client = Client.create(
-			user_id: c_user.id,
-			first_name: link.RPGivenNames,
-			last_name: link.RPSurname,
-			phone_1: link.RPPhone,
-			phone_2: link.RPWorkPhone,
-			address: link.RPAddress,
-			address_city: link.RPSuburb,
-			address_state: "QLD",
-			address_postcode: link.RPPostCode,
-			)
-		else
-			client = @find_client
-		end
-
-		#Attach user to student
-		@find_parent = ClientStudent.where(
-			client_id: client.id).where(
-	  		student_id: student.id).last
-	  	if @find_parent.blank?
-			parent = ClientStudent.find_or_create_by(
-		  		client_id: client.id,
-		  		student_id: student.id
-		  	)
-		end
-
-	end
-	end
+		  		level_id: @current_level,
+  			)
+  		@lesson.save
+  		
+  	end
 
   end
 end
