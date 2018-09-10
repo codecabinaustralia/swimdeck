@@ -5,116 +5,232 @@ class LessonWorker
 
   def perform()
   	
-  	#First destroy the first line in links table -----------
-  	@link_first = Link.first
-  	@link_first.destroy
+  	@links = Link.all
 
-  	#Now group links data by lesson time and teacher
-  	@links_lessons = Link.all
+  	@links.each do |link|
 
-  	#Loop through these lessons and create a teacher and lesson
-  	@links_lessons.each do |lesson|
-  		#First create the teacher and their login
-  		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachGivenNames}@rackleyswimming.com.au").last
-  		if @teacher.blank?
-  			@new_teacher = User.new(
-		 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-		 	  		password: "Test123",
-		 	  		password_confirmation: "Test123", 
-		 	  		current_sign_in_at: DateTime.now,
-		 	  		last_sign_in_at: DateTime.now,
-		 	  		created_at: DateTime.now,
-		 	  		admin: false,
-		 	  		manager: false,
-		 	  		pool_deck_leader: false,
-		 	  		teacher: true,
-		 	  		customer_service: false,
-		 	  		client: false,
-		 	  		first_name: link.TeachGivenNames,
-		 	  		last_name: link.TeachSurname
-	 	  		)
-  			@new_teacher.save
-  			@teacher = @new_teacher
-  		end
+  	if link.StuSurname != "----------"
+  		# LESSON LEVEL 
 
-
-  		#Now the Lesson
-  		#First we find the current level of each student
-  		if lesson.LessonLevel == "00 SPLASH"
+  		if link.LessonLevel == "00 SPLASH"
   			@current_level = 1
   		end
-		if lesson.LessonLevel == "01 DIS 1"
+		if link.LessonLevel == "01 DIS 1"
 			@current_level = 2
 		end
-		if lesson.LessonLevel == "02 DIS 2"
+		if link.LessonLevel == "02 DIS 2"
 			@current_level = 3
 		end
-		if lesson.LessonLevel == "03 DIS 3"
+		if link.LessonLevel == "03 DIS 3"
 			@current_level = 4
 		end
-		if lesson.LessonLevel == "04 NWST"
+		if link.LessonLevel == "04 NWST"
 			@current_level = 5
 		end
-		if lesson.LessonLevel == "05 LRN 1"
+		if link.LessonLevel == "05 LRN 1"
 			@current_level = 6
 		end
-		if lesson.LessonLevel == "06 LRN 2"
+		if link.LessonLevel == "06 LRN 2"
 			@current_level = 7
 		end
-		if lesson.LessonLevel == "07 INT 1"
+		if link.LessonLevel == "07 INT 1"
 			@current_level = 8
 		end
-		if lesson.LessonLevel == "08 INT 2"
+		if link.LessonLevel == "08 INT 2"
 			@current_level = 9
 		end
-		if lesson.LessonLevel == "09 ADV 1"
+		if link.LessonLevel == "09 ADV 1"
 			@current_level = 10
 		end
-		if lesson.LessonLevel == "10 ADV 2"
+		if link.LessonLevel == "10 ADV 2"
 			@current_level = 11
 		end
-		if lesson.LessonLevel == "11 ACH 1"
+		if link.LessonLevel == "11 ACH 1"
 			@current_level = 12
 		end
-		if lesson.LessonLevel == "12 ACH 2"
+		if link.LessonLevel == "12 ACH 2"
 			@current_level = 13
 		end
-  		# Secondly we need to find the date of next StuBookStartDate
-  		#But we need to make lesson.StuBookStartDate a true date
-  		@true_date = Date.strptime(lesson.StuBookStartDateDate, "%d %b %Y")
-  		@true_time = Time.strptime(lesson.LessonTime, "%-I:%M%p")
 
-  		if lesson.LessonDay == "Monday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:monday)
-	  	elsif lesson.LessonDay == "Tuesday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:tuesday)
-	  	elsif lesson.LessonDay == "Wednesday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:wednesday)
-	  	elsif lesson.LessonDay == "Thursday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:thursday)
-	  	elsif lesson.LessonDay == "Friday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:friday)
-	  	elsif lesson.LessonDay == "Saturday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:saturday)
-	  	elsif lesson.LessonDay == "Sunday"
-	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %-I:%M%p").next_occurring(:sunday)
+		  
+
+		# DOB FORMAT
+
+		if link.StuDateOfBirth.present?
+			require 'date'
+		  	begin
+		  	   @dob = Date.parse(link.StuDateOfBirth.to_date.strftime("%Y-%m-%d"))
+		  	rescue ArgumentError
+		  	   @dob = nil
+		  	end
 	  	end
 
-  		@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: @teacher.id).last
+	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
 
-  		if @find_lesson.blank?
-	  		@lesson = Lesson.new(
-			  		start_time: @lesson_start,
-			  		user_id: @teacher.id,
-			  		site_id: 1,
-			  		level_id: @current_level,
-	  			)
-	  		@lesson.save
+	  	@newdate  = Date.today
+		@deltadate = Date.today
+		@lesson_start = Date.today.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
+
+	  	@time_reformat = @lesson_start.to_date.strftime("%Y-%m-%d %I:%M%p")
+	  	@lesson_finish = @time_reformat
+
+	  	#Add Teacher User
+	   	#Create User/Client/Parent Login
+	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
+
+	   	if @teacher.blank?
+	 	  	@t_user = User.new(
+	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+	 	  		password: "Test123",
+	 	  		password_confirmation: "Test123", 
+	 	  		current_sign_in_at: DateTime.now,
+	 	  		last_sign_in_at: DateTime.now,
+	 	  		created_at: DateTime.now,
+	 	  		admin: false,
+	 	  		manager: false,
+	 	  		pool_deck_leader: false,
+	 	  		teacher: true,
+	 	  		customer_service: false,
+	 	  		client: false,
+	 	  		first_name: link.TeachGivenNames,
+	 	  		last_name: link.TeachSurname
+	 	  		)
+	 	  	@t_user.save
+	 	else
+	 		@t_user = @teacher
+	 	end
+
+
+	  	@find_lesson = Lesson.where(
+	  		start_time: @lesson_start
+	  		).where(
+	  		finish_time: @lesson_start
+	  		).where(
+	  		user_id: @t_user.id #Teacher
+	  		).where(
+	  		site_id: 1 #Site
+	  		).where(
+	  		level_id: @current_level,
+	  		).last
+
+	  	if @find_lesson.blank?
+	  		lesson = Lesson.create(
+		  		start_time: @lesson_start,
+		  		finish_time: @lesson_start,
+		  		user_id: @t_user.id, #Teacher placeholder 3
+		  		site_id: 1, #Site placeholder 1
+		  		level_id: @current_level,
+	  		)
 	  	else
-	  		@lesson = @find_lesson
-  		end
+	  		lesson = @find_lesson
+	  	end
 
-  	end
+	  	@find_student = Student.where(
+	  		first_name: link.StuGivenNames).where(
+	  		last_name: link.StuSurname).where(
+	  		dob: @dob).where(
+	  		personal_notes: 1).where(
+	  		current_level: @current_level
+	  		).last
+	  	if @find_student.blank?
+	  	student = Student.create(
+	  		first_name: link.StuGivenNames,
+	  		last_name: link.StuSurname,
+	  		dob: @dob,
+	  		personal_notes: 1,
+	  		current_level: @current_level,
+	  		)
+	  	else
+	  	student = @find_student
+	  	end
+
+	  	# LESSON PARTICPANT
+	  	require 'securerandom'
+	  	@random_string = SecureRandom.hex
+
+	  	@lesson_participant = LessonParticipant.where(
+	  		lesson_id: lesson.id).where(
+	  		student_id: student.id
+	  	).last
+
+	  	if @lesson_participant.blank?
+		  	lesson_participant = LessonParticipant.create(
+		  		lesson_id: lesson.id,
+		  		student_id: student.id,
+		  		random_string: @random_string
+		  	)
+		else
+			lesson_participant = @lesson_participant
+	    end
+
+
+
+
+	  	#Create User/Client/Parent Login
+	  	@user = User.where(email: link.RPEmail).last
+
+	  	if @user.blank?
+		  	c_user = User.new(
+		  		email: link.RPEmail,
+		  		password: "Test123",
+		  		password_confirmation: "Test123", 
+		  		current_sign_in_at: DateTime.now,
+		  		last_sign_in_at: DateTime.now,
+		  		created_at: DateTime.now,
+		  		admin: false,
+		  		manager: false,
+		  		pool_deck_leader: false,
+		  		teacher: false,
+		  		customer_service: false,
+		  		client: true,
+		  		first_name: link.RPGivenNames,
+		  		last_name: link.RPSurname
+		  		)
+		  	c_user.save
+		else
+			c_user = @user
+		end
+
+		#Create Client
+		@find_client = Client.where(
+			user_id: c_user.id).where(
+			first_name: link.RPGivenNames).where(
+			last_name: link.RPSurname).where(
+			phone_1: link.RPPhone).where(
+			phone_2: link.RPWorkPhone).where(
+			address: link.RPAddress).where(
+			address_city: link.RPSuburb).where(
+			address_state: "QLD").where(
+			address_postcode: link.RPPostCode).last
+		if @find_client.blank?
+		client = Client.create(
+			user_id: c_user.id,
+			first_name: link.RPGivenNames,
+			last_name: link.RPSurname,
+			phone_1: link.RPPhone,
+			phone_2: link.RPWorkPhone,
+			address: link.RPAddress,
+			address_city: link.RPSuburb,
+			address_state: "QLD",
+			address_postcode: link.RPPostCode,
+			)
+		else
+			client = @find_client
+		end
+
+		#Attach user to student
+		@find_parent = ClientStudent.where(
+			client_id: client.id).where(
+	  		student_id: student.id).last
+	  	if @find_parent.blank?
+			parent = ClientStudent.find_or_create_by(
+		  		client_id: client.id,
+		  		student_id: student.id
+		  	)
+		end
+
+	end
+	end
 
   end
 end
