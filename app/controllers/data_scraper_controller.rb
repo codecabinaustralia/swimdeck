@@ -9,7 +9,7 @@ class DataScraperController < ApplicationController
   end
 
   def add_lessons
-  	LessonWorker.perform_async()
+  	DelegationWorker.perform_async()
   end
 
 
