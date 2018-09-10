@@ -23,6 +23,7 @@ class LinksWorker
 	csv.each do |row|
 		data = row[0].split("|") 
   		    
+          
           @csv_date = Date.strptime("data.values_at(9).join('')", "%d-%b-%y").strftime("%d-%b-%y")
           if (@csv_date >= (Date.today).strftime("%d-%b-%y"))
   	  		Link.create(
