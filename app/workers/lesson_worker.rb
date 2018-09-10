@@ -17,7 +17,7 @@ class LessonWorker
   		#First create the teacher and their login
   		@teacher = User.where(email: "#{lesson.TeachSurname}.#{lesson.TeachGivenNames}@rackleyswimming.com.au").last
   		if @teacher.blank?
-  			@teacher = User.new(
+  			@new_teacher = User.new(
 		 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
 		 	  		password: "Test123",
 		 	  		password_confirmation: "Test123", 
@@ -33,7 +33,8 @@ class LessonWorker
 		 	  		first_name: link.TeachGivenNames,
 		 	  		last_name: link.TeachSurname
 	 	  		)
-  			@teacher.save
+  			@new_teacher.save
+  			@teacher = @new_teacher
   		end
 
 
