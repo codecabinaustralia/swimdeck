@@ -84,10 +84,6 @@ class DelegationWorker
 	  		@new_date = @parsed_date.next_occurring(:sunday).strftime('%d %b %Y')
 	  	end
 
-	  	#Now we need to turn StuBookStartDate from AM to 24hr time
-	  	@new_time = Time.strptime( link.LessonTime, "%H:%M%p")
-
-
   		#Now let's create a teacher
   		teacher = User.find_or_create_by(email: "#{link.TeachGivenNames}.#{link.TeachSurname}@rackleyswimming.com.au") do |user|
 					user.password = "Test123"
@@ -106,7 +102,7 @@ class DelegationWorker
 				  end
 
 		#Now to create the Lesson
-		lesson = Lesson.find_or_create_by(user_id: teacher.id, lesson_date: @new_date, lesson_time: @new_time) do |l|
+		lesson = Lesson.find_or_create_by(user_id: teacher.id, lesson_date: @new_date, lesson_time: link.LessonTime) do |l|
 				    l.level_id = @current_level
 				 end
 
