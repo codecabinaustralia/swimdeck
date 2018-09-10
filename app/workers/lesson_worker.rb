@@ -5,7 +5,7 @@ class LessonWorker
 
   def perform()
   	
-	@links = Link.where(LessonDay: Time.now.strftime('%A').to_s).where("StuBookStartDate < ?", Time.now.strftime('%d %b %Y')).all
+	@links = Link.where(LessonDay: Time.now.strftime('%A').to_s).all
 
   	@links.each do |link|
 
