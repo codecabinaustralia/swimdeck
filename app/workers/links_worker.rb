@@ -24,7 +24,7 @@ class LinksWorker
 		data = row[0].split("|") 
   		    
           @csv_date = DateTime.parse("data.values_at(9).join('') 00:00:00").strftime("%d-%b-%Y")
-          if (@csv_date < (Date.today).strftime("%d-%b-%Y"))
+          if (@csv_date == (Date.today).strftime("%d-%b-%Y"))
 
   	  		Link.create(
   		  		StuSurname: data.values_at(0).join(''),
