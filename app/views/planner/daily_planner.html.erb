@@ -18,7 +18,7 @@
       <!-- Accordion -->
       <div class="list-lesson">
       <ul class="accordion " data-accordion data-allow-all-closed="true" style="margin-top:-18px;">
-        <% @lessons.each do |lesson| %>
+        <% @lessons.order("army_time desc").each do |lesson| %>
             <%= render 'planner/lesson', lesson: lesson %>
         <% end %>
       </ul>

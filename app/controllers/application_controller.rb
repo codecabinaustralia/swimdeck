@@ -14,10 +14,10 @@ class ApplicationController < ActionController::Base
    @parent_info_flag = false #
    @no_skill_achieved_flag = true #
    @no_wall_activity_flag = false #
-   @new_skill_achieved_flag = false #
+   @new_skill_achieved_flag = false # Turn on before we leave
    @ready_for_assesment_flag = true #
-   @birthday_party_flag = false
-   @birthday_week_flag = true
+   @birthday_party_flag = false #
+   @birthday_week_flag = true #
 
   end
 
