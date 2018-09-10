@@ -135,6 +135,7 @@ class LessonWorker
 			c.address_state = "QLD"
 			c.address_postcode = link.RPPostCode
 		end
+		
 
 		#Let's connect the student to the client
 		student_client = ClientStudent.find_or_create_by(student_id: student.id, client_id: client.id)
