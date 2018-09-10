@@ -2,6 +2,8 @@ class LinksWorker
 
   include Sidekiq::Worker
   sidekiq_options retry:false
+  require 'time'
+  require 'date'
 
   def perform()
   	@link_data = Link.all
