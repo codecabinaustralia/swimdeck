@@ -81,26 +81,24 @@ class HardWorker
   		# Secondly we need to find the date of next StuBookStartDate
   		#But we need to make lesson.StuBookStartDate a true date
   		@true_date = Date.strptime(lesson.StuBookStartDateDate, "%d %b %Y")
+  		@true_time = Time.strptime(lesson.LessonTime, "%I:%M%p")
 
   		if lesson.LessonDay == "Monday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:monday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:monday)
 	  	elsif lesson.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:tuesday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:tuesday)
 	  	elsif lesson.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:wednesday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:wednesday)
 	  	elsif lesson.LessonDay == "Thursday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:thursday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:thursday)
 	  	elsif lesson.LessonDay == "Friday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:friday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:friday)
 	  	elsif lesson.LessonDay == "Saturday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:saturday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:saturday)
 	  	elsif lesson.LessonDay == "Sunday"
-	  		@new_date = Date.parse(@true_date).next_occurring(:sunday)
+	  		@lesson_start = DateTime.parse(@true_date + " " + @true_time, "%Y-%m-%d %I:%M%p").next_occurring(:sunday)
 	  	end
-	  	
-	  	# Now we need to merge that date with the LessonTime - we'llconvert this to a DateTime then format it accordingly
-  		@lesson_start = DateTime.strptime("#{@new_date} #{lesson.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
-  		#Finally we create the lesson
+
   		@find_lesson = Lesson.where(start_time: @lesson_start).where(user_id: @teacher.id).last
 
   		if @find_lesson.blank?
