@@ -5,6 +5,7 @@
       <div class="accordion-header">
         <h1>Daily Planner <small>For <%= Time.now.strftime("%b %d %Y") %></small></h1>
       </div>
+      
       <!-- Checklist Flag Buttons -->
       <% @students_today = LessonParticipant.where(lesson_id: @lessons).pluck(:student_id) %>
       <% @flags = Flag.where(student_id: @students_today).where(closed: [false, nil]).all %>
