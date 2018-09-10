@@ -81,7 +81,7 @@ class LessonWorker
 	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
 	  	end
 
-	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
+	  	@new_time = DateTime.strptime("2018-09-10 #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
 		@time_reformat = @new_time
 
 	  	#Add Teacher User
