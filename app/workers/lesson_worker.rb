@@ -232,5 +232,21 @@ class LessonWorker
 	end
 	end
 
+	#Add skills 
+    @students = Student.all
+
+    @students.each do |student|
+
+    @skills = Skill.where(level_id: student.current_level).all
+    @skills.each do |skill|
+    StudentSkill.find_or_create_by(
+        student_id: student.id,
+        skill_id: skill.id,
+        level_id: student.current_level,
+        competency_level_id: 1
+      )
+    end
+  end
+
   end
 end
