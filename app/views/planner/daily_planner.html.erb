@@ -20,8 +20,8 @@
       <ul class="accordion " data-accordion data-allow-all-closed="true" style="margin-top:-18px;">
         <% @lessons.each do |lesson| %>
           <% @brisbane_time = Time.now + 10.hours %>
-          <% @temp_date = Date.strptime(lesson.lesson_date, '%d %b %Y') %>
-          <% if @temp_date > @brisbane_time.strftime("%d %b %Y") %>
+          <% @temp_date = Date.strptime(lesson.lesson_date, "%d %b %Y") %>
+          <% if @temp_date.to_date > @brisbane_time.strftime("%d %b %Y") %>
           <% else %>
             <%= render 'planner/lesson', lesson: lesson %>
           <% end %>
