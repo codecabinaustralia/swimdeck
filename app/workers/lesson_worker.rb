@@ -6,7 +6,8 @@ class LessonWorker
   def perform()
   	
   	@time_brisbane = Time.now + 10.hours
-	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
+	@links = Link.where(
+		: @time_brisbane.strftime('%A').to_s).all
 
   	@links.each do |link|
 
