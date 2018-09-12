@@ -106,7 +106,7 @@ class LessonWorker
 	  	if @find_lesson.blank?
 	  		lesson = Lesson.create(
 		  		lesson_date: link.StuBookStartDate,
-		  		lesson_time: link.LessonTime.strip,
+		  		lesson_time: link.LessonTime,
 		  		lesson_day: link.LessonDay,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
