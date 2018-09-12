@@ -114,7 +114,7 @@ class LessonWorker
 		  		level_id: current_level,
 	  		)
 	  	else
-	  		new_time = Time.strptime(link.LessonTime.strip, "%-H:%M%p").strftime("%H:%M%p")
+	  		new_time = Time.strptime(link.LessonTime.strip, "%-H%M%p").strftime("%H:%M%p")
 	  		@find_lesson.update_attributes(
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: new_time,
