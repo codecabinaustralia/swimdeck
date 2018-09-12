@@ -21,7 +21,7 @@ class LinksWorker
 	csv = CSV.parse(csv_text, :headers=>true)
 
 	csv.each do |row|
-		data = row[0] 
+		data = row[0].split("|") 
   		    
   	  		Link.create(
   		  		StuSurname: data.values_at(0).join(''),
@@ -31,8 +31,8 @@ class LinksWorker
   		  		LessonTime: data.values_at(4).join(''),
   		  		LessonLevel: data.values_at(5).join(''),
   		  		Area: data.values_at(6).join(''),
-  		  		TeachSurname: data.values_at(7).join(''),
-  		  		TeachGivenNames: data.values_at(8).join(''),
+  		  		TeachSurname: data.values_at(7).join('').strip,
+  		  		TeachGivenNames: data.values_at(8).join('').strip,
   		  		StuBookStartDate: data.values_at(9).join(''),
   		  		RPSurname: data.values_at(10).join(''),
   		  		RPGivenNames: data.values_at(11).join(''),
