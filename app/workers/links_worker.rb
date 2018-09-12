@@ -24,33 +24,33 @@ class LinksWorker
 		data = row.split("|")
   		    
   	  		new_link = Link.new(
-  		  		StuSurname: data.values_at(0).join('').tr_s('"', '').strip
-  		  		StuGivenNames: data.values_at(1).join('').tr_s('"', '').strip
-  		  		StudId: data.values_at(2).join('').tr_s('"', '').strip
-  		  		LessonDay: data.values_at(3).join('').tr_s('"', '').strip
-  		  		LessonTime: data.values_at(4).join('').tr_s('"', '').strip
-  		  		LessonLevel: data.values_at(5).join('').tr_s('"', '').strip
-  		  		Area: data.values_at(6).join('').tr_s('"', '').strip
-  		  		TeachSurname: data.values_at(7).join('').tr_s('"', '').strip
-  		  		TeachGivenNames: data.values_at(8).join('').tr_s('"', '').strip
-  		  		StuBookStartDate: data.values_at(9).join('').tr_s('"', '').strip
-  		  		RPSurname: data.values_at(10).join('').tr_s('"', '').strip
-  		  		RPGivenNames: data.values_at(11).join('').tr_s('"', '').strip
-  		  		RPId: data.values_at(12).join('').tr_s('"', '').strip
-  		  		RPAddress: data.values_at(13).join('').tr_s('"', '').strip
-  		  		RPSuburb: data.values_at(14).join('').tr_s('"', '').strip
-  		  		RPPostCode: data.values_at(15).join('').tr_s('"', '').strip
-  		  		RPHomePhone: data.values_at(16).join('').tr_s('"', '').strip
-  		  		RPWorkPhone: data.values_at(17).join('').tr_s('"', '').strip
-  		  		RPPhone: data.values_at(18).join('').tr_s('"', '').strip
-  		  		RPEmail: data.values_at(19).join('').tr_s('"', '').strip
-  		  		RPBookingBalance: data.values_at(20).join('').tr_s('"', '').strip
-  		  		RPBookingFee: data.values_at(21).join('').tr_s('"', '').strip
-  		  		FamilyPaymentType: data.values_at(22).join('').tr_s('"', '').strip
-  		  		SpecialDiscount: data.values_at(23).join('').tr_s('"', '').strip
-  		  		RP: data.values_at(24).join('').tr_s('"', '').strip
-  		  		StuGender: data.values_at(25).join('').tr_s('"', '').strip
-  		  		StuDateOfBirth: data.values_at(26).join('').tr_s('"', '').strip
+  		  		StuSurname: data.values_at(0).tr_s('"', '').strip.join('')
+  		  		StuGivenNames: data.values_at(1).tr_s('"', '').strip.join('')
+  		  		StudId: data.values_at(2).tr_s('"', '').strip.join('')
+  		  		LessonDay: data.values_at(3).tr_s('"', '').strip.join('')
+  		  		LessonTime: data.values_at(4).tr_s('"', '').strip.join('')
+  		  		LessonLevel: data.values_at(5).tr_s('"', '').strip.join('')
+  		  		Area: data.values_at(6).tr_s('"', '').strip.join('')
+  		  		TeachSurname: data.values_at(7).tr_s('"', '').strip.join('')
+  		  		TeachGivenNames: data.values_at(8).tr_s('"', '').strip.join('')
+  		  		StuBookStartDate: data.values_at(9).tr_s('"', '').strip.join('')
+  		  		RPSurname: data.values_at(10).tr_s('"', '').strip.join('')
+  		  		RPGivenNames: data.values_at(11).tr_s('"', '').strip.join('')
+  		  		RPId: data.values_at(12).tr_s('"', '').strip.join('')
+  		  		RPAddress: data.values_at(13).tr_s('"', '').strip.join('')
+  		  		RPSuburb: data.values_at(14).tr_s('"', '').strip.join('')
+  		  		RPPostCode: data.values_at(15).tr_s('"', '').strip.join('')
+  		  		RPHomePhone: data.values_at(16).tr_s('"', '').strip.join('')
+  		  		RPWorkPhone: data.values_at(17).tr_s('"', '').strip.join('')
+  		  		RPPhone: data.values_at(18).tr_s('"', '').strip.join('')
+  		  		RPEmail: data.values_at(19).tr_s('"', '').strip.join('')
+  		  		RPBookingBalance: data.values_at(20).tr_s('"', '').strip.join('')
+  		  		RPBookingFee: data.values_at(21).tr_s('"', '').strip.join('')
+  		  		FamilyPaymentType: data.values_at(22).tr_s('"', '').strip.join('')
+  		  		SpecialDiscount: data.values_at(23).tr_s('"', '').strip.join('')
+  		  		RP: data.values_at(24).tr_s('"', '').strip.join('')
+  		  		StuGender: data.values_at(25).tr_s('"', '').strip.join('')
+  		  		StuDateOfBirth: data.values_at(26).tr_s('"', '').strip.join('')
   		  		StuAge: data.values_at(27).join('')
   	  		)
         new_link.save
