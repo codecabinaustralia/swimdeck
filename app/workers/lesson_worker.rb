@@ -104,25 +104,16 @@ class LessonWorker
 	  		).last
 
 	  	if @find_lesson.blank?
-	  		new_time = Time.strptime(link.LessonTime.strip, "%-H:%M%p").strftime("%H:%M%p")
 	  		lesson = Lesson.create(
 		  		lesson_date: link.StuBookStartDate,
-		  		lesson_time: new_time,
+		  		lesson_time: link.LessonTime.strip,
 		  		lesson_day: link.LessonDay,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: current_level,
 	  		)
 	  	else
-	  		new_time = Time.strptime(link.LessonTime.strip, "%-H%M%p").strftime("%H:%M%p")
-	  		@find_lesson.update_attributes(
-		  		lesson_date: link.StuBookStartDate,
-		  		lesson_time: new_time,
-		  		lesson_day: link.LessonDay,
-		  		user_id: @t_user.id, #Teacher placeholder 3
-		  		site_id: 1, #Site placeholder 1
-		  		level_id: current_level,
-	  		)
+	  		lesson = @find_lesson
 	  	end
 
 	  	@find_student = Student.where(
