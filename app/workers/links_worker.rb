@@ -17,7 +17,7 @@ class LinksWorker
 	ftp.passive = true
 	ftp.getbinaryfile("CEN_SCHOOL.csv", "tmp_path")
 
-  csv_text = open("tmp_path")
+  	csv_text = open("tmp_path")
 	csv = CSV.parse(csv_text, :headers=>true)
 
 	csv.each do |row|
