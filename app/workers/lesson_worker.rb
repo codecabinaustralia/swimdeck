@@ -139,12 +139,17 @@ class LessonWorker
 	  	require 'securerandom'
 	  	@random_string = SecureRandom.hex
 
-	  	lesson_participant = LessonParticipant.create(
-	  		lesson_id: lesson.id,
-	  		student_id: student.id,
-	  		random_string: @random_string
-	  	)
+	  	@find_lesson_participant = LessonParticipant.where(student_id: student.id).where(lesson_id: lesson.id).last
+
+	  	if @lesson_participant.blank?
+
+		  	lesson_participant = LessonParticipant.create(
+		  		lesson_id: lesson.id,
+		  		student_id: student.id,
+		  		random_string: @random_string
+		  	)
 		
+		end
 
 
 
