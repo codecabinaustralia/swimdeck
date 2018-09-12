@@ -23,7 +23,7 @@ class LinksWorker
 	csv.each do |row|
 		data = row.split("|")
   		    
-  	  		new_link = Link.new(
+  	  		new_link = Link.create(
   		  		StuSurname: data.values_at(0).tr_s('"', '').strip,
   		  		StuGivenNames: data.values_at(1).tr_s('"', '').strip,
   		  		StudId: data.values_at(2).tr_s('"', '').strip,
@@ -53,7 +53,6 @@ class LinksWorker
   		  		StuDateOfBirth: data.values_at(26).tr_s('"', '').strip,
   		  		StuAge: data.values_at(27).tr_s('"', '').strip
   	  		)
-        new_link.save
         
   	end
 
