@@ -66,7 +66,7 @@ class LessonWorker
 
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
+	   	@teacher = User.where(email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
 
 	   	if @teacher.blank?
 	 	  	@t_user = User.new(
