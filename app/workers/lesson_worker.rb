@@ -70,7 +70,7 @@ class LessonWorker
 
 	   	if @teacher.blank?
 	 	  	@t_user = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+	 	  		email: "#{link.TeachGivenNames.downcase.parameterize}#{link.TeachSurname.downcase.parameterize}@rackleyswimming.com.au",
 	 	  		password: "Test123",
 	 	  		password_confirmation: "Test123", 
 	 	  		current_sign_in_at: DateTime.now,
@@ -139,9 +139,7 @@ class LessonWorker
 	  	require 'securerandom'
 	  	@random_string = SecureRandom.hex
 
-	  	@find_lesson_participant = LessonParticipant.where(student_id: student.id).where(lesson_id: lesson.id).last
 
-	  	if @lesson_participant.blank?
 
 		  	lesson_participant = LessonParticipant.create(
 		  		lesson_id: lesson.id,
@@ -149,8 +147,6 @@ class LessonWorker
 		  		random_string: @random_string
 		  	)
 		
-		end
-
 
 
 
