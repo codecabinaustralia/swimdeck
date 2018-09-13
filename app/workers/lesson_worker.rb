@@ -70,7 +70,7 @@ class LessonWorker
 
 	   	if @teacher.blank?
 	 	  	@t_user = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}#{link.TeachSurname.downcase}@rackleyswimming.com.au",
+	 	  		email: "#{link.TeachGivenNames.downcase.parameterize}#{link.TeachSurname.downcase.parameterize}@rackleyswimming.com.au",
 	 	  		password: "Test123",
 	 	  		password_confirmation: "Test123", 
 	 	  		current_sign_in_at: DateTime.now,
