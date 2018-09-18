@@ -16,7 +16,7 @@ class RemovableWorker
     @tasks = Task.all
     @posts = Post.all
 
-  @post.destroy_all
+  @posts.destroy_all
   @tasks.destroy_all
   @flags.destroy_all
 	@student_skills.destroy_all
