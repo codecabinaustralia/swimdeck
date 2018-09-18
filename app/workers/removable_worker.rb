@@ -14,8 +14,11 @@ class RemovableWorker
 	@users = User.where.not(email: "josh@codecabin.com.au").where.not(email: "centenary@rackleyswimming.com.au").all
     @flags = Flag.all
     @tasks = Task.all
-    
+    @posts = Post.all
+    @comments = Comment.all
 
+  @comments.destroy_all
+  @post.destroy_all
   @tasks.destroy_all
   @flags.destroy_all
 	@student_skills.destroy_all
