@@ -6,7 +6,7 @@ class Lesson < ApplicationRecord
   require 'time'
 
   def custom_method
-  	Date.strptime(lesson_time, '%-I:%M%p').strftime('%I%M%p')
+  	Date.strptime("01/01/2000" lesson_time, '%d/%m/%Y %-I:%M%p').strftime('%I%M%p').to_s
   end
 
 end
