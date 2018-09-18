@@ -5,7 +5,7 @@ class Lesson < ApplicationRecord
 
 
   def custom_method
-  	Time.strptime(lesson_time, '%-H:%M%p').strftime('%I%M%p')
+  	Time.strptime(lesson_time, '%H:%M%p').strftime('%I%M%p')
   end
 
 end
