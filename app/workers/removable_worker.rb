@@ -15,9 +15,7 @@ class RemovableWorker
     @flags = Flag.all
     @tasks = Task.all
     @posts = Post.all
-    @comments = Comment.all
 
-  @comments.destroy_all
   @post.destroy_all
   @tasks.destroy_all
   @flags.destroy_all
