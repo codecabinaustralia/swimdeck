@@ -11,7 +11,7 @@ class RemovableWorker
   	@students = Student.all
   	@lessons = Lesson.all
     @generic_lists = GenericListCheck.all
-	@users = User.where.not(email: "josh@codecabin.com.au").all
+	@users = User.where.not(email: "josh@codecabin.com.au").where.not(email: "centenary@rackleyswimming.com.au").all
 
 
 	@student_skills.destroy_all
