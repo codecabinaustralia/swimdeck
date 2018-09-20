@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Template Customs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Header 1 img</th>
+      <th>Header 1 overlay color</th>
+      <th>Header 1 subtxt</th>
+      <th>Header 1 primarytxt</th>
+      <th>Header 1 btntxt</th>
+      <th>Quotebar 1 subtxt</th>
+      <th>Quote bar primarytxt</th>
+      <th>Quote bar btntxt</th>
+      <th>Content 6col leftimg1</th>
+      <th>Content 6col leftimg2</th>
+      <th>Content 6col righttxt</th>
+      <th>Content 6col rightsubtxt</th>
+      <th>Content 6col rightprimarytxt</th>
+      <th>Content 6col rightimg1</th>
+      <th>Content 6col rightimg2</th>
+      <th>Content 6col lefttxt</th>
+      <th>Content 6col leftsubtxt</th>
+      <th>Content 6col leftprimarytxt</th>
+      <th>Quotebox 1 subtxt</th>
+      <th>Quotebox 1 primarytxt</th>
+      <th>Quotebox 1 btntxt</th>
+      <th>Services 1 primarytxt</th>
+      <th>About 1 img1</th>
+      <th>About 1 img2</th>
+      <th>About 1 subtxt</th>
+      <th>About 1 primarytxt</th>
+      <th>About 1 txt</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @template_customs.each do |template_custom| %>
+      <tr>
+        <td><%= template_custom.header_1_img %></td>
+        <td><%= template_custom.header_1_overlay_color %></td>
+        <td><%= template_custom.header_1_subtxt %></td>
+        <td><%= template_custom.header_1_primarytxt %></td>
+        <td><%= template_custom.header_1_btntxt %></td>
+        <td><%= template_custom.quotebar_1_subtxt %></td>
+        <td><%= template_custom.quote_bar_primarytxt %></td>
+        <td><%= template_custom.quote_bar_btntxt %></td>
+        <td><%= template_custom.content_6col_leftimg1 %></td>
+        <td><%= template_custom.content_6col_leftimg2 %></td>
+        <td><%= template_custom.content_6col_righttxt %></td>
+        <td><%= template_custom.content_6col_rightsubtxt %></td>
+        <td><%= template_custom.content_6col_rightprimarytxt %></td>
+        <td><%= template_custom.content_6col_rightimg1 %></td>
+        <td><%= template_custom.content_6col_rightimg2 %></td>
+        <td><%= template_custom.content_6col_lefttxt %></td>
+        <td><%= template_custom.content_6col_leftsubtxt %></td>
+        <td><%= template_custom.content_6col_leftprimarytxt %></td>
+        <td><%= template_custom.quotebox_1_subtxt %></td>
+        <td><%= template_custom.quotebox_1_primarytxt %></td>
+        <td><%= template_custom.quotebox_1_btntxt %></td>
+        <td><%= template_custom.services_1_primarytxt %></td>
+        <td><%= template_custom.about_1_img1 %></td>
+        <td><%= template_custom.about_1_img2 %></td>
+        <td><%= template_custom.about_1_subtxt %></td>
+        <td><%= template_custom.about_1_primarytxt %></td>
+        <td><%= template_custom.about_1_txt %></td>
+        <td><%= link_to 'Show', template_custom %></td>
+        <td><%= link_to 'Edit', edit_template_custom_path(template_custom) %></td>
+        <td><%= link_to 'Destroy', template_custom, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Template Custom', new_template_custom_path %>

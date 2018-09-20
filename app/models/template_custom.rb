@@ -1,0 +1,2 @@
+class TemplateCustom < ApplicationRecord
+end

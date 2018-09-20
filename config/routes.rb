@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :template_customs
   get 'control_room/cockpit'
   get 'twilio/webhook'
   #Twilio test

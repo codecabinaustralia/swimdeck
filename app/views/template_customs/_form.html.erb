@@ -1,0 +1,152 @@
+<%= form_with(model: template_custom, local: true) do |form| %>
+  <% if template_custom.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(template_custom.errors.count, "error") %> prohibited this template_custom from being saved:</h2>
+
+      <ul>
+      <% template_custom.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :header_1_img %>
+    <%= form.text_field :header_1_img %>
+  </div>
+
+  <div class="field">
+    <%= form.label :header_1_overlay_color %>
+    <%= form.text_field :header_1_overlay_color %>
+  </div>
+
+  <div class="field">
+    <%= form.label :header_1_subtxt %>
+    <%= form.text_field :header_1_subtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :header_1_primarytxt %>
+    <%= form.text_field :header_1_primarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :header_1_btntxt %>
+    <%= form.text_field :header_1_btntxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quotebar_1_subtxt %>
+    <%= form.text_field :quotebar_1_subtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quote_bar_primarytxt %>
+    <%= form.text_field :quote_bar_primarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quote_bar_btntxt %>
+    <%= form.text_field :quote_bar_btntxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_leftimg1 %>
+    <%= form.text_field :content_6col_leftimg1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_leftimg2 %>
+    <%= form.text_field :content_6col_leftimg2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_righttxt %>
+    <%= form.text_area :content_6col_righttxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_rightsubtxt %>
+    <%= form.text_field :content_6col_rightsubtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_rightprimarytxt %>
+    <%= form.text_field :content_6col_rightprimarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_rightimg1 %>
+    <%= form.text_field :content_6col_rightimg1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_rightimg2 %>
+    <%= form.text_field :content_6col_rightimg2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_lefttxt %>
+    <%= form.text_area :content_6col_lefttxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_leftsubtxt %>
+    <%= form.text_field :content_6col_leftsubtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content_6col_leftprimarytxt %>
+    <%= form.text_field :content_6col_leftprimarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quotebox_1_subtxt %>
+    <%= form.text_field :quotebox_1_subtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quotebox_1_primarytxt %>
+    <%= form.text_field :quotebox_1_primarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quotebox_1_btntxt %>
+    <%= form.text_field :quotebox_1_btntxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :services_1_primarytxt %>
+    <%= form.text_field :services_1_primarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about_1_img1 %>
+    <%= form.text_field :about_1_img1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about_1_img2 %>
+    <%= form.text_field :about_1_img2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about_1_subtxt %>
+    <%= form.text_field :about_1_subtxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about_1_primarytxt %>
+    <%= form.text_field :about_1_primarytxt %>
+  </div>
+
+  <div class="field">
+    <%= form.label :about_1_txt %>
+    <%= form.text_area :about_1_txt %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

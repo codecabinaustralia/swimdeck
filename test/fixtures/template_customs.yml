@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  header_1_img: MyString
+  header_1_overlay_color: MyString
+  header_1_subtxt: MyString
+  header_1_primarytxt: MyString
+  header_1_btntxt: MyString
+  quotebar_1_subtxt: MyString
+  quote_bar_primarytxt: MyString
+  quote_bar_btntxt: MyString
+  content_6col_leftimg1: MyString
+  content_6col_leftimg2: MyString
+  content_6col_righttxt: MyText
+  content_6col_rightsubtxt: MyString
+  content_6col_rightprimarytxt: MyString
+  content_6col_rightimg1: MyString
+  content_6col_rightimg2: MyString
+  content_6col_lefttxt: MyText
+  content_6col_leftsubtxt: MyString
+  content_6col_leftprimarytxt: MyString
+  quotebox_1_subtxt: MyString
+  quotebox_1_primarytxt: MyString
+  quotebox_1_btntxt: MyString
+  services_1_primarytxt: MyString
+  about_1_img1: MyString
+  about_1_img2: MyString
+  about_1_subtxt: MyString
+  about_1_primarytxt: MyString
+  about_1_txt: MyText
+
+two:
+  header_1_img: MyString
+  header_1_overlay_color: MyString
+  header_1_subtxt: MyString
+  header_1_primarytxt: MyString
+  header_1_btntxt: MyString
+  quotebar_1_subtxt: MyString
+  quote_bar_primarytxt: MyString
+  quote_bar_btntxt: MyString
+  content_6col_leftimg1: MyString
+  content_6col_leftimg2: MyString
+  content_6col_righttxt: MyText
+  content_6col_rightsubtxt: MyString
+  content_6col_rightprimarytxt: MyString
+  content_6col_rightimg1: MyString
+  content_6col_rightimg2: MyString
+  content_6col_lefttxt: MyText
+  content_6col_leftsubtxt: MyString
+  content_6col_leftprimarytxt: MyString
+  quotebox_1_subtxt: MyString
+  quotebox_1_primarytxt: MyString
+  quotebox_1_btntxt: MyString
+  services_1_primarytxt: MyString
+  about_1_img1: MyString
+  about_1_img2: MyString
+  about_1_subtxt: MyString
+  about_1_primarytxt: MyString
+  about_1_txt: MyText
