@@ -9,6 +9,8 @@ class LessonWorker
 	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
 
 	require 'securerandom'
+	require 'date'
+
 	@random_string = SecureRandom.hex
 
   	@links.each do |link|
@@ -93,6 +95,8 @@ class LessonWorker
 	 		@t_user = @teacher
 	 	end
 
+	 	date_now = Date.now.strftime("%d %b %Y")
+	 	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y").strftime("%d %b %Y")
 
 	  	@find_lesson = Lesson.where(
 	  		lesson_day: link.LessonDay
@@ -105,6 +109,7 @@ class LessonWorker
 	  		).last
 
 	  	if @find_lesson.blank?
+	  		if l_start_date <= date_now
 	  		lesson = Lesson.create(
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: link.LessonTime,
@@ -114,6 +119,7 @@ class LessonWorker
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: current_level,
 	  		)
+	  		end
 	  	else
 	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
