@@ -6,7 +6,7 @@ class Lesson < ApplicationRecord
   require 'time'
 
  def custom_method
- 	Time.parse("2011-04-12 #{lesson_time}")
+ 	Time.parse("2018-09-24 #{lesson_time}")
  end
 
 
