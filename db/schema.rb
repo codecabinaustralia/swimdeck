@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_10_104343) do
+ActiveRecord::Schema.define(version: 2018_09_24_004257) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2018_09_10_104343) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "random_string"
+    t.boolean "cancelled"
     t.index ["lesson_id"], name: "index_lesson_participants_on_lesson_id"
     t.index ["student_id"], name: "index_lesson_participants_on_student_id"
   end
@@ -158,6 +159,8 @@ ActiveRecord::Schema.define(version: 2018_09_10_104343) do
     t.integer "level_id"
     t.string "lesson_date"
     t.string "lesson_time"
+    t.string "lesson_day"
+    t.string "area"
     t.index ["level_id"], name: "index_lessons_on_level_id"
     t.index ["site_id"], name: "index_lessons_on_site_id"
     t.index ["user_id"], name: "index_lessons_on_user_id"

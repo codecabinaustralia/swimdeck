@@ -56,7 +56,10 @@
                       <tbody>
                       <% @lesson_students.each do |ls| %>
                         <tr>
-                          <td width="50%" style="cursor: pointer;" data-open="student_mini_profile_<%= ls.id %>"><h4 ><%= ls.student.full_name %></h4>
+                          <td width="50%" style="cursor: pointer;" data-open="student_mini_profile_<%= ls.id %>"><h4 ><%= ls.student.full_name %></h4><br />
+                          <% if ls.cancelled == true %>
+                          <span class="label warning">CANCELLED</span>
+                          <% end %>
                           <div class="reveal" id="student_mini_profile_<%= ls.id %>" data-reveal style="background-color: none; padding: 0; -webkit-border-top-left-radius: 10px; -webkit-border-top-right-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; overflow-x: hidden;">
                             <div class="grid-x grid-margin-x">
                               <div class="cell small-12">

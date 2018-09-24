@@ -8,6 +8,9 @@ class LessonWorker
   	@time_brisbane = Time.now + 10.hours
 	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
 
+	require 'securerandom'
+	@random_string = SecureRandom.hex
+
   	@links.each do |link|
 
   	if link.StuSurname != "----------"
@@ -96,9 +99,7 @@ class LessonWorker
 	  		).where(
 		  	lesson_time: link.LessonTime,
 	  		).where(
-	  		user_id: @t_user.id #Teacher
-	  		).where(
-	  		site_id: 1 #Site
+	  		area: link.Area #Area
 	  		).where(
 	  		level_id: current_level,
 	  		).last
@@ -108,21 +109,22 @@ class LessonWorker
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: link.LessonTime,
 		  		lesson_day: link.LessonDay,
+		  		area: link.Area,
 		  		user_id: @t_user.id, #Teacher placeholder 3
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: current_level,
 	  		)
 	  	else
-	  		lesson = @find_lesson
+	  		lesson = @find_lesson.update_attributes(
+		  		user_id: @t_user.id
+	  		)
 	  	end
 
 	  	@find_student = Student.where(
 	  		first_name: link.StuGivenNames).where(
 	  		last_name: link.StuSurname).where(
-	  		dob: @dob).where(
-	  		personal_notes: 1).where(
-	  		current_level: current_level
-	  		).last
+	  		dob: @dob).last
+
 	  	if @find_student.blank?
 	  	student = Student.create(
 	  		first_name: link.StuGivenNames,
@@ -132,22 +134,37 @@ class LessonWorker
 	  		current_level: current_level,
 	  		)
 	  	else
-	  	student = @find_student
+	  	student = @find_student.update_attributes(
+	  		current_level: current_level
+	  		)
 	  	end
 
+
 	  	# LESSON PARTICPANT
-	  	require 'securerandom'
-	  	@random_string = SecureRandom.hex
-
-	  	lesson_participant = LessonParticipant.create(
+	  	@find_participant = LessonParticipant.where(
 	  		lesson_id: lesson.id,
-	  		student_id: student.id,
+	  		student_id: student.id
+	  	).last
+
+	  	if @find_participant.blank?
+		  	lesson_participant = LessonParticipant.create(
+		  		lesson_id: lesson.id,
+		  		student_id: student.id,
+		  		random_string: @random_string
+		  	)
+	    else
+	    	lesson_participant = @find_participant
+	    end
+
+	    @get_old_participants = LessonParticipant.where.not(
 	  		random_string: @random_string
-	  	)
-		
+	  	).all
 
-
-
+	    @get_old_participants.each do |oldie|
+	  		oldie.update_attributes(
+	  			cancelled: true
+	  			)
+	 	end
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
@@ -176,40 +193,46 @@ class LessonWorker
 
 		#Create Client
 		@find_client = Client.where(
-			user_id: c_user.id).where(
-			first_name: link.RPGivenNames).where(
-			last_name: link.RPSurname).where(
-			phone_1: link.RPPhone).where(
-			phone_2: link.RPWorkPhone).where(
-			address: link.RPAddress).where(
-			address_city: link.RPSuburb).where(
-			address_state: "QLD").where(
-			address_postcode: link.RPPostCode).last
+			user_id: c_user.id).last
+			
+
 		if @find_client.blank?
-		client = Client.create(
-			user_id: c_user.id,
-			first_name: link.RPGivenNames,
-			last_name: link.RPSurname,
-			phone_1: link.RPPhone,
-			phone_2: link.RPWorkPhone,
-			address: link.RPAddress,
-			address_city: link.RPSuburb,
-			address_state: "QLD",
-			address_postcode: link.RPPostCode,
+			client = Client.create(
+				user_id: c_user.id,
+				first_name: link.RPGivenNames,
+				last_name: link.RPSurname,
+				phone_1: link.RPPhone,
+				phone_2: link.RPWorkPhone,
+				address: link.RPAddress,
+				address_city: link.RPSuburb,
+				address_state: "QLD",
+				address_postcode: link.RPPostCode,
 			)
 		else
-			client = @find_client
+			client = @find_client.update_attributes(
+				first_name: link.RPGivenNames,
+				last_name: link.RPSurname,
+				phone_1: link.RPPhone,
+				phone_2: link.RPWorkPhone,
+				address: link.RPAddress,
+				address_city: link.RPSuburb,
+				address_state: "QLD",
+				address_postcode: link.RPPostCode
+			)
 		end
 
 		#Attach user to student
 		@find_parent = ClientStudent.where(
 			client_id: client.id).where(
 	  		student_id: student.id).last
+
 	  	if @find_parent.blank?
-			parent = ClientStudent.find_or_create_by(
+			parent = ClientStudent.create(
 		  		client_id: client.id,
 		  		student_id: student.id
 		  	)
+		else
+			parent = @find_parent
 		end
 
 	end
@@ -221,13 +244,21 @@ class LessonWorker
     @students.each do |student|
 
     @skills = Skill.where(level_id: student.current_level).all
+    
     @skills.each do |skill|
-    StudentSkill.find_or_create_by(
-        student_id: student.id,
-        skill_id: skill.id,
-        level_id: student.current_level,
-        competency_level_id: 1
-      )
+	    @find_skill = StudentSkill.where(skill_id: skill.id).where(student_id: student.id).last
+	    
+	    if @find_skill.blank?
+		    new_skill = StudentSkill.create(
+		        student_id: student.id,
+		        skill_id: skill.id,
+		        level_id: student.current_level,
+		        competency_level_id: 1
+		    )
+		else
+			new_skill = @find_skill
+		end
+
     end
   end
 
