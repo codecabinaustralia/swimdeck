@@ -124,8 +124,12 @@
 		<!-- Table for graduated students -->
 		<div class="grid-x lessons-header">
 			<% @next_int = @lesson.level_id.to_i + 1 %>
+			<% if @next_int <= 13 %>
 			<% @next_level = Level.find(@next_int.to_i) %>
-			<% if @next_level >= 14 %>
+			<% else %>
+			<% @next_level = 14 %>
+			<% end %>
+			<% if @next_level == 14 %>
 			<h2>Lesson Limit Reached</h2>
 			<% else %>
 					<h3 style="color: white; margin-bottom: 0;">Graduate students needing placement in <%= @next_level.title %> lesson</h3>
