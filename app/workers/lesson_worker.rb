@@ -109,7 +109,7 @@ class LessonWorker
 	  		).last
 
 	  	if @find_lesson.blank?
-	  		if l_start_date <= date_now
+	  		
 	  		lesson = Lesson.create(
 		  		lesson_date: link.StuBookStartDate,
 		  		lesson_time: link.LessonTime,
@@ -119,7 +119,7 @@ class LessonWorker
 		  		site_id: 1, #Site placeholder 1
 		  		level_id: current_level,
 	  		)
-	  		end
+	
 	  	else
 	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
@@ -155,11 +155,13 @@ class LessonWorker
 	  	).last
 
 	  	if @find_participant.blank?
-		  	lesson_participant = LessonParticipant.create(
-		  		lesson_id: lesson.id,
-		  		student_id: student.id,
-		  		random_string: @random_string
-		  	)
+	  		if l_start_date <= date_now
+			  	lesson_participant = LessonParticipant.create(
+			  		lesson_id: lesson.id,
+			  		student_id: student.id,
+			  		random_string: @random_string
+			  	)
+		  	end
 	    else
 	    	lesson_participant = @find_participant
 	    end
