@@ -13,6 +13,7 @@ class DataScraperController < ApplicationController
   end
 
   def temp_fix
+  	students = Student.all
   	students.each do  |student|
   		student_skill = StudentSkill.where(student_id: student.id).all
   		student_level = Skill.where(level_id: student.current_level).all
