@@ -95,7 +95,7 @@ class LessonWorker
 	 		@t_user = @teacher
 	 	end
 
-	 	date_now = Time.now.strftime("%d %b %Y")
+	 	date_now = Date.today.strftime("%d %b %Y")
 	 	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y").strftime("%d %b %Y")
 
 	  	@find_lesson = Lesson.where(
