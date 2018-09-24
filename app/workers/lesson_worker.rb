@@ -156,7 +156,7 @@ class LessonWorker
 	  	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y")
 	  	l_start_date = Date.new(l_start_date.strftime("%Y").to_i,l_start_date.strftime("%m").to_i,l_start_date.strftime("%d").to_i)
 	  	if @find_participant.blank?
-	  		if Date.today < l_start_date
+	  		if Date.today >= l_start_date
 			  	lesson_participant = LessonParticipant.create(
 			  		lesson_id: lesson.id,
 			  		student_id: student.id,
