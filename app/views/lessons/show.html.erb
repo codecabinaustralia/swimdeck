@@ -125,57 +125,62 @@
 		<div class="grid-x lessons-header">
 			<% @next_int = @lesson.level_id.to_i + 1 %>
 			<% @next_level = Level.find(@next_int.to_i) %>
-		<h3 style="color: white; margin-bottom: 0;">Graduate students needing placement in <%= @next_level.title %> lesson</h3>
-	</div>
-		<table class="ui table striped unstackable fixed sortable">
+			<% if @next_level >= 14 %>
+			<h2>Lesson Limit Reached</h2>
+			<% else %>
+					<h3 style="color: white; margin-bottom: 0;">Graduate students needing placement in <%= @next_level.title %> lesson</h3>
+				</div>
+					<table class="ui table striped unstackable fixed sortable">
 
-			<thead>
-				<th width="200" class="center aligned">Student</th>
-				<% @next_skills.each do |skill| %>
-					<th width="110"><%= skill.title %></th> 
-				<% end %>
-			</thead>
-			<tbody>
-				
+						<thead>
+							<th width="200" class="center aligned">Student</th>
+							<% @next_skills.each do |skill| %>
+								<th width="110"><%= skill.title %></th> 
+							<% end %>
+						</thead>
+						<tbody>
+							
 
-				<% @lesson_participants.each do |lesson_participant| %>
-				<% if lesson_participant.student.current_level != @lesson.level_id %>
-				<% @next_student_skills = StudentSkill.where(student_id: lesson_participant.student.id).all %>
-				<tr>
-					<td class="center aligned" style="padding: 0;">
-						<div class="grid-x grid-margin-x">
-							<div class="cell shrink lesson-avatar">
-							<%= link_to student_path(lesson_participant.student.id) do %>
-							<% if lesson_participant.student.avatar.attached? %>
-									  <%= image_tag(lesson_participant.student.avatar) %>
-									  <% else %>
-									      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
-									<% end %>
+							<% @lesson_participants.each do |lesson_participant| %>
+							<% if lesson_participant.student.current_level != @lesson.level_id %>
+							<% @next_student_skills = StudentSkill.where(student_id: lesson_participant.student.id).all %>
+							<tr>
+								<td class="center aligned" style="padding: 0;">
+									<div class="grid-x grid-margin-x">
+										<div class="cell shrink lesson-avatar">
+										<%= link_to student_path(lesson_participant.student.id) do %>
+										<% if lesson_participant.student.avatar.attached? %>
+												  <%= image_tag(lesson_participant.student.avatar) %>
+												  <% else %>
+												      <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
+												<% end %>
+										<% end %>
+										</div>
+										<div class="cell shrink" style="padding-top:25px; ">
+										<%= link_to lesson_participant.student.first_name, student_path(lesson_participant.student.id) %>
+										</div>
+									</div>
+								</td>
+								<% @next_student_skills.each do |student_skill| %>
+									<td style="background-color: <%= student_skill.competency_level.color %>">
+									<% @student_skill = StudentSkill.find(student_skill.id) %>
+									<div class="ui form" style="padding-top:14px">
+									<%= form_for @student_skill, :url => student_update_student_skills_path(student_skill.student_id) do |form| %>
+											<div class="field" >
+										    <%= form.collection_select(:competency_level_id, CompetencyLevel.all, :id, :title,{}, {onchange: 'this.form.submit();'}) %>
+										    </div>
+										    <%= form.hidden_field :skill_id, value: student_skill.id %>
+										<% end %>
+									</div>
+									</td>
+								<% end %>
+							</tr>
 							<% end %>
-							</div>
-							<div class="cell shrink" style="padding-top:25px; ">
-							<%= link_to lesson_participant.student.first_name, student_path(lesson_participant.student.id) %>
-							</div>
-						</div>
-					</td>
-					<% @next_student_skills.each do |student_skill| %>
-						<td style="background-color: <%= student_skill.competency_level.color %>">
-						<% @student_skill = StudentSkill.find(student_skill.id) %>
-						<div class="ui form" style="padding-top:14px">
-						<%= form_for @student_skill, :url => student_update_student_skills_path(student_skill.student_id) do |form| %>
-								<div class="field" >
-							    <%= form.collection_select(:competency_level_id, CompetencyLevel.all, :id, :title,{}, {onchange: 'this.form.submit();'}) %>
-							    </div>
-							    <%= form.hidden_field :skill_id, value: student_skill.id %>
 							<% end %>
-						</div>
-						</td>
-					<% end %>
-				</tr>
-				<% end %>
-				<% end %>
-			</tbody>
-		</table>
+						</tbody>
+					</table>
+			<% end %>
+		
 		<% end %>
 	</div>
 </div>
