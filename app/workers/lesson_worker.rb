@@ -95,8 +95,7 @@ class LessonWorker
 	 		@t_user = @teacher
 	 	end
 
-	 	date_now = Date.today.strftime("%d %b %Y")
-	 	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y").strftime("%d %b %Y")
+	 	l_start_date = Date.new(link.StuBookStartDate)
 
 	  	@find_lesson = Lesson.where(
 	  		lesson_day: link.LessonDay
@@ -155,13 +154,13 @@ class LessonWorker
 	  	).last
 
 	  	if @find_participant.blank?
-	  		if l_start_date <= date_now
+	  		if Date.today < l_start_date
 			  	lesson_participant = LessonParticipant.create(
 			  		lesson_id: lesson.id,
 			  		student_id: student.id,
 			  		random_string: @random_string
 			  	)
-		  	end
+			end
 	    else
 	    	lesson_participant = @find_participant
 	    end
