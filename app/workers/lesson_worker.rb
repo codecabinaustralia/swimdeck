@@ -115,9 +115,10 @@ class LessonWorker
 		  		level_id: current_level,
 	  		)
 	  	else
-	  		lesson = @find_lesson.update_attributes(
+	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
 	  		)
+	  		lesson = @find_lesson
 	  	end
 
 	  	@find_student = Student.where(
@@ -134,9 +135,10 @@ class LessonWorker
 	  		current_level: current_level,
 	  		)
 	  	else
-	  	student = @find_student.update_attributes(
+	  	@find_student.update_attributes(
 	  		current_level: current_level
 	  		)
+	  	student = @find_student
 	  	end
 
 
@@ -209,7 +211,7 @@ class LessonWorker
 				address_postcode: link.RPPostCode,
 			)
 		else
-			client = @find_client.update_attributes(
+			@find_client.update_attributes(
 				first_name: link.RPGivenNames,
 				last_name: link.RPSurname,
 				phone_1: link.RPPhone,
@@ -219,6 +221,7 @@ class LessonWorker
 				address_state: "QLD",
 				address_postcode: link.RPPostCode
 			)
+			client = @find_client
 		end
 
 		#Attach user to student
@@ -239,6 +242,7 @@ class LessonWorker
 	end
 
 	#Add skills 
+	#REMINDER REMOVE SKILLS IF LEVELID DOESN'T MATCH FOUND SKILLID
     @students = Student.all
 
     @students.each do |student|
