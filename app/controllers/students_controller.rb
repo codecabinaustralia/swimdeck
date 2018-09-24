@@ -17,6 +17,7 @@ protect_from_forgery with: :exception, prepend: true
     # Find if client has multiple students
     @last_student = ClientStudent.where(student_id: @student.id).last
     @multiple_students = ClientStudent.where(client_id: @last_student.client_id).all
+
     if @multiple_students.count > 1
       @multiple = true
     end
