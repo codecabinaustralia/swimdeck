@@ -11,22 +11,6 @@ class DataScraperController < ApplicationController
   def add_lessons
   	LessonWorker.perform_async()
   end
-
-  def temp_fix
-  	students = Student.all
-  	students.each do  |student|
-  		student_skill = StudentSkill.where(student_id: student.id).all
-  		student_level = Skill.where(level_id: student.current_level).all
-  		excess = student_skill.count - student_level.count
-  		if excess > 0
-  			new_student_skill = StudentSkill.where(student_id: student.id).last(excess)
-  			new_student_skill.each do |sk|
-  				sk.destroy
-  			end
-  		end
-  		
-  	end
-  end
   
 
   def csv_spider
