@@ -20,7 +20,9 @@ class DataScraperController < ApplicationController
   		excess = student_skill.count - student_level.count
   		if excess > 0
   			new_student_skill = StudentSkill.where(student_id: student.id).last(excess)
-  			new_student_skill.destroy_all
+  			new_student_skill.each do |sk|
+  				sk.destroy
+  			end
   		end
   		
   	end
