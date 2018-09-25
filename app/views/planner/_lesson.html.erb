@@ -57,17 +57,17 @@
                       <% @lesson_students.each do |ls| %>
                         <tr>
                           <td width="50%" style="cursor: pointer;" data-open="student_mini_profile_<%= ls.id %>"><h4 ><%= ls.student.full_name %></h4><br />
-                          <% if ls.cancelled == true %>
-                          <span class="label warning">CANCELLED</span>
-                          <% end %>
+                          
                           <div class="reveal" id="student_mini_profile_<%= ls.id %>" data-reveal style="background-color: none; padding: 0; -webkit-border-top-left-radius: 10px; -webkit-border-top-right-radius: 10px; -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; overflow-x: hidden;">
                             <div class="grid-x grid-margin-x">
                               <div class="cell small-12">
                                 <% @student_skills = StudentSkill.where(student_id: ls.student_id).all %>
+
+                                <% if @student_skills.present? %>
                                 <% @student_last = @student_skills.last %>
                                 <% @student = Student.find(@student_last.student_id) %>
-                                <% @clients = ClientStudent.where(student_id: @student.id).all%>
-
+                                <% @clients = ClientStudent.where(student_id: @student.id).all %>
+                                
                                 <% @student_level = Level.find(@student.current_level)%>
                                 
                                 
@@ -76,6 +76,7 @@
                                   
                                 <%= render 'students/student_details', student: @student, student_level: @student_level, posts: @posts %>
                                 <%= render 'students/student_skills', student_skills: @student_skills, student: @student, clients: @clients %>
+                                <% end %>
                               </div>
                             </div>
                             
