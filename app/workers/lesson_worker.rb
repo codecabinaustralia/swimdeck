@@ -95,7 +95,8 @@ class LessonWorker
 	 		@t_user = @teacher
 	 	end
 
-	 	
+	 	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y")
+	  	l_start_date = Date.new(l_start_date.strftime("%Y").to_i,l_start_date.strftime("%m").to_i,l_start_date.strftime("%d").to_i)
 
 	  	@find_lesson = Lesson.where(
 	  		lesson_day: link.LessonDay
@@ -108,16 +109,17 @@ class LessonWorker
 	  		).last
 
 	  	if @find_lesson.blank?
-	  		
-	  		lesson = Lesson.create(
-		  		lesson_date: link.StuBookStartDate,
-		  		lesson_time: link.LessonTime,
-		  		lesson_day: link.LessonDay,
-		  		area: link.Area,
-		  		user_id: @t_user.id, #Teacher placeholder 3
-		  		site_id: 1, #Site placeholder 1
-		  		level_id: current_level,
-	  		)
+	  		if Date.today >= l_start_date
+		  		lesson = Lesson.create(
+			  		lesson_date: link.StuBookStartDate,
+			  		lesson_time: link.LessonTime,
+			  		lesson_day: link.LessonDay,
+			  		area: link.Area,
+			  		user_id: @t_user.id, #Teacher placeholder 3
+			  		site_id: 1, #Site placeholder 1
+			  		level_id: current_level,
+		  		)
+	  		end
 	
 	  	else
 	  		@find_lesson.update_attributes(
@@ -153,8 +155,6 @@ class LessonWorker
 	  		student_id: student.id
 	  	).last
 
-	  	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y")
-	  	l_start_date = Date.new(l_start_date.strftime("%Y").to_i,l_start_date.strftime("%m").to_i,l_start_date.strftime("%d").to_i)
 	  	if @find_participant.blank?
 	  		if Date.today >= l_start_date
 			  	lesson_participant = LessonParticipant.create(
