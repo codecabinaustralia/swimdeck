@@ -112,7 +112,7 @@ class LessonWorker
 	  		level_id: current_level,
 	  		).last
 
-	  	if Date.today >= l_start_date
+	  	if Date.today > l_start_date
 	  	if @find_lesson.blank?
 	  		
 		  		lesson = Lesson.create(
@@ -160,7 +160,7 @@ class LessonWorker
 	  		student_id: student.id
 	  	).last
 
-	  	if Date.today >= l_start_date
+	  	if Date.today > l_start_date
 		  	if @find_participant.blank?
 				  	lesson_participant = LessonParticipant.create(
 				  		lesson_id: lesson.id,
