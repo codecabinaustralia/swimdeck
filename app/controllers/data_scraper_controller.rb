@@ -161,7 +161,14 @@ redirect_to root_path
 
 
   def tester
-  	@links = Link.all
+  	
+@time_brisbane = Time.now + 10.hours
+	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
+
+	require 'securerandom'
+	require 'date'
+
+	@random_string = SecureRandom.hex
 
   	@links.each do |link|
 
@@ -208,13 +215,10 @@ redirect_to root_path
 			current_level = 13
 		end
 
-		  
-
+		
 		# DOB FORMAT
-
 		if link.StuDateOfBirth.present?
 			require 'date'
-			require 'time'
 		  	begin
 		  	   @dob = Date.parse(link.StuDateOfBirth.to_date.strftime("%Y-%m-%d"))
 		  	rescue ArgumentError
@@ -222,35 +226,15 @@ redirect_to root_path
 		  	end
 	  	end
 
-	  	#@lesson_start = link.StuBookStartDate.to_date.strftime("%Y-%m-%d") + " " + link.LessonTime.to_time.strftime("%I:%M:00")
-
-	  	if link.LessonDay == "Monday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:monday)
-	  	elsif link.LessonDay == "Tuesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:tuesday)
-	  	elsif link.LessonDay == "Wednesday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:wednesday)
-	  	elsif link.LessonDay == "Thursday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:thursday)
-	  	elsif link.LessonDay == "Friday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:friday)
-	  	elsif link.LessonDay == "Saturday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:saturday)
-	  	elsif link.LessonDay == "Sunday"
-	  		@new_date = Date.parse(link.StuBookStartDate).next_occurring(:sunday)
-	  	end
-
-	  	@new_time = DateTime.strptime("#{@new_date} #{link.LessonTime}", "%Y-%m-%d %I:%M%p").strftime("%Y-%m-%d %I:%M")
-		@time_reformat = @new_time
-
 	  	#Add Teacher User
 	   	#Create User/Client/Parent Login
-	   	@find_teacher = User.where(email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au").last
- 	  	if @find_teacher.blank?
-	 	  	@find_teacher = User.new(
-	 	  		email: "#{link.TeachGivenNames.downcase}.#{link.TeachSurname.downcase}@rackleyswimming.com.au",
-	 	  		password: "Rackley!23",
-	 	  		password_confirmation: "Rackley!23",
+	   	@teacher = User.where(last_name: link.TeachSurname).where(first_name: link.TeachGivenNames).last
+
+	   	if @teacher.blank?
+	 	  	@t_user = User.new(
+	 	  		email: "#{link.TeachGivenNames.downcase.parameterize}#{link.TeachSurname.downcase.parameterize}@rackleyswimming.com.au",
+	 	  		password: "Test123",
+	 	  		password_confirmation: "Test123", 
 	 	  		current_sign_in_at: DateTime.now,
 	 	  		last_sign_in_at: DateTime.now,
 	 	  		created_at: DateTime.now,
@@ -263,35 +247,92 @@ redirect_to root_path
 	 	  		first_name: link.TeachGivenNames,
 	 	  		last_name: link.TeachSurname
 	 	  		)
-	 	  	@find_teacher.save
+	 	  	@t_user.save
 	 	else
-	 		@find_teacher = @find_teacher
+	 		@t_user = @teacher
 	 	end
 
+	 	l_start_date = Date.parse(link.StuBookStartDate, "%d %b %Y")
+	  	l_start_date = Date.new(l_start_date.strftime("%Y").to_i,l_start_date.strftime("%m").to_i,l_start_date.strftime("%d").to_i)
 
-	  	find_lesson = Lesson.find_or_create_by(
-	  		start_time: @time_reformat,
-	  		user_id: @find_teacher.id,
-	  		site_id: 1,
-	  		level_id: current_level
+	  	@find_lesson = Lesson.where(
+	  		lesson_day: link.LessonDay
+	  		).where(
+		  	lesson_time: link.LessonTime,
+	  		).where(
+	  		area: link.Area #Area
+	  		).where(
+	  		level_id: current_level,
+	  		).last
+
+	  	if @find_lesson.blank?
+	  		if Date.today >= l_start_date
+		  		lesson = Lesson.create(
+			  		lesson_date: link.StuBookStartDate,
+			  		lesson_time: link.LessonTime,
+			  		lesson_day: link.LessonDay,
+			  		area: link.Area,
+			  		user_id: @t_user.id, #Teacher placeholder 3
+			  		site_id: 1, #Site placeholder 1
+			  		level_id: current_level,
+		  		)
+	  		end
+	
+	  	else
+	  		@find_lesson.update_attributes(
+		  		user_id: @t_user.id
 	  		)
+	  		lesson = @find_lesson
+	  	end
 
-	  	
+	  	@find_student = Student.where(
+	  		first_name: link.StuGivenNames).where(
+	  		last_name: link.StuSurname).where(
+	  		dob: @dob).last
 
-	  	find_student = Student.find_or_create_by(
+	  	if @find_student.blank?
+	  	student = Student.create(
 	  		first_name: link.StuGivenNames,
 	  		last_name: link.StuSurname,
 	  		dob: @dob,
 	  		personal_notes: 1,
+	  		current_level: current_level,
+	  		)
+	  	else
+	  	@find_student.update_attributes(
 	  		current_level: current_level
 	  		)
+	  	student = @find_student
+	  	end
+
 
 	  	# LESSON PARTICPANT
+	  	@find_participant = LessonParticipant.where(
+	  		lesson_id: lesson.id,
+	  		student_id: student.id
+	  	).last
 
-	  	lesson_participant = LessonParticipant.find_or_create_by(
-	  		lesson_id: find_lesson.id,
-	  		student_id: find_student.id
-	  	)
+	  	if @find_participant.blank?
+	  		if Date.today >= l_start_date
+			  	lesson_participant = LessonParticipant.create(
+			  		lesson_id: lesson.id,
+			  		student_id: student.id,
+			  		random_string: @random_string
+			  	)
+			end
+	    else
+	    	lesson_participant = @find_participant
+	    end
+
+	    @get_old_participants = LessonParticipant.where.not(
+	  		random_string: @random_string
+	  	).all
+
+	    @get_old_participants.each do |oldie|
+	  		oldie.update_attributes(
+	  			cancelled: true
+	  			)
+	 	end
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
@@ -319,29 +360,77 @@ redirect_to root_path
 		end
 
 		#Create Client
-		find_client = Client.find_or_create_by(
-			user_id: c_user.id,
-			first_name: link.RPGivenNames,
-			last_name: link.RPSurname,
-			phone_1: link.RPPhone,
-			phone_2: link.RPWorkPhone,
-			address: link.RPAddress,
-			address_city: link.RPSuburb,
-			address_state: "QLD",
-			address_postcode: link.RPPostCode
+		@find_client = Client.where(
+			user_id: c_user.id).last
+			
+
+		if @find_client.blank?
+			client = Client.create(
+				user_id: c_user.id,
+				first_name: link.RPGivenNames,
+				last_name: link.RPSurname,
+				phone_1: link.RPPhone,
+				phone_2: link.RPWorkPhone,
+				address: link.RPAddress,
+				address_city: link.RPSuburb,
+				address_state: "QLD",
+				address_postcode: link.RPPostCode,
 			)
-	
+		else
+			@find_client.update_attributes(
+				first_name: link.RPGivenNames,
+				last_name: link.RPSurname,
+				phone_1: link.RPPhone,
+				phone_2: link.RPWorkPhone,
+				address: link.RPAddress,
+				address_city: link.RPSuburb,
+				address_state: "QLD",
+				address_postcode: link.RPPostCode
+			)
+			client = @find_client
+		end
 
 		#Attach user to student
-		find_parent = ClientStudent.find_or_create_by(
-			client_id: find_client.id,
-	  		student_id: find_student.id
-	  	)
-	  	
+		@find_parent = ClientStudent.where(
+			client_id: client.id).where(
+	  		student_id: student.id).last
+
+	  	if @find_parent.blank?
+			parent = ClientStudent.create(
+		  		client_id: client.id,
+		  		student_id: student.id
+		  	)
+		else
+			parent = @find_parent
+		end
 
 	end
 	end
 
+	#Add skills 
+	#REMINDER REMOVE SKILLS IF LEVELID DOESN'T MATCH FOUND SKILLID
+    @students = Student.all
+
+    @students.each do |student|
+
+    @skills = Skill.where(level_id: student.current_level).all
+    
+    @skills.each do |skill|
+	    @find_skill = StudentSkill.where(skill_id: skill.id).where(student_id: student.id).last
+	    
+	    if @find_skill.blank?
+		    new_skill = StudentSkill.create(
+		        student_id: student.id,
+		        skill_id: skill.id,
+		        level_id: student.current_level,
+		        competency_level_id: 1
+		    )
+		else
+			new_skill = @find_skill
+		end
+
+    end
+  end
 	
   end
 
