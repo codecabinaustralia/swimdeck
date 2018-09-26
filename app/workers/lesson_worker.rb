@@ -112,7 +112,6 @@ class LessonWorker
 	  		level_id: current_level,
 	  		).last
 
-	  	if Date.today <= l_start_date
 	  	if @find_lesson.blank?
 	  		
 		  		lesson = Lesson.create(
@@ -130,7 +129,7 @@ class LessonWorker
 	  		)
 	  		lesson = @find_lesson
 	  	end
-	  	end
+	  	
 
 	  	@find_student = Student.where(
 	  		first_name: link.StuGivenNames).where(
@@ -160,7 +159,6 @@ class LessonWorker
 	  		student_id: student.id
 	  	).last
 
-	  	if Date.today <= l_start_date
 		  	if @find_participant.blank?
 				  	lesson_participant = LessonParticipant.create(
 				  		lesson_id: lesson.id,
@@ -171,7 +169,7 @@ class LessonWorker
 		    else
 		    	lesson_participant = @find_participant
 		    end
-		end
+		
 
 	    @get_old_participants = LessonParticipant.where.not(
 	  		random_string: @random_string
