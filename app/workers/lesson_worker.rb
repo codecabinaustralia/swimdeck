@@ -6,8 +6,8 @@ class LessonWorker
   def perform()
   	
   	#Delete all Lesson Participants and Lessons if they were created more than 5 days ago.
-  	LessonParticipant.delete_all("created_at < '#{5.days.ago}'")
-    Lesson.delete_all("created_at < '#{5.days.ago}'")
+  	#LessonParticipant.delete_all("created_at < '#{5.days.ago}'")
+    #Lesson.delete_all("created_at < '#{5.days.ago}'")
 
   	@time_brisbane = Time.now + 10.hours
 	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
