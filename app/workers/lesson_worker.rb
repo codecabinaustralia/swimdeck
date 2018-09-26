@@ -5,6 +5,10 @@ class LessonWorker
 
   def perform()
   	
+  	#Delete all Lesson Participants and Lessons if they were created more than 5 days ago.
+  	LessonParticipant.delete_all("created_at < '#{5.days.ago}'")
+    Lesson.delete_all("created_at < '#{5.days.ago}'")
+
   	@time_brisbane = Time.now + 10.hours
 	@links = Link.where(LessonDay: @time_brisbane.strftime('%A').to_s).all
 
@@ -108,8 +112,9 @@ class LessonWorker
 	  		level_id: current_level,
 	  		).last
 
+	  	if Date.today >= l_start_date
 	  	if @find_lesson.blank?
-	  		if Date.today >= l_start_date
+	  		
 		  		lesson = Lesson.create(
 			  		lesson_date: link.StuBookStartDate,
 			  		lesson_time: link.LessonTime,
@@ -119,13 +124,12 @@ class LessonWorker
 			  		site_id: 1, #Site placeholder 1
 			  		level_id: current_level,
 		  		)
-	  		end
-	
 	  	else
 	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
 	  		)
 	  		lesson = @find_lesson
+	  	end
 	  	end
 
 	  	@find_student = Student.where(
@@ -150,22 +154,24 @@ class LessonWorker
 
 
 	  	# LESSON PARTICPANT
+
 	  	@find_participant = LessonParticipant.where(
 	  		lesson_id: lesson.id,
 	  		student_id: student.id
 	  	).last
 
-	  	if @find_participant.blank?
-	  		if Date.today >= l_start_date
-			  	lesson_participant = LessonParticipant.create(
-			  		lesson_id: lesson.id,
-			  		student_id: student.id,
-			  		random_string: @random_string
-			  	)
-			end
-	    else
-	    	lesson_participant = @find_participant
-	    end
+	  	if Date.today >= l_start_date
+		  	if @find_participant.blank?
+				  	lesson_participant = LessonParticipant.create(
+				  		lesson_id: lesson.id,
+				  		student_id: student.id,
+				  		random_string: @random_string
+				  	)
+				
+		    else
+		    	lesson_participant = @find_participant
+		    end
+		end
 
 	    @get_old_participants = LessonParticipant.where.not(
 	  		random_string: @random_string
