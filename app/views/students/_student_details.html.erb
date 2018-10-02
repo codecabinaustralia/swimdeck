@@ -100,11 +100,7 @@
             <% end %>
           </h5>
 
-          <% if @student.current_level.present? %>
-          <a class="label" style="background-color: <%= @student_level.color %>; color: #fff; margin-top:10px;">
-              <%= @student_level.title %>
-          </a><br />
-          <% end %>
+        
           <!-- Add Student Notes -->
           <div class="text-center" style="margin-top: 20px">
             <% @last_post = @posts.where(note: true).where(note_closed: [nil, false]).last %>

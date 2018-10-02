@@ -68,13 +68,12 @@
                                 <% @student = Student.find(@student_last.student_id) %>
                                 <% @clients = ClientStudent.where(student_id: @student.id).all %>
                                 
-                                <% @student_level = Level.find(@student.current_level)%>
                                 
                                 
                                   
                                 <% @posts = Post.where(student_id: @student.id).order("created_at DESC").all %>
                                   
-                                <%= render 'students/student_details', student: @student, student_level: @student_level, posts: @posts %>
+                                <%= render 'students/student_details', student: @student, posts: @posts %>
                                 <%= render 'students/student_skills', student_skills: @student_skills, student: @student, clients: @clients %>
                                 <% end %>
                               </div>
