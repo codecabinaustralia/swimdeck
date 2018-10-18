@@ -30,16 +30,16 @@
 			<div class="grid-x">
 				<% if lesson_participant.student.current_level == @lesson.level_id %>
 					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
-					<div class="cell auto text-left" style="font-size: 12px; font-weight: bold;">
+					<div class="cell small-3 text-left" style="font-size: 12px; font-weight: bold;">
 						<%= lesson_participant.student.first_name %> <%= truncate(lesson_participant.student.last_name, :length => 6)  %>
 					</div>
 					<% @student_skills.order("id desc").each do |student_skill| %>
-					<div class="cell shrink text-center" style="background-color: #fff; border:1px solid #ccc;">
+					<div class="cell shrink text-center" style="background-color: #fff; border:1px solid #ccc; padding: 20px;">
 						<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
 					</div>
 					<% end %>
 				<% end %>
-				<div class="cell auto" style="border:1px solid #ccc;">
+				<div class="cell small-4" style="border:1px solid #ccc;">
 					
 				</div>
 			</div>
