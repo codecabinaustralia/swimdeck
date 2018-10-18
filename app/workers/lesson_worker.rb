@@ -122,13 +122,17 @@ class LessonWorker
 			  		user_id: @t_user.id, #Teacher placeholder 3
 			  		site_id: 1, #Site placeholder 1
 			  		level_id: current_level,
+			  		random_string: @random_string
 		  		)
 	  	else
 	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
 	  		)
 	  		lesson = @find_lesson
+	  		@find_lesson.update_attributes(random_string: @random_string)
 	  	end
+
+  	   
 	  	
 
 	  	@find_student = Student.where(
@@ -171,6 +175,14 @@ class LessonWorker
 		    	@find_participant.update_attributes(random_string: @random_string)
 		    end
 		
+		    # Delete all lesson and participants if random string doesn't match
+	  @get_old_lessons = Lesson.where.not(
+			random_string: @random_string
+		).all
+
+	  @get_old_lessons.each do |oldie|
+			oldie.destroy
+	  end
 
 	    @get_old_participants = LessonParticipant.where.not(
 	  		random_string: @random_string
