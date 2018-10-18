@@ -33,28 +33,13 @@
 					<th width="110"><%= skill.title %></th> 
 				<% end %>
 			</thead>
-			<thead style="background-color: #525b60;">
-				<th width="120" class="center aligned" style="color: white;">BULK CHANGE</th>
-				<% @skills.each do |skill| %>
-					<th width="110">
-						<%= form_tag lesson_bulk_update_skills_path(@lesson.id), :method => 'patch' do %>
-								<div class="field">
-								<% @competency_levels = CompetencyLevel.all %>
-							    <%= select_tag :new_competency_level, options_for_select(@competency_levels.pluck(:title), params[:id]),:include_blank => 'Bulk Change', onchange: "this.form.submit();", style: "margin-bottom: 0" %>
-							    </div>
-							    <div class="field">
-							    <%= hidden_field_tag :skill_id, skill.id %>
-							    </div>
-							<% end %>
-					</th> 
-				<% end %>
-			</thead>
+			
 			<tbody >
 				
 
 				<% @lesson_participants.each do |lesson_participant| %>
 				<% if lesson_participant.student.current_level == @lesson.level_id %>
-				<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).all %>
+				<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: @lesson_participant.student.level_id).all %>
 				<tr>
 					<td class="center aligned" style="padding: 0;">
 						<div class="grid-x grid-margin-x" >
