@@ -19,7 +19,8 @@
       <div class="list-lesson">
       <ul class="accordion " data-accordion data-allow-all-closed="true" style="margin-top:-18px;">
         <% @lessons.sort_by(&:custom_method).each do |lesson| %>
-            <% if lesson.lesson_participant.count > 0 %>
+            <% @lps = LessonParticipant.where(lesson_id: lesson.id).all %>
+            <% if @lps.present? %>
             <%= render 'planner/lesson', lesson: lesson %>
             <% end %>
         <% end %>
