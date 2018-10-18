@@ -132,8 +132,8 @@
 
 							<% @lesson_participants.each do |lesson_participant| %>
 							<% if lesson_participant.student.current_level != @lesson.level_id %>
-			
-							<% @next_student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
+				
+							<% @next_student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level + 1).all %>
 							<tr>
 								<td class="center aligned" style="padding: 0;">
 									<div class="grid-x grid-margin-x">
