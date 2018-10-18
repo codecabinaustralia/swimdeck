@@ -1,7 +1,7 @@
 <div class="grid-x grid-padding-x lessons">
 	<div class="cell small-12">
 		<div class="grid-x lessons-header">
-			<div class="cell auto" style="padding: 0 20px;">
+			<div class="cell auto" style="">
 				<h1>
 					<%= @lesson.site.title %> - <%= @lesson.level.title %> class<br />
 					<small>
@@ -33,7 +33,7 @@
 				<% if lesson_participant.student.current_level == @lesson.level_id %>
 					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
 					<div class="cell auto text-left" style="font-size: 12px; font-weight: bold;">
-						<%= lesson_participant.student.first_name %> <%= truncate(lesson_participant.student.last_name, :length => 8)  %>
+						<%= lesson_participant.student.first_name %> <%= truncate(lesson_participant.student.last_name, :length => 6)  %>
 					</div>
 					<% @student_skills.order("id desc").each do |student_skill| %>
 					<div class="cell auto text-center" style="background-color: #fff; border:1px solid #ccc;">
