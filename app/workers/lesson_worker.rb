@@ -176,13 +176,7 @@ class LessonWorker
 		    end
 		
 		    # Delete all lesson and participants if random string doesn't match
-	  @get_old_lessons = Lesson.where.not(
-			random_string: @random_string
-		).all
-
-	  @get_old_lessons.each do |oldie|
-			oldie.destroy
-	  end
+	  
 
 	    @get_old_participants = LessonParticipant.where.not(
 	  		random_string: @random_string
@@ -191,6 +185,14 @@ class LessonWorker
 	    @get_old_participants.each do |oldie|
 	  		oldie.destroy
 	 	end
+
+	 	@get_old_lessons = Lesson.where.not(
+			random_string: @random_string
+		).all
+
+	  @get_old_lessons.each do |oldie|
+			oldie.destroy
+	  end
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
