@@ -109,52 +109,6 @@ Skill.create(title: "Backstroke development", level_id: 13, rank_id: 91)
 Skill.create(title: "Breaststroke development", level_id: 13, rank_id: 92)
 Skill.create(title: "Butterfly development", level_id: 13, rank_id: 93)
 
-
-
-GenericChecklist.create(title: 'Pre', description: 'Set up for session, including lane ropes, kickboards, area signs are all in place and correct', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Attach name tag to your shirt or jumper', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Walk through toilets, reception & pool deck checking for any hazards or rubbish', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Place name signs for the Pool Deck Team Leader and Swim School Coordinator on the parent communication board, as well as absent teachers and replacements ', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Collect Teacher Timetables, Supervisor’s Report and Student Tracking Forms as well as any other messages for distribution during team huddle. If using SwimDesk ensure tablet has been fully charged.', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Review Reports for children in levels for extended periods, children experiencing issues or any other factors. Any issues or children who have not graduated during the past 6 months can be highlighted for follow up during the session as well as discussing these with the specific teacher during the team huddle.  ', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Make any last minute teacher changes on Links', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Meet and greet teachers and conduct Team Huddle focussing on Weekly Teaching Focuses and upcoming events and training ', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Assign trainees to mentor or senior teachers', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Pre', description: 'Teachers in water prior to start time', site_id: 1, session_time: 'am')
-
-GenericChecklist.create(title: 'Post', description: 'Have teachers help to set up for PM/next session, or if pool to be used during the break, to store equipment', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Meet with teachers to give feedback from Team Leader Report or discuss any compliments or issues raised by parents during the shift. Compliments should be followed up with a Feedback Card in their pigeon hole.', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Check toilets and surrounds for rubbish, lost property or any safety hazards that may have arisen during the shift and bring to the attention of the Manager', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Take down Team Leader sign from board', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Check with Customer Service Team about any issues that may have arisen during the shift', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Indicate on Pool Deck Team Leader Report any variations to the teaching shift, e.g. teachers who started late, or finished shift early due to non-attendance.s sheet. This allows Managers to confirm Zuus shifts more easily.', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Ensure any last minute teacher absences for the following shift have been covered', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Complete Team Leader Report and file for Coordinator review', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Update Student Tracking Form on the computer for next session', site_id: 1, session_time: 'am')
-GenericChecklist.create(title: 'Post', description: 'Print out teacher timetables, Team Leader report and Student Tracking Form for the next shift. If using SwimDesk, make sure all notes are up to date and tablet is put on the charger.', site_id: 1, session_time: 'am')
-
-GenericChecklist.create(title: 'Pre', description: 'Set up for session, including lane ropes, kickboards, area signs are all in place and correct', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Attach name tag to your shirt or jumper', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Walk through toilets, reception & pool deck checking for any hazards or rubbish', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Place name signs for the Pool Deck Team Leader and Swim School Coordinator on the parent communication board, as well as absent teachers and replacements ', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Collect Teacher Timetables, Supervisor’s Report and Student Tracking Forms as well as any other messages for distribution during team huddle. If using SwimDesk ensure tablet has been fully charged.', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Review Reports for children in levels for extended periods, children experiencing issues or any other factors. Any issues or children who have not graduated during the past 6 months can be highlighted for follow up during the session as well as discussing these with the specific teacher during the team huddle.  ', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Make any last minute teacher changes on Links', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Meet and greet teachers and conduct Team Huddle focussing on Weekly Teaching Focuses and upcoming events and training ', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Assign trainees to mentor or senior teachers', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Pre', description: 'Teachers in water prior to start time', site_id: 1, session_time: 'pm')
-
-GenericChecklist.create(title: 'Post', description: 'Have teachers help to set up for PM/next session, or if pool to be used during the break, to store equipment', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Meet with teachers to give feedback from Team Leader Report or discuss any compliments or issues raised by parents during the shift. Compliments should be followed up with a Feedback Card in their pigeon hole.', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Check toilets and surrounds for rubbish, lost property or any safety hazards that may have arisen during the shift and bring to the attention of the Manager', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Take down Team Leader sign from board', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Check with Customer Service Team about any issues that may have arisen during the shift', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Indicate on Pool Deck Team Leader Report any variations to the teaching shift, e.g. teachers who started late, or finished shift early due to non-attendance.s sheet. This allows Managers to confirm Zuus shifts more easily.', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Ensure any last minute teacher absences for the following shift have been covered', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Complete Team Leader Report and file for Coordinator review', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Update Student Tracking Form on the computer for next session', site_id: 1, session_time: 'pm')
-GenericChecklist.create(title: 'Post', description: 'Print out teacher timetables, Team Leader report and Student Tracking Form for the next shift. If using SwimDesk, make sure all notes are up to date and tablet is put on the charger.', site_id: 1, session_time: 'pm')
-
 redirect_to root_path
   end
 

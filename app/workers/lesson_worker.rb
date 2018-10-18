@@ -176,9 +176,7 @@ class LessonWorker
 	  	).all
 
 	    @get_old_participants.each do |oldie|
-	  		oldie.update_attributes(
-	  			cancelled: true
-	  			)
+	  		oldie.destroy
 	 	end
 
 	  	#Create User/Client/Parent Login
