@@ -131,7 +131,7 @@
 							
 
 							<% @lesson_participants.each do |lesson_participant| %>
-							<% if lesson_participant.student.current_level != @lesson.level_id %>
+							<% if lesson_participant.student.current_level == @lesson.level_id + 1 %>
 							<% @next_student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
 							<tr>
 								<td class="center aligned" style="padding: 0;">
