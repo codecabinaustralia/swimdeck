@@ -7,6 +7,8 @@
     <title><%= content_for?(:title) ? yield(:title) : "Swimdeck" %></title>
 
     <%= stylesheet_link_tag    "application" %>
+    <%= stylesheet_link_tag "application", media: "print" %>
+    
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800" rel="stylesheet">

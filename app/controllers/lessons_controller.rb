@@ -19,15 +19,19 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf do
-           render pdf: "Your_filename",
-           template: "lessons/show.html.erb"
-           layout: 'pdf.html'
-         end
     end
+  end
 
+  def teachers
+    @lesson = Lesson.find(params[:lesson_id])
+    @skills = Skill.where(level_id: @lesson.level_id).all
+    @next_skills = Skill.where(level_id: @lesson.level_id + 1).all
 
+    @lesson_participants = LessonParticipant.where(lesson_id: @lesson).all 
 
+    respond_to do |format|
+      format.html
+    end
   end
 
   # GET /lessons/new

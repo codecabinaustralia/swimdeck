@@ -45,7 +45,11 @@ Rails.application.routes.draw do
 
   resources :lessons do 
     patch 'bulk_update_skills' => 'students#bulk_update_skills'
+    get 'teachers'
   end
+
+  
+
   resources :students do
     patch 'update_student_skills' => 'students#update_student_skills'
   end
