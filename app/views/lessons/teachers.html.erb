@@ -11,36 +11,35 @@
 				</h1>
 			</div>
 		</div>
-		<table>
 
-			<thead>
-				<tr height="100">
-				<th width="200" class="center aligned topside-ninety">Student</th>
-				<% @skills.each do |skill| %>
-					<th width="20px" class="topside-ninety" style="font-size: 10px;"><%= truncate(skill.title, :length => 10) %></th> 
+
+
+
+		<div class="grid-x">
+		<div class="cell auto">Student</div>	
+		<% @skills.each do |skill| %>
+			<div class="auto topside-ninety" style="font-size: 10px;"><%= truncate(skill.title, :length => 10) %></div> 
+		<% end %>
+		</div>
+
+		<div class="grid-x">
+		<% @lesson_participants.each do |lesson_participant| %>
+			<% if lesson_participant.student.current_level == @lesson.level_id %>
+				<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
+				<div class="cell auto">
+					<%= lesson_participant.student.first_name %> <%= lesson_participant.student.first_name %>
+				</div>
+				<% @student_skills.order("id desc").each do |student_skill| %>
+				<div class="cell auto">
+					<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
+				</div>
 				<% end %>
-			</tr>
-			</thead>
-			
-			<tbody >
-				<% @lesson_participants.each do |lesson_participant| %>
-				<% if lesson_participant.student.current_level == @lesson.level_id %>
-					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
-					<tr>
-						<td class="center aligned" style="padding: 10px">
-								<%= lesson_participant.student.first_name %> <%= lesson_participant.student.first_name %>
+			<% end %>
+		<% end %>
 		
-						</td>
-						<% @student_skills.order("id desc").each do |student_skill| %>
-							<td style="text-align: center;" width="20px">
-								<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
-							</td>
-						<% end %>
-					</tr>
-				<% end %>
-				<% end %>
-			</tbody>
-		</table>
+		</div>
+
+		</div>
 	</div>
 </div>
 
