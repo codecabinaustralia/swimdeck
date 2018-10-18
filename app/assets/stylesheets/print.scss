@@ -3,14 +3,18 @@
 		display: none;
 	}
 
+	.auto{
+		font-size: 11px;
+	}
+
 	
 }
 
 .topside-ninety{
-		-webkit-transform: rotate(-45deg);
-		-moz-transform: rotate(-45deg);
-		-ms-transform: rotate(-45deg);
-		-o-transform: rotate(-45deg);
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
 		font-weight: bold;
 		font-size: 10px;
 		text-align: right;

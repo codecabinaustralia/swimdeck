@@ -36,7 +36,7 @@
 						<%= lesson_participant.student.first_name %> <%= truncate(lesson_participant.student.last_name, :length => 6)  %>
 					</div>
 					<% @student_skills.order("id desc").each do |student_skill| %>
-					<div class="cell auto text-center" style="background-color: #fff; border:1px solid #ccc;">
+					<div class="cell shrink text-center" style="background-color: #fff; border:1px solid #ccc;">
 						<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
 					</div>
 					<% end %>
