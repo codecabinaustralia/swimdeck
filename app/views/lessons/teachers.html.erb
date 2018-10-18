@@ -16,11 +16,13 @@
 
 
 		<div class="grid-x">
-			<div class="cell auto text-center"></div>	
+			<div class="cell small-1 text-center"></div>	
 			<% @skills.each do |skill| %>
-				<div class="cell auto "><div class="topside-ninety" ><%= truncate(skill.title, :length => 15) %></div>	</div> 
+				<div class="cell shrink ">
+					<div class="topside-ninety" style="width: 30px;">
+						<%= truncate(skill.title, :length => 15) %></div>	</div> 
 			<% end %>
-			<div class="cell auto">
+			<div class="cell small-2">
 				<div class="topside-ninety">Comments</div>
 			</div>
 		</div>
@@ -35,13 +37,13 @@
 					</div>
 					<% @student_skills.order("id desc").each do |student_skill| %>
 					<div class="cell shrink text-center" >
-						<div style="background-color: #fff; border:1px solid #ccc; padding: 20px;">
+						<div style="background-color: #fff; border:1px solid #ccc; padding: 20px; width: 30px;">
 						<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
 						</div>
 					</div>
 					<% end %>
 				<% end %>
-				<div class="cell small-1" style="border:1px solid #ccc;">
+				<div class="cell small-2" style="border:1px solid #ccc;">
 					
 				</div>
 			</div>
