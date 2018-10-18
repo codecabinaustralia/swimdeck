@@ -1,5 +1,7 @@
 @media print {
-
+	.top-bar{
+		display: none;
+	}
 	.topside-ninety{
 		-webkit-transform: rotate(-90deg);
 		-moz-transform: rotate(-90deg);
