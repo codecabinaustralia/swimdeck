@@ -121,15 +121,14 @@ class LessonWorker
 			  		area: link.Area,
 			  		user_id: @t_user.id, #Teacher placeholder 3
 			  		site_id: 1, #Site placeholder 1
-			  		level_id: current_level,
-			  		random_string: @random_string
+			  		level_id: current_level
 		  		)
 	  	else
 	  		@find_lesson.update_attributes(
 		  		user_id: @t_user.id
 	  		)
 	  		lesson = @find_lesson
-	  		@find_lesson.update_attributes(random_string: @random_string)
+	  		
 	  	end
 
   	   
@@ -185,14 +184,6 @@ class LessonWorker
 	    @get_old_participants.each do |oldie|
 	  		oldie.destroy
 	 	end
-
-	 	@get_old_lessons = Lesson.where.not(
-			random_string: @random_string
-		).all
-
-	  @get_old_lessons.each do |oldie|
-			oldie.destroy
-	  end
 
 	  	#Create User/Client/Parent Login
 	  	@user = User.where(email: link.RPEmail).last
