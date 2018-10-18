@@ -1,4 +1,4 @@
-<div class="grid-x grid-padding-x lessons" style="min-height: 100vh;">
+<div class="grid-x grid-padding-x lessons">
 	<div class="cell small-12">
 		<div class="grid-x lessons-header">
 			<div class="cell auto" style="padding: 0 20px;">
@@ -16,7 +16,7 @@
 			<thead>
 				<th width="200" class="center aligned">Student</th>
 				<% @skills.each do |skill| %>
-					<th width="110"><%= skill.title %></th> 
+					<th class="topside-ninety"><%= skill.title %></th> 
 				<% end %>
 			</thead>
 			
@@ -26,14 +26,12 @@
 					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
 					<tr>
 						<td class="center aligned" style="padding: 0;">
-							<div class="grid-x grid-margin-x" >
-								<%= link_to lesson_participant.student.first_name, student_path(lesson_participant.student.id) %>
-							</div>
+								<%= lesson_participant.student.first_name %> <%= lesson_participant.student.first_name %>
 		
 						</td>
 						<% @student_skills.order("id desc").each do |student_skill| %>
 							<td >
-								<%= student_skill.competency_level.title %>
+								<%= student_skill.competency_level.title.split.map(&:first).join.upcase %>
 							</td>
 						<% end %>
 					</tr>
