@@ -16,9 +16,9 @@
 
 
 		<div class="grid-x">
-			<div class="cell auto">Student</div>	
+			<div class="cell auto text-center"></div>	
 			<% @skills.each do |skill| %>
-				<div class="cell auto "><div class="topside-ninety"><%= truncate(skill.title, :length => 15) %></div>	</div> 
+				<div class="cell auto "><div class="topside-ninety" ><%= truncate(skill.title, :length => 15) %></div>	</div> 
 			<% end %>
 		</div>
 
@@ -27,8 +27,8 @@
 			<div class="grid-x">
 				<% if lesson_participant.student.current_level == @lesson.level_id %>
 					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
-					<div class="cell auto text-center">
-						<%= lesson_participant.student.first_name %> <%= lesson_participant.student.first_name %>
+					<div class="cell auto text-center" style="font-size: 12px; font-weight: bold;">
+						<%= lesson_participant.student.first_name %> <%= lesson_participant.student.last_name %>
 					</div>
 					<% @student_skills.order("id desc").each do |student_skill| %>
 					<div class="cell auto text-center" style="background-color: #fff; border:1px solid #ccc;">
@@ -36,6 +36,9 @@
 					</div>
 					<% end %>
 				<% end %>
+				<div class="cell auto" style="width: 300px;">
+					
+				</div>
 			</div>
 		<% end %>
 		
