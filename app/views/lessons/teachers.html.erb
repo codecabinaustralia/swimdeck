@@ -17,7 +17,7 @@
 				<tr height="100">
 				<th width="200" class="center aligned topside-ninety">Student</th>
 				<% @skills.each do |skill| %>
-					<th width="20px" class="topside-ninety"><%= truncate(skill.title, :length => 15) %></th> 
+					<th width="20px" class="topside-ninety"><%= truncate(skill.title, :length => 10) %></th> 
 				<% end %>
 			</tr>
 			</thead>
