@@ -11,13 +11,13 @@
 				</h1>
 			</div>
 		</div>
-		<table class="table">
+		<table>
 
 			<thead>
 				<tr height="100">
 				<th width="200" class="center aligned topside-ninety">Student</th>
 				<% @skills.each do |skill| %>
-					<th width="20px" class="topside-ninety"><%= truncate(skill.title, :length => 10) %></th> 
+					<th width="20px" class="topside-ninety" style="font-size: 10px;"><%= truncate(skill.title, :length => 10) %></th> 
 				<% end %>
 			</tr>
 			</thead>
