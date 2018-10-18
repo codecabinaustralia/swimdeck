@@ -20,7 +20,7 @@ class LessonWorker
   	@links.each do |link|
 
   	@new_start_date = Date.parse(link.StuBookStartDate.to_date.strftime("%d/%m/%Y"))
-  	if @new_start_date.strftime("%d/%m/%Y") <= @time_brisbane.strftime("%d/%m/%Y")
+  	if @new_start_date.end_of_day.strftime("%d/%m/%Y") <= @time_brisbane.end_of_day.strftime("%d/%m/%Y")
 
 	  	if link.StuSurname != "----------"
 	  		# LESSON LEVEL 
