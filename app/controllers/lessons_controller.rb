@@ -23,11 +23,8 @@ class LessonsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = LessonPdf.new(@lesson, @skills, @lesson_participants)
-        send_data pdf.render, filename: "LessonPlan_#{@lesson.start_time.strftime('%Y-%m-%d')}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
-      end
+              render pdf: "file_name"   # Excluding ".pdf" extension.
+            end
     end
 
   end

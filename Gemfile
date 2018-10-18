@@ -39,6 +39,9 @@ gem 'birthday', '~> 0.3.0'
 
 gem 'cloudinary', require: false
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary-edge', '~> 0.12.5.0'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
