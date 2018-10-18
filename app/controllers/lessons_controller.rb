@@ -19,8 +19,14 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.pdf { render template: 'lessons/teacher_sheet', pdf: 'Teacher Sheet' }
+      format.pdf do
+           render pdf: "Your_filename",
+           template: "lessons/show.html.erb"
+           layout: 'pdf.html'
+         end
     end
+
+
 
   end
 
