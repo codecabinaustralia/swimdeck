@@ -17,14 +17,9 @@ class LessonsController < ApplicationController
 
     @lesson_participants = LessonParticipant.where(lesson_id: @lesson).all 
 
-    
-    
-    
     respond_to do |format|
       format.html
-      format.pdf do
-              render pdf: "file_name"   # Excluding ".pdf" extension.
-            end
+      format.pdf { render template: 'lessons/teacher_sheet', pdf: 'Teacher Sheet' }
     end
 
   end
