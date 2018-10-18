@@ -168,6 +168,7 @@ class LessonWorker
 				
 		    else
 		    	lesson_participant = @find_participant
+		    	@find_participant.update_attributes(random_string: @random_string)
 		    end
 		
 
