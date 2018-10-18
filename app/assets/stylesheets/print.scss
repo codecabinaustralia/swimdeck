@@ -2,6 +2,10 @@
 	.top-bar{
 		display: none;
 	}
+
+	tbody th, tbody td {
+	     padding: 0 !important;
+	}
 	
 }
 

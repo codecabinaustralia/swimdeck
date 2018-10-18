@@ -14,10 +14,12 @@
 		<table class="table">
 
 			<thead>
+				<tr height="100">
 				<th width="200" class="center aligned topside-ninety">Student</th>
 				<% @skills.each do |skill| %>
-					<th class="topside-ninety"><%= skill.title %></th> 
+					<th width="20" class="topside-ninety"><%= truncate(skill.title, :length => 15) %></th> 
 				<% end %>
+			</tr>
 			</thead>
 			
 			<tbody >
@@ -25,13 +27,13 @@
 				<% if lesson_participant.student.current_level == @lesson.level_id %>
 					<% @student_skills = StudentSkill.where(student_id: lesson_participant.student.id).where(level_id: lesson_participant.student.current_level).all %>
 					<tr>
-						<td class="center aligned" style="padding: 0;">
+						<td class="center aligned" style="padding: 10px">
 								<%= lesson_participant.student.first_name %> <%= lesson_participant.student.first_name %>
 		
 						</td>
 						<% @student_skills.order("id desc").each do |student_skill| %>
-							<td >
-								<%= student_skill.competency_level.title.split.map(&:first).join.upcase %>
+							<td style="text-align: center;">
+								<strong><%= student_skill.competency_level.title.split.map(&:first).join.upcase %></strong>
 							</td>
 						<% end %>
 					</tr>
