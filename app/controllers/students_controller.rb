@@ -74,7 +74,20 @@ protect_from_forgery with: :exception, prepend: true
 
 
 
-    @student_skill = StudentSkill.find(studentskill_params[:skill_id])                          
+    @student_skill = StudentSkill.find(studentskill_params[:skill_id])   
+
+    #Add congratulations flag
+    if @new_skill_achieved_flag == true
+    @flag = Flag.new(
+            title: "Congratulate #{@student_skill.student.full_name} for becoming compentant in #{@student_skill.skill.title}.",
+            student_id: @student_skill.student_id,
+            flag_type: 'gratitude',
+            compulsory_note: true,
+
+      )
+    @flag.save
+    end
+                           
     @student_skill.update_attributes(
       competency_level_id: studentskill_params[:competency_level_id]
       )
@@ -115,17 +128,7 @@ protect_from_forgery with: :exception, prepend: true
         )
       end
 
-      #Add congratulations flag
-      if @new_skill_achieved_flag == true
-      @flag = Flag.new(
-              title: "Congratulate #{@student_skill.student.full_name} for becoming compentant in #{@student_skill.skill.title}.",
-              student_id: @student_skill.student_id,
-              flag_type: 'gratitude',
-              compulsory_note: true,
-
-        )
-      @flag.save
-      end
+      
 
       @tasks = Task.where(student_id: @student_skill.student_id).where(task_type: 'risk').where(completed: [nil, false]).all
       @tasks.each do |task|

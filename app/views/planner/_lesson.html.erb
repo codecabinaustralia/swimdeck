@@ -24,7 +24,7 @@
                 <% @lessons_attending = LessonParticipant.where(lesson_id: lesson.id).all %>
                 <i class="fa fa-user"></i> <%= @lessons_attending.count %> 
                 <% @symbol_flags = @student_flags.where(closed: [nil, false]).all %>
-                <% @symbol_tasks = @student_tasks.where(completed: [nil, false]).all %>
+                <% @symbol_tasks = @student_tasks.where(completed: [nil, false]).where(user_id: current_user.id).all %>
 
                 <% if @symbol_flags.count > 0 %>
                 | <i class="fa fa-flag"></i>
@@ -83,7 +83,7 @@
                           </td>
                           <td width="50%" class="student_flag_label">
                             <% @student_flags = Flag.where(student_id: ls.student_id).where(closed: [nil, false]).all %>
-                            <% @student_tasks =  @task_flags.where(student_id: ls.student_id).where(completed: [nil, false]).all %>
+                            <% @student_tasks =  @task_flags.where(student_id: ls.student_id).where(completed: [nil, false]).where(user_id: current_user.id).all %>
 
                             <% @other_student_tasks =  @other_tasks.where(student_id: ls.student_id).where(completed: [nil, false]).all %>
 
