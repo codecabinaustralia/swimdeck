@@ -66,6 +66,28 @@
 
 				<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #fff; color: #black; padding: 40px; margin-top: 10px;"><%= @tasks.count %></div>
 			</div>
+
+			<div class="cell small-12">
+				<h2>My Tasks</h2>
+		<table class="table">
+			<thead>
+				<th><h5>Task</h5></th>
+				<th><h5>Complete</h5></th>
+			</thead>
+			<tbody>
+				<% @tasks.each do |task| %>
+					<tr>
+						<td width="50%" style="font-size: 12px;"><%= task.title %></td>
+						<td>
+						<%= form_for task, :url => task_complete_task_path(task) do |f| %>
+						<%= f.submit "Complete Task",class: "button small success expanded", style: "margin-top: 10px;" %>
+						<% end %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+			</div>
 			
 			
 		</div>
@@ -73,3 +95,11 @@
 	</div>
 
 </div>
+
+
+
+
+
+
+
+
