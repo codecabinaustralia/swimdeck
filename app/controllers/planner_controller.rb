@@ -28,7 +28,7 @@ class PlannerController < ApplicationController
     @push_checklists = PushChecklist.where(site_id: @site).all
 
     @date_today = Time.now.strftime("%Y-%m-%d")
-    @task_flags = Task.where(target_user: current_user.id).where(due_date: @date_today).where(completed: [false, nil]).all
+    @task_flags = Task.where(target_user: current_user.id).where(completed: [false, nil]).all
     @other_tasks = Task.where(due_date: @date_today).where(completed: [false, nil]).where(user_id: current_user.id).all
 
   	end
