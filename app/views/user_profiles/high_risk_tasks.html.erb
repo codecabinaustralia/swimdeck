@@ -15,8 +15,8 @@
 				<td>
 				<div class="lesson-bubble">
 					
-					<% if @lesson.user.avatar.attached? %>
-					  <%= image_tag(@lesson.user.avatar) %>
+					<% if task.student.avatar.attached? %>
+					  <%= image_tag(task.student.avatar) %>
 					  <% else %>
 	                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png">
 					<% end %>
