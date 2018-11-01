@@ -21,7 +21,7 @@
             <tr>
               <td>
                 <% flag = Flag.where(student_id: student.id).all %>
-                <% high_risk = Task.where(student_id: student.id).where(risk_type: "risk").all %>
+                <% high_risk = Task.where(student_id: student.id).where(flag_type: "risk").all %>
                 <% if flag.count == 0 && high_risk == 0 %>
                   <i class="fas fa-smile-wink" style="color: #39BA82"></i>
                 <% end %>
