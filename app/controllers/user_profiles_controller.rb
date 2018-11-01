@@ -36,6 +36,7 @@ class UserProfilesController < ApplicationController
       @zero = 1
     end
 
+    @tasks_completed_today = Task.where(completed: true).where(date_completed: Date.today).all.count
 
     @result = (@start_score - ((@problems.round(1) / @all_students.round(1)) * 100).floor ) * @zero
 
