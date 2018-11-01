@@ -65,8 +65,8 @@
 						<% @student_skill = StudentSkill.find(student_skill.id) %>
 						<div class="ui form">
 						<%= form_for @student_skill, :url => student_update_student_skills_path(student_skill.student_id) do |form| %>
-								<div class="field" id="<%= student_skill.skill.title %>">
-									<%= student_skill.skill.title %>
+								<div class="field">
+									
 							    <%= form.collection_select(:competency_level_id, CompetencyLevel.all, :id, :title,{}, {onchange: 'this.form.submit();', style: "margin: 0"}) %>
 							    </div>
 							    <%= form.hidden_field :skill_id, value: student_skill.id %>
