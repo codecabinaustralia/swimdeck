@@ -25,6 +25,7 @@
                 <i class="fa fa-user"></i> <%= @lessons_attending.count %> 
                 <% @symbol_flags = @student_flags.where(closed: [nil, false]).all %>
                 <% @symbol_tasks = @student_tasks.where(completed: [nil, false]).where(user_id: current_user.id).all %>
+                <% @symbol_flags_tasks = @student_tasks.where(completed: [nil, false]).all %>
 
                 <% if @symbol_flags.count > 0 %>
                 | <i class="fa fa-flag"></i>
@@ -32,6 +33,10 @@
 
                 <% if @symbol_tasks.count > 0 %>
                 | <i class="fa fa-check"></i>
+                <% end %>
+
+                <% if @symbol_flags_tasks.count > 0 %>
+                | <i class="fa fa-exclamation-triangle"></i>
                 <% end %>
 
               </h4>
