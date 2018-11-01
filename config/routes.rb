@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get 'user_profiles/customer_service'
   get 'user_profiles/client'
 
-  get 'user_profiles/high_risks_tasks'
+  get 'user_profiles/high_risk_tasks'
 
   get 'data_scraper/csv_spider'
   get 'data_scraper/add_links_data'
