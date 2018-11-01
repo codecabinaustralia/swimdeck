@@ -123,7 +123,7 @@
   <% end %>
   <div class="scrolling content">
   	<table class="ui table stackable inverted">
-  		<% @task_flags.each do |task_flag| %>
+  		<% @task_flags.where(student_id: @students_today).all.each do |task_flag| %>
         <tr>
           <td><span class="label">Sechdualed Task</span></td>
           <td>
