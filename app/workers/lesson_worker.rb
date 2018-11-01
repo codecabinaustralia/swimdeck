@@ -265,7 +265,7 @@ class LessonWorker
 
 		end
 	end
-	end
+	
 
 	#Add skills 
 	#REMINDER REMOVE SKILLS IF LEVELID DOESN'T MATCH FOUND SKILLID
