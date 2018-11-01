@@ -45,13 +45,19 @@
 	<div class="cell small-12 medium-4">
 		<div class="grid-x grid-margin-x">
 			<div class="cell small-4">
-				<h2>My Personal Tasks</h2>
+				<h2><i class="fa fa-exclamation-triangle"></i> HIGH RISK TASKS</h2>
+				<% if @risk_tasks.count == 0 %>
+				<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #14764a; color: #white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
+				<% else %>
+				<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #bf0101; color: #white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
+				<% end %>	
+			</div>
+
+			<div class="cell small-4">
+				<h2><i class="fa fa-check"></i> My Personal Tasks</h2>
 				<div class="text-center" style="font-size: 50px; font-weight: 700"><%= @tasks.count %></div>
 			</div>
-			<div class="cell small-4">
-				<h2>Unassigned Tasks</h2>
-				<div class="text-center" style="font-size: 50px; font-weight: 700"><%= @risk_tasks.count %></div>	
-			</div>
+			
 			<div class="cell small-4">
 				<h2>All Open Tasks</h2>
 				<div class="text-center" style="font-size: 50px; font-weight: 700"><%= @all_tasks.count %></div>
