@@ -60,7 +60,7 @@
 						</div>
 	
 					</td>
-					<% @student_skills.order("id desc").each do |student_skill| %>
+					<% @student_skills.order("id asc").each do |student_skill| %>
 						<td style="background-color: <%= student_skill.competency_level.color %>">
 						<% @student_skill = StudentSkill.find(student_skill.id) %>
 						<div class="ui form">
