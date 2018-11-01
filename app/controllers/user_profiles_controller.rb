@@ -31,8 +31,16 @@ class UserProfilesController < ApplicationController
     .where.not(user_id: current_user.id)
     .all.count
 
-    @problems = @out_flags + @out_tasks + @out_messages + @out_comments
-    @result = @start_score - ((@problems.round(1) / @all_students.round(1)) * 100).floor / 2
+    @problems = @out_flags + @out_messages + @out_comments
+
+    if @out_tasks > 0
+      @zero = 0
+    else
+      @zero = 1
+    end
+
+
+    @result = (@start_score - ((@problems.round(1) / @all_students.round(1)) * 100).floor ) * @zero
 
   end
 
