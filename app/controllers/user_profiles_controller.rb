@@ -11,7 +11,7 @@ class UserProfilesController < ApplicationController
     @risk_tasks = Task.where(task_type: "risk").where(completed: nil).all
     @completed_tasks = Task.where(target_user: current_user.id).where(completed: true).all
     @all_tasks = Task.where(completed: [false, nil]).all
-    @flags = Flag.where(completed: [false, nil]).all
+    @flags = Flag.where(closed: [false, nil]).all
 
     #Health Scores
     @start_score = 100
