@@ -36,6 +36,10 @@ class UserProfilesController < ApplicationController
 
   end
 
+  def high_risk_tasks
+    @risk_tasks = Task.where(task_type: "risk").where(completed: nil).all
+  end
+
   def teacher
     if params.has_key?(:teacher_search)
       @user = User.where(email: params[:teacher_search]).last

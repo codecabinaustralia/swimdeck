@@ -46,10 +46,13 @@
 		<div class="grid-x grid-margin-x">
 			<div class="cell small-4">
 				<h2><i class="fa fa-exclamation-triangle"></i> HIGH RISK TASKS</h2>
-				<% if @risk_tasks.count == 0 %>
-				<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #14764a; color: white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
-				<% else %>
-				<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #bf0101; color: white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
+				<%= link_to user_profiles_high_risks_tasks_path do %>
+					<% if @risk_tasks.count == 0 %>
+
+					<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #14764a; color: white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
+					<% else %>
+					<div class="text-center" style="font-size: 50px; font-weight: 700; background-color: #bf0101; color: white; padding: 40px; margin-top: 10px;"><%= @risk_tasks.count %></div>
+					<% end %>
 				<% end %>	
 			</div>
 
@@ -66,35 +69,7 @@
 			
 			
 		</div>
-		<h2>My Tasks</h2>
-		<table class="table">
-			<thead>
-				<th><h5>Task</h5></th>
-				<th><h5>Complete</h5></th>
-			</thead>
-			<tbody>
-				<% @tasks.each do |task| %>
-					<tr>
-						<td width="50%" style="font-size: 12px;"><%= task.title %></td>
-						<td>
-						<%= form_for task, :url => task_complete_task_path(task) do |f| %>
-						<%= f.submit "Complete Task",class: "button small success expanded", style: "margin-top: 10px;" %>
-						<% end %>
-						</td>
-					</tr>
-				<% end %>
-				<% @risk_tasks.each do |task| %>
-					<tr>
-						<td width="50%" style="font-size: 12px;"><%= task.title %></td>
-						<td>
-						<%= form_for task, :url => task_complete_task_path(task) do |f| %>
-						<%= f.submit "Complete Task",class: "button small success expanded", style: "margin-top: 10px;" %>
-						<% end %>
-						</td>
-					</tr>
-				<% end %>
-			</tbody>
-		</table>
+		
 	</div>
 
 </div>
