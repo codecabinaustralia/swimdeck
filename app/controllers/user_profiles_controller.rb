@@ -32,7 +32,7 @@ class UserProfilesController < ApplicationController
     .all.count
 
     @problems = @out_flags + @out_messages + @out_comments
-
+    
     if @out_tasks > 0
       @zero = 0
     else

@@ -25,7 +25,7 @@
                 <% if @flag_count.count == 0 && @high_risk.count == 0 %>
                   <i class="fas fa-smile-wink" style="color: #39BA82"></i>
                 <% end %>
-                <% if @flag_count.count == 1 || @flag_count.count == 2 && high_risk == 0 %>
+                <% if @flag_count.count == 1 || @flag_count.count == 2 && @high_risk == 0 %>
                   <i class="fas fa-sad-cry" style="color: #D60000"></i>
                 <% elsif  @flag_count.count > 2 || @high_risk.count > 0 %>
                   <i class="fas fa-sad-tear" style="color: #ffae00"></i>
