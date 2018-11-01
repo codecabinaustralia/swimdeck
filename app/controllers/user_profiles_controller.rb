@@ -3,6 +3,42 @@ class UserProfilesController < ApplicationController
   end
 
   def manager
+    @teachers = User.where(teacher: true).all
+    @tasks = Task.where(target_user: current_user.id).where(completed: nil).all
+    @risk_tasks = Task.where(task_type: "risk").where(completed: nil).all
+    @completed_tasks = Task.where(target_user: current_user.id).where(completed: true).all
+    @all_tasks = Task.where(completed: [false, nil]).all
+    @flags = Flag.where(closed: [false, nil]).all
+
+    #Health Scores
+    @start_score = 100
+    @all_students = Student.all.count
+    @out_flags = Flag.where(closed: [nil, false]).all.count
+    @out_tasks = Task.where(completed: [nil, false]).where(task_type: "risk").all.count
+    @out_messages = Post
+    .where(certificate: [nil, false])
+    .where(level_id: [nil, false])
+    .where(skill_id: [nil, false])
+    .where.not(body: "Welcome to Rackley Swimming")
+    .where(actioned: [false, nil])
+    .where(note: [nil, false])
+    .where.not(user_id: current_user.id)
+    .all.count
+    @out_comments = Comment.where(acknowleged: [false, nil])
+    .where.not(user_id: current_user.id)
+    .all.count
+
+    @problems = @out_flags + @out_messages + @out_comments
+    
+    if @out_tasks > 0
+      @zero = 0
+    else
+      @zero = 1
+    end
+
+
+    @result = (@start_score - ((@problems.round(1) / @all_students.round(1)) * 100).floor ) * @zero
+
   end
 
   def pool_deck_leader
@@ -32,7 +68,7 @@ class UserProfilesController < ApplicationController
     .all.count
 
     @problems = @out_flags + @out_messages + @out_comments
-    
+
     if @out_tasks > 0
       @zero = 0
     else

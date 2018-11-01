@@ -1,2 +1,210 @@
-<h1>UserProfiles#manager</h1>
-<p>Find me in app/views/user_profiles/manager.html.erb</p>
+<div class="grid-container">
+	<div class="grid-x">
+		<div class="cell small-12">
+			<table>
+				<thead>
+					<th>Site</th>
+					<th>High Risk Tasks</th>
+					<th>Outstanding Flags</th>
+					<th>Health Score</th>
+					<th>Status</th>
+				</thead>
+
+				<tr>
+					<td>
+						<%= link_to "Centenary", user_profiles_pool_deck_leader_path %>
+					</td>
+					<td>
+						<%= @out_flags.count %>
+					</td>
+					<td>
+						<%= @out_tasks.count %>
+					</td>
+					<td>
+						<%= @result %>
+					</td>
+					<td>
+						<% if @result <= 25 || @risk_tasks.count > 0 %>
+							<i class="fas fa-sad-cry" style="color: #D60000"></i>
+						<% elsif @result > 25 && @result <= 80 && @risk_tasks.count == 0 %>
+							<i class="fas fa-sad-tear" style="color: #ffae00"></i>
+						<% elsif @result > 80 && @risk_tasks.count == 0 %>
+							<i class="fas fa-smile-wink" style="color: #39BA82"></i>
+						<% else %>
+							<i class="fas fa-sad-tear" style="color: #ffae00"></i>
+						<% end %>
+					</td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Redbank Plains", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Westlake", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Kawana", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Spring Hill", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Chermside", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Deagon", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Logan West", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Parkinson", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Colmslie", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Hibiscus", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Runcorn", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Kingston", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Canungra", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Tamborine Mountain", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Coomera", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Pimpapama", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Helensvale", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Runawaybay", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Robina", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+				<tr>
+					<td><%= link_to "Miami", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+				<tr>
+					<td><%= link_to "Burleigh Heads", root_path %></td>
+					<td>0</td>
+					<td>0</td>
+					<td>100</td>
+					<td><i class="fas fa-smile-wink" style="color: #39BA82"></i></td>
+				</tr>
+
+
+			</table>
+		</div>
+	</div>
+</div>
