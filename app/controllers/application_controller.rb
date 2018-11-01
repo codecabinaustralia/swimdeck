@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def set_variables
    @activate_parent_sms = false
 
-   @parent_info_flag = true #
+   @parent_info_flag = false #
    @no_skill_achieved_flag = true #
    @no_wall_activity_flag = false #
    @new_skill_achieved_flag = true #
