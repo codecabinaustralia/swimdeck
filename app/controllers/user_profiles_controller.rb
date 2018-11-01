@@ -102,7 +102,7 @@ class UserProfilesController < ApplicationController
 
   def complete_task
     @task = Task.find(params[:task_id])
-    @task.update_attributes(completed: true)
+    @task.update_attributes(completed: true, date_completed: Date.today)
     redirect_back(fallback_location: user_profiles_teacher_path)
   end 
 
