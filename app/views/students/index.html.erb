@@ -1,35 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="grid-container">
+  <div class="grid-x">
+    <div class="cell small-12">
+      <h1>Students</h1>
 
-<h1>Students</h1>
+      <table class="ui celled table sortable stacked striped">
+        <thead>
+          <tr>
+            <th>Health Score</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Dob</th>
+            <th>Personal notes</th>
+            <th>Current level</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-<table class="ui celled table sortable stacked striped">
-  <thead>
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Dob</th>
-      <th>Personal notes</th>
-      <th>Current level</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+        <tbody>
+          <% @students.each do |student| %>
+            <tr>
+              <td>
+                <% flag = Flag.where(student_id: student.id).all %>
+                <% high_risk = Task.where(student_id: student.id).where(risk_type: "risk").all %>
+                <% if flag.count == 0 && high_risk == 0 %>
+                  <i class="fas fa-smile-wink" style="color: #39BA82"></i>
+                <% end %>
+                <% if flag.count == 1 || flag.count == 2 && high_risk == 0 %>
+                  <i class="fas fa-sad-cry" style="color: #D60000"></i>
+                <% elsif  flag.count > 2 || high_risk > 0 %>
+                  <i class="fas fa-sad-tear" style="color: #ffae00"></i>
+                <% end %>
+              </td>
+              <td><%= student.first_name %></td>
+              <td><%= student.last_name %></td>
+              <td><%= student.dob %></td>
+              <td><%= student.personal_notes %></td>
+              <td><%= student.current_level %></td>
+              <td><%= link_to 'Show', student %></td>
+              <td><%= link_to 'Edit', edit_student_path(student) %></td>
+              <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-  <tbody>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.first_name %></td>
-        <td><%= student.last_name %></td>
-        <td><%= student.dob %></td>
-        <td><%= student.personal_notes %></td>
-        <td><%= student.current_level %></td>
-        <td><%= link_to 'Show', student %></td>
-        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Student', new_student_path %>
+    </div>
+  </div>
+</div>
