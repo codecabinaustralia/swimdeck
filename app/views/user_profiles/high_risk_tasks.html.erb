@@ -25,7 +25,7 @@
 				<td><%= task.title %></td>
 				<td><%= link_to task.student.full_name %></td>
 				<td>Flag raised <%= time_ago_in_words(task.created_at) %> ago</td>
-				<td>Student started <%= time_ago_in_words(student.created_at) %> ago</td>
+				<td>Student started <%= time_ago_in_words(task.student.created_at) %> ago</td>
 				<td>
 				<%= form_for task, :url => task_complete_task_path(task) do |f| %>
 				<%= f.submit "Complete Task",class: "button small success expanded", style: "margin-top: 10px;" %>
