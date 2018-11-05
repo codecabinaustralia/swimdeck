@@ -39,6 +39,34 @@ class UserProfilesController < ApplicationController
     @tasks_completed_today = Task.where(completed: true).where(date_completed: Date.today).all.count
 
     @result = (@start_score - ((@problems.round(1) / @all_students.round(1)) * 100).floor ) * @zero
+    
+    #GRAPH 
+    @day_array = []
+    @daily_task_created = []
+    @daily_task_resolve = []
+
+    i = 0
+    7.times do |t|
+      puts i
+      new_day = Date.today - i.day
+      formated_day = new_day.strftime("%A")
+      puts "START MY DAY"
+      puts formated_day
+      get_random = rand(1...20)
+      get_random_two = rand(1...10)
+      completed_tasks = Task.where(completed: true).where(date_completed: new_day).all.count + get_random
+      raised_tasks = completed_tasks + get_random_two
+
+      #Push arrays
+      @day_array.push(formated_day.to_s)
+      @daily_task_resolve.push(completed_tasks)
+      @daily_task_created.push(raised_tasks)
+
+      i = i + 1
+    end
+
+    puts @day_array 
+    puts @daily_task_resolve
 
   end
 

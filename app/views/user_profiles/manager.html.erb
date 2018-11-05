@@ -1,5 +1,71 @@
 <div class="grid-container">
 	<div class="grid-x">
+		<div class="cell small-12 text-center">
+
+			<canvas id="myChart" width="1100" height="250"></canvas>
+			<script>
+			var ctx = document.getElementById("myChart").getContext("2d");
+
+const colors = {
+  darkBlue: {
+    fill: '#92bed2',
+    stroke: '#3282bf',
+  },
+  purple: {
+    fill: '#8fa8c8',
+    stroke: '#75539e',
+  },
+};
+
+const availableForExisting = <%= @daily_task_created %>;
+const unavailable = <%= @daily_task_resolve %>;
+const xData = ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday"];
+
+const myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: xData,
+    datasets: [{
+      label: "Tasks resolved",
+      fill: true,
+      backgroundColor: colors.purple.fill,
+      pointBackgroundColor: colors.purple.stroke,
+      borderColor: colors.purple.stroke,
+      pointHighlightStroke: colors.purple.stroke,
+      borderCapStyle: 'butt',
+      data: unavailable,
+
+    }, {
+      label: "Tasks raised",
+      fill: true,
+      backgroundColor: colors.darkBlue.fill,
+      pointBackgroundColor: colors.darkBlue.stroke,
+      borderColor: colors.darkBlue.stroke,
+      pointHighlightStroke: colors.darkBlue.stroke,
+      borderCapStyle: 'butt',
+      data: availableForExisting,
+    }]
+  },
+  options: {
+    responsive: false,
+    // Can't just just `stacked: true` like the docs say
+    scales: {
+      yAxes: [{
+        stacked: true,
+      }]
+    },
+    animation: {
+      duration: 750,
+    },
+  }
+});
+			</script>
+		</div>
+	</div>
+</div>
+
+<div class="grid-container">
+	<div class="grid-x">
 		<div class="cell small-12">
 			<table>
 				<thead>

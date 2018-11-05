@@ -75,6 +75,8 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.3)
     byebug (10.0.2)
+    chart-js-rails (0.1.6)
+      railties (> 3.1)
     cloudinary (1.9.1)
       aws_cf_signer
       rest-client
@@ -283,6 +285,7 @@ DEPENDENCIES
   birthday (~> 0.3.0)
   bootsnap (>= 1.1.0)
   byebug
+  chart-js-rails
   cloudinary
   coffee-rails (~> 4.2)
   devise

@@ -34,6 +34,7 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate_infinite'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'chart-js-rails'
 
 gem 'birthday', '~> 0.3.0'
 
